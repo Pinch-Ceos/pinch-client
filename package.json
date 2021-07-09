@@ -1,0 +1,35 @@
+{
+  "name": "pinch-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build"
+  },
+  "author": "seungBum",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "antd": "^4.16.6",
+    "axios": "^0.21.1",
+    "babel-plugin-styled-components": "^1.13.1",
+    "bootstrap": "^4.6.0",
+    "next": "^10.2.3",
+    "next-redux-wrapper": "^6.0.2",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.4",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-saga": "^1.1.3",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0"
+  }
+}
