@@ -31,7 +31,6 @@ const AppLayout = ({ children }) => {
                 xl: '1200px',
                 xxl: '1600px',
               }}
-              // collapsedWidth="0"
               style={{ ackgroundColor: 'white' }}
             >
               <div className="logo" />
