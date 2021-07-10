@@ -7,7 +7,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -23,7 +23,14 @@ const Global = createGlobalStyle`
   .ant-col:last-child{
     padding-right: 0 !important;
   }
+  .ant-menu > .ant-menu-item-selected::after {
+    border-right:none;
+  }
+  .ant-list > .ant-list-header{
+    border: none;
+  }
 `;
+const styleditem = styled(Menu.Item)``;
 
 const AppLayout = ({ children }) => {
   return (
@@ -36,11 +43,11 @@ const AppLayout = ({ children }) => {
         />
         <Layout
           className="site-layout"
-          style={{ paddingTop: 10, backgroundColor: 'white' }}
+          style={{ paddingTop: 30, backgroundColor: 'white' }}
         >
           <Row style={{ border: 'none' }}>
             <Col md={1}></Col>
-            <Col xs={24} md={4}>
+            <Col xs={23} md={4}>
               <Sider
                 breakpoint
                 width={{
@@ -51,17 +58,19 @@ const AppLayout = ({ children }) => {
                   xl: '1200px',
                   xxl: '1600px',
                 }}
-                style={{ backgroundColor: 'white' }}
+                style={{ backgroundColor: 'white', border: 0 }}
               >
                 <div className="logo" />
                 <Menu
-                  theme="light"
+                  // theme="dark"
                   defaultSelectedKeys={['1']}
                   mode="inline"
                   style={{
                     backgroundColor: 'white',
                     marginLeft: 10,
                     marginRight: 10,
+                    border: 0,
+                    width: '95%',
                   }}
                 >
                   <Menu.Item

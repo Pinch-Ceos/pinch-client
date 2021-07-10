@@ -20,7 +20,7 @@ const CardList = ({ data, header }) => {
         backgroundColor: 'white',
         border: 'none',
       }}
-      header={<div>{header}</div>}
+      header={<div style={{ border: 0 }}>{header}</div>}
       dataSource={data}
       renderItem={(item) => (
         <List.Item

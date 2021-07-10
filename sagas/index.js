@@ -60,14 +60,14 @@ function* logOut() {
 }
 
 function giveCodeAPI(data) {
-  console.log('123');
   console.log(data);
   return axios.get(`http://127.0.0.1:8000/callback?code=${data}`);
 }
 function* giveCode(action) {
   try {
-    const result = yield call(giveCodeAPI, action.data);
-    // yield delay(1000);
+    // const result = yield call(giveCodeAPI, action.data);
+    const result = { data: 'http://localhost:3000/redirect' };
+    yield delay(1000);
     yield put({
       type: GIVE_CODE_SUCCESS,
       data: result.data,

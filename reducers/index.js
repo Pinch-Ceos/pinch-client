@@ -25,7 +25,6 @@ export const GIVE_CODE_SUCCESS = 'GIVE_CODE_SUCCESS';
 export const GIVE_CODE_FAILURE = 'GIVE_CODE_FAILURE';
 
 const rootReducer = (state = initalState, action) => {
-  // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
   switch (action.type) {
     case HYDRATE:
       return {
@@ -53,7 +52,6 @@ const rootReducer = (state = initalState, action) => {
         logInDone: false,
       };
     case LOG_IN_SUCCESS:
-      // setCookie('Token', action.data.token, { path: '/' });
       return {
         ...state,
         auth_uri: action.data,
