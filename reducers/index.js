@@ -9,11 +9,19 @@ const initalState = {
   logInLoading: false,
   logInDone: false,
   logInError: null,
+  giveCodeLoading: false,
+  giveCodeDone: false,
+  giveCodeError: null,
+  auth_rui: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+
+export const GIVE_CODE_REQUEST = 'GIVE_CODE_REQUEST';
+export const GIVE_CODE_SUCCESS = 'GIVE_CODE_SUCCESS';
+export const GIVE_CODE_FAILURE = 'GIVE_CODE_FAILURE';
 
 const rootReducer = (state = initalState, action) => {
   // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
@@ -22,6 +30,20 @@ const rootReducer = (state = initalState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+    case GIVE_CODE_REQUEST:
+      return {
+        ...state,
+        giveCodeLoading: true,
+        giveCodeDone: false,
+      };
+    case GIVE_CODE_SUCCESS:
+      return {
+        ...state,
+      };
+    case GIVE_CODE_FAILURE:
+      return {
+        ...state,
       };
     case LOG_IN_REQUEST:
       return {
@@ -33,12 +55,13 @@ const rootReducer = (state = initalState, action) => {
       // setCookie('Token', action.data.token, { path: '/' });
       return {
         ...state,
-        logInLoading: false,
-        logInDone: true,
-        name: action.data.name,
-        email_address: action.data.email,
-        subscribe: action.data.subscribe,
-        bookmark: action.data.bookmark,
+        auth_rui: action.data,
+        // logInLoading: false,
+        // logInDone: true,
+        // name: action.data.name,
+        // email_address: action.data.email,
+        // subscribe: action.data.subscribe,
+        // bookmark: action.data.bookmark,
       };
     case LOG_IN_FAILURE:
       return {
