@@ -57,12 +57,12 @@ function* logOut() {
   }
 }
 
-function logOutAPI() {
+function giveCodeAPI() {
   return axios.post('http://127.0.0.1:8000/callback');
 }
 function* giveCode() {
   try {
-    const result = yield call(logOutAPI);
+    const result = yield call(giveCodeAPI);
     // yield delay(1000);
     yield put({
       type: GIVE_CODE_SUCCESS,
