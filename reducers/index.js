@@ -1,4 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
+import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
 const initalState = {
@@ -55,7 +56,7 @@ const rootReducer = (state = initalState, action) => {
       // setCookie('Token', action.data.token, { path: '/' });
       return {
         ...state,
-        auth_rui: action.data,
+        auth_uri: action.data,
         // logInLoading: false,
         // logInDone: true,
         // name: action.data.name,

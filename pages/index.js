@@ -9,17 +9,20 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const state = useSelector((state) => state);
-  const responseGoogle = (response) => {
-    console.log(response.code);
+  const responseGoogle = () => {
+    // console.log(response.code);
     dispatch({
       type: LOG_IN_REQUEST,
-      data: response.code,
     });
-    router.push(`${state.auth_uri}`);
+    console.log(state.auth_uri);
   };
+  const move = () => {
+    router.push(`${state.auth_uri}`);
+  }
   return (
     <>
       <Button onClick={responseGoogle}>로그인</Button>
+      <Button onClick={move}>move</Button>
       {/* <GoogleLogin
         scope="https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.metadata https://www.googleapis.com/auth/gmail.labels"
         accessType="offline"
@@ -32,7 +35,7 @@ const Login = () => {
         onFailure={responseGoogle}
         // cookiePolicy={'single_host_origin'}
       /> */}
-
+      <div>asd</div>
       <div>로그인</div>
     </>
   );

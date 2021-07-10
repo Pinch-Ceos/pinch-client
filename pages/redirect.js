@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { GIVE_CODE_REQUEST } from '../reducers';
 const redirect = () => {
   const dispatch = useDispatch();
-  let authcode = new URL(window.location.href).searchParams.get('code');
-
+  
   useEffect(() => {
+    let authcode = new URL(window.location.href).searchParams.get('code');
+    console.log(window);
     dispatch({
       type: GIVE_CODE_REQUEST,
       data: authcode,
