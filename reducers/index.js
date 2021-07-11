@@ -1,19 +1,17 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 
 const initalState = {
   email_address: null,
   name: null,
-  subscribe: [],
+  subscribe_list: [],
   bookmark: [],
+  auth_uri: null,
   logInLoading: false,
   logInDone: false,
   logInError: null,
   giveCodeLoading: false,
   giveCodeDone: false,
   giveCodeError: null,
-  auth_rui: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -40,6 +38,12 @@ const rootReducer = (state = initalState, action) => {
     case GIVE_CODE_SUCCESS:
       return {
         ...state,
+        giveCodeLoading: false,
+        giveCodeDone: true,
+        email_address: action.data.user_email_address,
+        name: action.data.user_name,
+        subscribe_list: action.data.subscribe_list,
+        //미완성
       };
     case GIVE_CODE_FAILURE:
       return {
@@ -55,12 +59,8 @@ const rootReducer = (state = initalState, action) => {
       return {
         ...state,
         auth_uri: action.data,
-        // logInLoading: false,
-        // logInDone: true,
-        // name: action.data.name,
-        // email_address: action.data.email,
-        // subscribe: action.data.subscribe,
-        // bookmark: action.data.bookmark,
+        logInLoading: false,
+        logInDone: true,
       };
     case LOG_IN_FAILURE:
       return {
