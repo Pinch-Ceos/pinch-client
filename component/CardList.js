@@ -4,6 +4,7 @@ import { Meta } from 'antd/lib/list/Item';
 import React from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import styled from 'styled-components';
+import ModalWindow from '../component/Modal';
 
 const StyledMeta = styled(Meta)`
   .ant-list-item-meta-title {
@@ -50,7 +51,7 @@ const CardList = ({ data, header }) => {
         backgroundColor: 'white',
         border: 'none',
       }}
-      header={<div style={{ border: 0 }}>{header}</div>}
+      header={<div style={{ border: 0 }}>{header}<ModalWindow /></div>}
       dataSource={data}
       renderItem={(item) => (
         <List.Item
