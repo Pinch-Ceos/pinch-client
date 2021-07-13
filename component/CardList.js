@@ -3,6 +3,36 @@ import { List, Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import React from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
+import styled from 'styled-components';
+
+const StyledMeta = styled(Meta)`
+  .ant-list-item-meta-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    margin-top: 1px;
+    height: 44px;
+    overflow: hidden;
+    vertical-align: center;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .ant-list-item-meta-description {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    height: 44px;
+    margin-top: 1px;
+    overflow: hidden;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+`;
 
 const CardList = ({ data, header }) => {
   return (
@@ -53,24 +83,7 @@ const CardList = ({ data, header }) => {
               />,
             ]}
           >
-            <Meta
-              title={item.title}
-              description={item.description}
-              style={{
-                wordWrap: 'break-word',
-                whiteSpace: 'break-spaces',
-                // overflow: 'hidden',
-                // fontSize: '16px',
-                width: '100%',
-                // lineHeight: '1.6em',
-                // maxHeight: '6.4em',
-                // display: '-webkit-box',
-                // textOverflow: 'ellipsis',
-                // WebkitLineClamp: '2',
-                // WebkitBoxOrient: 'vertical',
-                // visibility: 'visible',
-              }}
-            />
+            <StyledMeta title={item.title} description={item.description} />
           </Card>
         </List.Item>
       )}

@@ -1,12 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { FileOutlined, TeamOutlined } from '@ant-design/icons';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const { Header, Content, Sider } = Layout;
@@ -29,6 +23,9 @@ const Global = createGlobalStyle`
   .ant-list > .ant-list-header{
     border: none;
   }
+  .ant-card-actions {
+    border: none;
+  }
 `;
 const styleditem = styled(Menu.Item)``;
 
@@ -45,7 +42,7 @@ const AppLayout = ({ children }) => {
           className="site-layout"
           style={{ paddingTop: 30, backgroundColor: 'white' }}
         >
-          <Row style={{ border: 'none' }}>
+          <Row gutter={20} style={{ border: 'none' }}>
             <Col md={1}></Col>
             <Col xs={23} md={4}>
               <Sider
@@ -67,10 +64,8 @@ const AppLayout = ({ children }) => {
                   mode="inline"
                   style={{
                     backgroundColor: 'white',
-                    marginLeft: 10,
-                    marginRight: 10,
                     border: 0,
-                    width: '95%',
+                    width: '100%',
                   }}
                 >
                   <Menu.Item

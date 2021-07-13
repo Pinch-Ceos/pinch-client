@@ -15,9 +15,9 @@ const Home = () => {
     {
       src: 'https://i.pinimg.com/originals/4b/64/69/4b64690a8654155e6e799031fc2d5a19.jpg',
       title:
-        'Card titleCard titlCard titlCard titlvCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titl',
+        'Card titleCard titlCard titlCard titlvCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titleCard titlCard titlCard titlvCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titlCard titl',
       description:
-        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     },
     {
       src: 'https://1.bp.blogspot.com/-S7hP-_bf7o8/WWZy7CRaT3I/AAAAAAAByHE/wtoIBrfrBCciHVLM5xAopxFVpYIeTN6-ACLcBGAs/s1600/funny-cat-267-01.jpg',
