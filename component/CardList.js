@@ -1,4 +1,3 @@
-import { NodeIndexOutlined } from '@ant-design/icons';
 import { List, Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import React from 'react';
@@ -51,7 +50,12 @@ const CardList = ({ data, header }) => {
         backgroundColor: 'white',
         border: 'none',
       }}
-      header={<div style={{ border: 0 }}>{header}<ModalWindow /></div>}
+      header={
+        <div style={{ border: 0 }}>
+          {header}
+          <ModalWindow />
+        </div>
+      }
       dataSource={data}
       renderItem={(item) => (
         <List.Item

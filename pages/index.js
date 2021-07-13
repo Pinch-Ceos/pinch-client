@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import GoogleLogin from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../reducers';
 import { useRouter } from 'next/router';

@@ -10,7 +10,7 @@ import {
 } from '../reducers';
 
 function logInAPI() {
-  return axios.get('http://127.0.0.1:8000/login/');
+  return axios.get('http://127.0.0.1:8000/auth/login');
 }
 
 function* logIn(action) {
@@ -25,7 +25,7 @@ function* logIn(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -52,7 +52,7 @@ function* giveCode(action) {
   } catch (err) {
     yield put({
       type: GIVE_CODE_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -71,7 +71,7 @@ function* logOut() {
   } catch (err) {
     yield put({
       type: 'LOG_OUT_FAILURE',
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }

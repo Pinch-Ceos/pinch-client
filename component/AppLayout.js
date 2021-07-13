@@ -27,7 +27,6 @@ const Global = createGlobalStyle`
     border: none;
   }
 `;
-const styleditem = styled(Menu.Item)``;
 
 const AppLayout = ({ children }) => {
   return (

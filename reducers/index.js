@@ -1,4 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
+import produce from 'immer';
 
 const initalState = {
   email_address: null,
@@ -22,55 +23,46 @@ export const GIVE_CODE_REQUEST = 'GIVE_CODE_REQUEST';
 export const GIVE_CODE_SUCCESS = 'GIVE_CODE_SUCCESS';
 export const GIVE_CODE_FAILURE = 'GIVE_CODE_FAILURE';
 
-const rootReducer = (state = initalState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GIVE_CODE_REQUEST:
-      return {
-        ...state,
-        giveCodeLoading: true,
-        giveCodeDone: false,
-      };
-    case GIVE_CODE_SUCCESS:
-      return {
-        ...state,
-        giveCodeLoading: false,
-        giveCodeDone: true,
-        email_address: action.data.user_email_address,
-        name: action.data.user_name,
-        subscribe_list: action.data.subscribe_list,
-        //미완성
-      };
-    case GIVE_CODE_FAILURE:
-      return {
-        ...state,
-      };
-    case LOG_IN_REQUEST:
-      return {
-        ...state,
-        logInLoading: true,
-        logInDone: false,
-      };
-    case LOG_IN_SUCCESS:
-      return {
-        ...state,
-        auth_uri: action.data,
-        logInLoading: false,
-        logInDone: true,
-      };
-    case LOG_IN_FAILURE:
-      return {
-        ...state,
-        logInLoading: false,
-        logInError: action.error,
-      };
-    default:
-      return state;
-  }
-};
+const rootReducer = (state = initalState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case HYDRATE:
+        Object.assign(draft, action.payload);
+        break;
+      case GIVE_CODE_REQUEST:
+        draft.giveCodeLoading = true;
+        draft.giveCodeDone = false;
+        draft.giveCodeError = null;
+        break;
+      case GIVE_CODE_SUCCESS:
+        draft.giveCodeLoading = false;
+        draft.giveCodeDone = true;
+        draft.email_address = action.data.user_email_address;
+        draft.name = action.data.user_name;
+        draft.subscribe_list = action.data.subscribe_list;
+        //토큰 처리
+        break;
+      case GIVE_CODE_FAILURE:
+        draft.giveCodeLoading = false;
+        draft.giveCodeError = action.error;
+        break;
+      case LOG_IN_REQUEST:
+        draft.logInLoading = true;
+        draft.logInDone = false;
+        draft.logInError = null;
+        break;
+      case LOG_IN_SUCCESS:
+        draft.logInLoading = false;
+        draft.logInDone = true;
+        draft.auth_uri = action.data;
+        break;
+      case LOG_IN_FAILURE:
+        draft.logInLoading = false;
+        draft.logInError = action.error;
+        break;
+      default:
+        break;
+    }
+  });
 
 export default rootReducer;
