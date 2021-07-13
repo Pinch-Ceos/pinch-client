@@ -81,7 +81,6 @@ class Tags extends React.Component {
     return (
       <Container>
         <Global />
-        <span style={{ marginRight: 8 }} />
         {tagsData.map((tag) => (
           <CheckableTag
             key={tag}
