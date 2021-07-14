@@ -111,7 +111,7 @@ function* watchGiveCode() {
   yield takeLatest(GIVE_CODE_REQUEST, giveCode);
 }
 function* watchSenderList() {
-  yield takeLatest(SENDER_LIST_REQUEST, SenderList);
+  yield takeLatest(SENDER_LIST_REQUEST, senderList);
 }
 export default function* rootSaga() {
   yield all([

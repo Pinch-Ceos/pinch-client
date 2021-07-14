@@ -41,14 +41,13 @@ const Container = styled.div`
 
 const Tags = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const { subscribe_list } = useSelector((state) => state);
+  const { sender_list } = useSelector((state) => state);
 
   const handleChange = (tag, checked) => {
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
     setSelectedTags(nextSelectedTags);
-    console.log(nextSelectedTags);
   };
 
   return (

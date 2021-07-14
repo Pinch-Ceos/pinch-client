@@ -77,6 +77,11 @@ const StyledButton = styled.button`
   width: 146px;
 `;
 
+const StyledImage = styled.div`
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+
 const ModalWindow = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -127,12 +132,13 @@ const ModalWindow = () => {
             <br />
             복잡한 뉴스레터에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <br />
-            <Image
-              src={'/design/modalStart.png'}
-              width="191px"
-              height="210px"
-              style={{ zIndex: 1, marginTop: '80px', marginBottom: '80px' }}
-            />
+            <StyledImage>
+              <Image
+                src={'/design/modalStart.png'}
+                width="191px"
+                height="210px"
+              />
+            </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
             좋아요!
