@@ -1,9 +1,12 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import produce from 'immer';
+import faker from 'faker';
+import shortId from 'shortid';
 
 const initalState = {
   email_address: null,
   name: null,
+  mails: [],
   subscribe_list: [],
   bookmark: [],
   auth_uri: null,
@@ -22,6 +25,20 @@ export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const GIVE_CODE_REQUEST = 'GIVE_CODE_REQUEST';
 export const GIVE_CODE_SUCCESS = 'GIVE_CODE_SUCCESS';
 export const GIVE_CODE_FAILURE = 'GIVE_CODE_FAILURE';
+
+export const generateDummyCard = (number) => {
+  Array(number)
+    .fill()
+    .map(() => {
+      name: faker.name.findName();
+      email_address: faker.internet.email();
+      datetime: faker.datatype.datetime();
+      subject: faker.name.title();
+      snippet: faker.lorem.paragraph();
+      image: faker.image.image();
+      html: '<div>asd</div>';
+    });
+};
 
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
