@@ -1,7 +1,8 @@
 import React from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
-import { FileOutlined, TeamOutlined } from '@ant-design/icons';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -29,6 +30,7 @@ const Global = createGlobalStyle`
 `;
 
 const AppLayout = ({ children }) => {
+  const { subscribe_list } = useSelector((state) => state);
   return (
     <>
       <Global />
@@ -58,7 +60,6 @@ const AppLayout = ({ children }) => {
               >
                 <div className="logo" />
                 <Menu
-                  // theme="dark"
                   defaultSelectedKeys={['1']}
                   mode="inline"
                   style={{
@@ -70,30 +71,43 @@ const AppLayout = ({ children }) => {
                   <Menu.Item
                     key="1"
                     icon="👀"
-                    // icon={<PieChartOutlined />}
                     style={{
                       color: 'black',
                       fontWeight: 'bold',
                       borderRadius: 10,
                     }}
                   >
-                    &nbsp;Inbox
+                    <Link href="/subscription/inbox">
+                      <a>&nbsp;Inbox</a>
+                    </Link>
                   </Menu.Item>
-                  <Menu.Item
+                  <SubMenu
                     key="2"
-                    // icon={<DesktopOutlined />}
                     icon="📚"
+                    title="구독 중인 뉴스레터"
                     style={{
                       color: 'black',
                       fontWeight: 'bold',
                       borderRadius: 10,
                     }}
                   >
-                    &nbsp;구독 중인 뉴스레터
-                  </Menu.Item>
+                    {subscribe_list.map((v) => (
+                      <Menu.Item
+                        key={v.name}
+                        style={{
+                          color: 'black',
+                          fontWeight: 'bold',
+                          borderRadius: 10,
+                        }}
+                      >
+                        <Link href={`/subscription/${v.email_address}`}>
+                          <a>{v.name}</a>
+                        </Link>
+                      </Menu.Item>
+                    ))}
+                  </SubMenu>
                   <Menu.Item
                     key="sub1"
-                    // icon={<UserOutlined />}
                     icon="📌"
                     style={{
                       color: 'black',
@@ -102,30 +116,6 @@ const AppLayout = ({ children }) => {
                     }}
                   >
                     &nbsp;저장한 뉴스레터
-                  </Menu.Item>
-                  <SubMenu
-                    key="sub2"
-                    icon={<TeamOutlined />}
-                    title="Team"
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      borderRadius: 10,
-                    }}
-                  >
-                    <Menu.Item key="6">Team 1</Menu.Item>
-                    <Menu.Item key="8">Team 2</Menu.Item>
-                  </SubMenu>
-                  <Menu.Item
-                    key="9"
-                    icon={<FileOutlined />}
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      borderRadius: 10,
-                    }}
-                  >
-                    Files
                   </Menu.Item>
                 </Menu>
               </Sider>

@@ -53,15 +53,16 @@ const Tags = () => {
   return (
     <Container universal={true}>
       <Global />
+      {console.log(sender_list)}
       {sender_list.map((tag) => (
         <CheckableTag
           key={tag}
           checked={selectedTags.indexOf(tag) > -1}
           onChange={(checked) => handleChange(tag, checked)}
         >
-          {JSON.stringify(tag.name, tag.email_address)}
+          {tag.name}
           <br />
-          {JSON.stringify(tag.email_address)}
+          {tag.email_address}
         </CheckableTag>
       ))}
     </Container>

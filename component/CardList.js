@@ -66,7 +66,7 @@ const CardList = ({ data, header }) => {
             cover={
               <img
                 alt="example"
-                src={item.src}
+                src={item.image}
                 style={{
                   height: 200,
                   objectFit: 'cover',
@@ -88,7 +88,7 @@ const CardList = ({ data, header }) => {
               />,
             ]}
           >
-            <StyledMeta title={item.title} description={item.description} />
+            <StyledMeta title={item.subject} description={item.snippet} />
           </Card>
         </List.Item>
       )}

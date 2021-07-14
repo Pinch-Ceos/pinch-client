@@ -1,15 +1,15 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import produce from 'immer';
 import faker from 'faker';
-import shortId from 'shortid';
 
 const initalState = {
   email_address: null,
   name: null,
   mails: [],
-  sender_list:[],
+  sender_list: [],
   subscribe_list: [],
   bookmark: [],
+  hasMoreMails: true,
   auth_uri: null,
   logInLoading: false,
   logInDone: false,
@@ -20,6 +20,9 @@ const initalState = {
   senderListLoading: false,
   senderListDone: false,
   senderListError: null,
+  loadMailLoading: false,
+  loadMailDone: false,
+  loadMailError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -34,73 +37,30 @@ export const SENDER_LIST_REQUEST = 'SENDER_LIST_REQUEST';
 export const SENDER_LIST_SUCCESS = 'SENDER_LIST_SUCCESS';
 export const SENDER_LIST_FAILURE = 'SENDER_LIST_FAILURE';
 
+export const LOAD_MAIL_REQUEST = 'LOAD_MAIL_REQUEST';
+export const LOAD_MAIL_SUCCESS = 'LOAD_MAIL_SUCCESS';
+export const LOAD_MAIL_FAILURE = 'LOAD_MAIL_FAILURE';
 
-
-export const generateDummyCard = (number) => {
+export const generateDummyMail = (number) =>
   Array(number)
     .fill()
-    .map(() => {
-      name: faker.name.findName();
-      email_address: faker.internet.email();
-      datetime: faker.datatype.datetime();
-      subject: faker.name.title();
-      snippet: faker.lorem.paragraph();
-      image: faker.image.image();
-      html: '<div>asd</div>';
-    });
-};
+    .map(() => ({
+      name: faker.name.findName(),
+      email_address: faker.internet.email(),
+      datetime: faker.datatype.datetime(),
+      subject: faker.name.title(),
+      snippet: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      html: '<div>asd</div>',
+    }));
 
-// export const generateDummySubList = (number) => {
-//   Array(number)
-//     .fill()
-//     .map(() => {
-//       name: faker.name.userName();
-//       email_address: faker.internet.email();
-//     });
-// };
-
-export const generateDummySendList = [
-  {
-    "name": "Google",
-    "email_address": "no-reply@accounts.google.com"
-  },
-  {
-    "name": "Apple Music",
-    "email_address": "new@applemusic.com"
-  },
-  {
-    "name": "Instagram",
-    "email_address": "no-reply@mail.instagram.com"
-  },
-  {
-    "name": "NEWNEEK",
-    "email_address": "whatsup@newneek.co"
-  },
-  {
-    "name": "임해진",
-    "email_address": "hj0816hj@naver.com"
-  },
-  {
-    "name": "YouTube",
-    "email_address": "noreply@youtube.com"
-  },
-  {
-    "name": "LinkedIn",
-    "email_address": "messages-noreply@linkedin.com"
-  },
-  {
-    "name": "GitGuardian",
-    "email_address": "security@mail.gitguardian.com"
-  },
-  {
-    "name": "GitHub",
-    "email_address": "noreply@github.com"
-  },
-  {
-    "name": "Apple",
-    "email_address": "no_reply@email.apple.com"
-  }
-];
+export const generateDummySendList = (number) =>
+  Array(number)
+    .fill()
+    .map(() => ({
+      name: faker.name.findName(),
+      email_address: faker.internet.email(),
+    }));
 
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
@@ -108,12 +68,28 @@ const rootReducer = (state = initalState, action) =>
       case HYDRATE:
         Object.assign(draft, action.payload);
         break;
+      case LOAD_MAIL_REQUEST:
+        draft.loadMailLoading = true;
+        draft.loadMailDone = false;
+        draft.loadMailError = null;
+        break;
+      case LOAD_MAIL_SUCCESS:
+        draft.loadMailLoading = false;
+        draft.loadMailDone = true;
+        draft.mails = draft.mails.concat(action.data);
+        draft.hasMoreMails = action.data.length === 12;
+        break;
+      case LOAD_MAIL_FAILURE:
+        draft.loadMailLoading = false;
+        draft.loadMailError = action.error;
+        break;
       case SENDER_LIST_REQUEST:
         draft.senderListLoading = true;
         draft.senderListDone = false;
         draft.senderListError = null;
         break;
       case SENDER_LIST_SUCCESS:
+        console.log(generateDummySendList(12));
         draft.senderListLoading = false;
         draft.senderListDone = true;
         draft.sender_list = action.data;
