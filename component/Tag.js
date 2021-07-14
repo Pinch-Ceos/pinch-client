@@ -1,8 +1,8 @@
 import { Tag } from 'antd';
 import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import 'aos/dist/aos.css';
 import { useSelector } from 'react-redux';
+import { select } from '@redux-saga/core/effects';
 
 const Global = createGlobalStyle`
     .ant-tag{
@@ -48,22 +48,21 @@ const Tags = () => {
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
     setSelectedTags(nextSelectedTags);
+    console.log(nextSelectedTags);
   };
 
   return (
     <Container universal={true}>
       <Global />
-      {subscribe_list.map((tag) => (
+      {sender_list.map((tag) => (
         <CheckableTag
           key={tag}
           checked={selectedTags.indexOf(tag) > -1}
           onChange={(checked) => handleChange(tag, checked)}
-          data-aos="fade-up"
-          data-aos-duration="3000"
-          data-aos-once="false"
-          data-aos-anchor-placement=".other-element"
         >
           {JSON.stringify(tag.name, tag.email_address)}
+          <br />
+          {JSON.stringify(tag.email_address)}
         </CheckableTag>
       ))}
     </Container>

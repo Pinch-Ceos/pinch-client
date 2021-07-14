@@ -4,7 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { SUBSCRIBTION_LIST_REQUEST } from '../reducers';
+import { SENDER_LIST_REQUEST } from '../reducers';
 // import startImage from 'D:/이화여대/ceos/pinch/pinch-client/public/design/modalStart.png';
 
 const Global = createGlobalStyle`
@@ -103,7 +103,7 @@ const ModalWindow = () => {
   const changeBody = () => {
     if (componum === 0) {
       dispatch({
-        type: SUBSCRIBTION_LIST_REQUEST,
+        type: SENDER_LIST_REQUEST,
       });
       setComponum(1);
     } else if (componum === 1) {
@@ -114,8 +114,9 @@ const ModalWindow = () => {
   const test = () => {
     setTimeout(() => {
       changeBody();
-    }, 3000);
+    }, 1000);
   };
+
   const modalBody = () => {
     if (componum === 0) {
       return (

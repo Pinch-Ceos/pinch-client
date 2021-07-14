@@ -7,10 +7,10 @@ import {
   GIVE_CODE_REQUEST,
   GIVE_CODE_SUCCESS,
   GIVE_CODE_FAILURE,
-  SUBSCRIBTION_LIST_REQUEST,
-  SUBSCRIBTION_LIST_SUCCESS,
-  SUBSCRIBTION_LIST_FAILURE,
-  generateDummySubList,
+  SENDER_LIST_REQUEST,
+  SENDER_LIST_SUCCESS,
+  SENDER_LIST_FAILURE,
+  generateDummySendList,
 } from '../reducers';
 
 function logInAPI() {
@@ -79,24 +79,25 @@ function* logOut() {
     });
   }
 }
-function subscribtionListAPI() {
-  return axios.get('api/subscribtionlist');
+function senderListAPI() {
+  return axios.get('api/user/email-sender-list');
 }
-function* subscribtionList() {
+function* senderList() {
   try {
     // const result = yield call(subscribtionListAPI);
     yield delay(1000);
     console.log('sub');
-    const result = generateDummySubList();
+    // const result = generateDummySubList(10);
+    const result = generateDummySendList;
     console.log(result);
     yield put({
-      type: SUBSCRIBTION_LIST_SUCCESS,
-      data: result.data,
+      type: SENDER_LIST_SUCCESS,
+      data: result,
     });
   } catch (err) {
     yield put({
-      type: SUBSCRIBTION_LIST_FAILURE,
-      error: err.response.data,
+      type: SENDER_LIST_FAILURE,
+      error: err.response,
     });
   }
 }
@@ -109,14 +110,14 @@ function* watchLogOut() {
 function* watchGiveCode() {
   yield takeLatest(GIVE_CODE_REQUEST, giveCode);
 }
-function* watchSubscribtionList() {
-  yield takeLatest(SUBSCRIBTION_LIST_REQUEST, subscribtionList);
+function* watchSenderList() {
+  yield takeLatest(SENDER_LIST_REQUEST, SenderList);
 }
 export default function* rootSaga() {
   yield all([
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchGiveCode),
-    fork(watchSubscribtionList),
+    fork(watchSenderList),
   ]);
 }
