@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { SUBSCRIBTION_LIST_REQUEST } from '../reducers';
 // import startImage from 'D:/이화여대/ceos/pinch/pinch-client/public/design/modalStart.png';
 
 const Global = createGlobalStyle`
@@ -79,6 +81,7 @@ const ModalWindow = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
+  const dispatch = useDispatch();
 
   const showModal = () => {
     setComponum(0);
@@ -99,6 +102,9 @@ const ModalWindow = () => {
 
   const changeBody = () => {
     if (componum === 0) {
+      dispatch({
+        type: SUBSCRIBTION_LIST_REQUEST,
+      });
       setComponum(1);
     } else if (componum === 1) {
       setComponum(2);

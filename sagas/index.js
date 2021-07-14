@@ -7,6 +7,10 @@ import {
   GIVE_CODE_REQUEST,
   GIVE_CODE_SUCCESS,
   GIVE_CODE_FAILURE,
+  SUBSCRIBTION_LIST_REQUEST,
+  SUBSCRIBTION_LIST_SUCCESS,
+  SUBSCRIBTION_LIST_FAILURE,
+  generateDummySubList,
 } from '../reducers';
 
 function logInAPI() {
@@ -75,6 +79,27 @@ function* logOut() {
     });
   }
 }
+function subscribtionListAPI() {
+  return axios.get('api/subscribtionlist');
+}
+function* subscribtionList() {
+  try {
+    // const result = yield call(subscribtionListAPI);
+    yield delay(1000);
+    console.log('sub');
+    const result = generateDummySubList();
+    console.log(result);
+    yield put({
+      type: SUBSCRIBTION_LIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: SUBSCRIBTION_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -84,6 +109,14 @@ function* watchLogOut() {
 function* watchGiveCode() {
   yield takeLatest(GIVE_CODE_REQUEST, giveCode);
 }
+function* watchSubscribtionList() {
+  yield takeLatest(SUBSCRIBTION_LIST_REQUEST, subscribtionList);
+}
 export default function* rootSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchGiveCode)]);
+  yield all([
+    fork(watchLogIn),
+    fork(watchLogOut),
+    fork(watchGiveCode),
+    fork(watchSubscribtionList),
+  ]);
 }
