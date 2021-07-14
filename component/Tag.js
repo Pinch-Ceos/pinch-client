@@ -1,15 +1,14 @@
 import { Tag } from 'antd';
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import 'aos/dist/aos.css';
 
 const Global = createGlobalStyle`
     .ant-tag{
-        /* display: flex;
-        justify-content: center; */
-        margin: 5px;
+        margin: 10px;
     }
     .ant-tag-checkable{
-        width: 300px;
+        width: 302px;
         height: 87px;
         text-align: center;
         color: #E5E6EB;
@@ -17,18 +16,17 @@ const Global = createGlobalStyle`
         background: #393A3F;
 
     }
-
     .ant-tag-checkable-checked{
         background: #3562FF;
     }
     :-webkit-scrollbar {
-        width: 7px;
+        width: 7px !important;
     }
     :-webkit-scrollbar-thumb {
-        background-color: #404247;
+        background-color: #404247 !important;
     }
     :-webkit-scrollbar-track {
-        background-color: none;
+        background-color: none !important;
     }
 `;
 
@@ -38,17 +36,15 @@ const Container = styled.div`
   overflow: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  :-webkit-scrollbar {
-    /* width: 7px; */
-    width: 0;
-    display: none;
+  /* .workarea-view-scroll-wrapper::-webkit-scrollbar {
+    width: 7px !important;
   }
-  :-webkit-scrollbar-thumb {
-    background-color: #404247;
+  .workarea-view-scroll-wrapper::-webkit-scrollbar-track {
+    background: transparent !important;
   }
-  :-webkit-scrollbar-track {
-    background-color: none;
-  }
+  .workarea-view-scroll-wrapper::-webkit-scrollbar-thumb {
+    background-color: #404247 !important;
+  } */
 `;
 
 const tagsData = [
@@ -56,6 +52,10 @@ const tagsData = [
   { 뉴닉: '1234@123.com' },
   { 집가고싶당: '123@123.com' },
   { '어쩌구~': '1234@123.com' },
+  { 'css왜 적용안댐': '123@123.com' },
+  { '다섯개째~': '1234@123.com' },
+  { 스페이스오디티: '123@123.com' },
+  { 뉴닉: '1234@123.com' },
   { 'css왜 적용안댐': '123@123.com' },
   { '다섯개째~': '1234@123.com' },
   { 스페이스오디티: '123@123.com' },
@@ -72,20 +72,24 @@ class Tags extends React.Component {
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
-    // console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
   }
 
   render() {
     const { selectedTags } = this.state;
     return (
-      <Container>
+      <Container universal={true}>
         <Global />
+
         {tagsData.map((tag) => (
           <CheckableTag
             key={tag}
             checked={selectedTags.indexOf(tag) > -1}
             onChange={(checked) => this.handleChange(tag, checked)}
+            data-aos="fade-up"
+            data-aos-duration="3000"
+            data-aos-once="false"
+            data-aos-anchor-placement=".other-element"
           >
             {JSON.stringify(tag)}
           </CheckableTag>
