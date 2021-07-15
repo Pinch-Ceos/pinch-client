@@ -5,6 +5,7 @@ import faker from 'faker';
 const initalState = {
   email_address: null,
   name: null,
+  token: null,
   mails: [],
   sender_list: [],
   subscribe_list: [],
@@ -131,7 +132,7 @@ const rootReducer = (state = initalState, action) =>
         draft.email_address = action.data.user_email_address;
         draft.name = action.data.user_name;
         draft.subscribe_list = action.data.subscribe_list;
-        //토큰 처리
+        draft.token = action.data.token;
         break;
       case GIVE_CODE_FAILURE:
         draft.giveCodeLoading = false;

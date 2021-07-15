@@ -4,7 +4,7 @@ import AppLayout from '../component/AppLayout';
 const test = () => {
   return (
     <>
-      <AppLayout style={{ width: '100%', height: '100%' }}>
+      <AppLayout>
         <iframe
           style={{
             width: '75vw',

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { SENDER_LIST_REQUEST } from '../reducers';
 import { SUBSCRIBTION_LIST_REQUEST } from '../reducers';
+import { useCookies } from 'react-cookie';
 
 const Global = createGlobalStyle`
  .ant-modal-header{
@@ -92,6 +93,7 @@ const ModalWindow = () => {
   const [componum, setComponum] = useState(0);
   const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   const showModal = () => {
     setComponum(0);
@@ -114,6 +116,7 @@ const ModalWindow = () => {
     if (componum === 0) {
       dispatch({
         type: SENDER_LIST_REQUEST,
+        token: cookie.Token,
       });
       setComponum(1);
     } else if (componum === 1) {
@@ -122,6 +125,7 @@ const ModalWindow = () => {
       dispatch({
         type: SUBSCRIBTION_LIST_REQUEST,
         data: selectedTags,
+        token: cookie.Token,
       });
     }
   };

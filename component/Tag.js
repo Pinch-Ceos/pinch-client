@@ -20,13 +20,13 @@ const Global = createGlobalStyle`
     .ant-tag-checkable-checked{
         background: #3562FF;
     }
-    :-webkit-scrollbar {
+    .Container :-webkit-scrollbar {
         width: 7px !important;
     }
-    :-webkit-scrollbar-thumb {
+    .Container :-webkit-scrollbar-thumb {
         background-color: #404247 !important;
     }
-    :-webkit-scrollbar-track {
+    .Container :-webkit-scrollbar-track {
         background-color: none !important;
     }
 `;
@@ -47,8 +47,6 @@ const Tags = ({ selectedTags, setSelectedTags }) => {
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
     setSelectedTags(nextSelectedTags);
-    console.log(selectedTags);
-    console.log(nextSelectedTags);
   };
 
   return (

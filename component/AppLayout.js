@@ -133,9 +133,19 @@ const AppLayout = ({ children }) => {
                 </Menu>
               </Sider>
             </Col>
-            <Col xs={24} md={18}>
+            <Col
+              xs={24}
+              md={18}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
               <Content
-                style={{ margin: '0 16px', width: '100%', height: '100%' }}
+                style={{
+                  display: 'flex',
+                  margin: '0 16px',
+                  width: '95%',
+                  height: '100%',
+                  justifyContent: 'center',
+                }}
               >
                 {children}
               </Content>

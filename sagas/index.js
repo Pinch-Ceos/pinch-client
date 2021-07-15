@@ -51,6 +51,8 @@ function* giveCode(action) {
     yield delay(1000);
     const result = {
       data: {
+        token:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTB9.x6yM3zZn0dtSLhKjP_pYBzLy9aOJkWru0dotJjZG1PE',
         user_email_address: 'asd@asd',
         user_name: 'asd',
         subscribe_list: [
@@ -99,12 +101,14 @@ function* logOut() {
     });
   }
 }
-function senderListAPI() {
-  return axios.get('api/user/email-sender-list');
+function senderListAPI(token) {
+  return axios.get('api/user/email-sender-list', {
+    headers: { Authorization: token },
+  });
 }
-function* senderList() {
+function* senderList(action) {
   try {
-    // const result = yield call(senderListAPI);
+    // const result = yield call(senderListAPI,action.token);
     yield delay(1000);
     yield put({
       type: SENDER_LIST_SUCCESS,
@@ -119,12 +123,18 @@ function* senderList() {
   }
 }
 
-function subscribtionListAPI(data) {
-  return axios.post('api/user/subscribtions',data); //이거 api 어떻게 넘기는지
+function subscribtionListAPI(data, token) {
+  return axios.post(
+    'api/user/subscribtions',
+    {
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+    },
+    data
+  ); //이거 api 어떻게 넘기는지
 }
-function* subscribtionList() {
+function* subscribtionList(action) {
   try {
-    // const result = yield call(subscribtiListAPI);
+    // const result = yield call(subscribtiListAPI, action.data, action.token);
     yield delay(1000);
     yield put({
       type: SUBSCRIBTION_LIST_SUCCESS,
@@ -156,12 +166,14 @@ function* subscribtionList() {
   }
 }
 
-function loadMailAPI(data) {
-  return axios.get(`api/email?subscription=${data}`);
+function loadMailAPI(data, token) {
+  return axios.get(`api/email?subscription=${data}`, {
+    headers: { Authorization: token },
+  });
 }
 function* loadMail(action) {
   try {
-    // const result = yield call(loadMailAPI, action.data);
+    // const result = yield call(loadMailAPI, action.data, action.token);
     yield delay(1000);
     yield put({
       type: LOAD_MAIL_SUCCESS,

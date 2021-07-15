@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
@@ -13,18 +14,21 @@ const Mail = () => {
     (state) => state
   );
   const [header, setHeader] = useState('');
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   useEffect(() => {
     if (newsletter === 'inbox') {
       dispatch({
         type: LOAD_MAIL_REQUEST,
         data: '',
+        token: cookie.Token,
       });
       setHeader('전체 뉴스레터');
     } else {
       dispatch({
         type: LOAD_MAIL_REQUEST,
         data: newsletter,
+        token: cookie.Token,
       });
       setHeader(
         subscribe_list.find((v) => v.email_address === newsletter).name
@@ -43,11 +47,13 @@ const Mail = () => {
             dispatch({
               type: LOAD_MAIL_REQUEST,
               data: '',
+              token: cookie.Token,
             });
           } else {
             dispatch({
               type: LOAD_MAIL_REQUEST,
               data: newsletter,
+              token: cookie.Token,
             });
           }
         }

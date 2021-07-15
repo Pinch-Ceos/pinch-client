@@ -1,5 +1,6 @@
 import { List, Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
+import Router from 'next/router';
 import React from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import styled from 'styled-components';
@@ -35,6 +36,9 @@ const StyledMeta = styled(Meta)`
 `;
 
 const CardList = ({ data, header }) => {
+  const onCardClick = () => {
+    Router.push('/newsletterview');
+  };
   return (
     <List
       grid={{
@@ -62,6 +66,7 @@ const CardList = ({ data, header }) => {
           style={{ marginTop: '20px', marginLeft: 10, marginRight: 10 }}
         >
           <Card
+            onClick={onCardClick}
             style={{ hight: 200, border: 'none' }}
             cover={
               <img
