@@ -42,6 +42,10 @@ const Global = createGlobalStyle`
   }
 `;
 
+const StartImage = styled(Image)`
+  margin-top: 80px;
+  margin-bottom: 80px;
+`;
 const StyledCompo = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,12 +131,7 @@ const ModalWindow = () => {
             <br />
             복잡한 뉴스레터에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <br />
-            <Image
-              src={'/design/modalStart.png'}
-              width="191px"
-              height="210px"
-              style={{ zIndex: 1, marginTop: '80px', marginBottom: '80px' }}
-            />
+            <StartImage src={'/design/modalStart.png'} width="" height="" />
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
             좋아요!
