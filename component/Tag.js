@@ -39,8 +39,7 @@ const Container = styled.div`
   -ms-overflow-style: none;
 `;
 
-const Tags = () => {
-  const [selectedTags, setSelectedTags] = useState([]);
+const Tags = ({ selectedTags, setSelectedTags }) => {
   const { sender_list } = useSelector((state) => state);
 
   const handleChange = (tag, checked) => {
@@ -48,6 +47,7 @@ const Tags = () => {
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
     setSelectedTags(nextSelectedTags);
+    console.log(selectedTags);
     console.log(nextSelectedTags);
   };
 
@@ -56,13 +56,13 @@ const Tags = () => {
       <Global />
       {sender_list.map((tag) => (
         <CheckableTag
-          key={tag}
+          key={tag.name}
           checked={selectedTags.indexOf(tag) > -1}
           onChange={(checked) => handleChange(tag, checked)}
         >
-          {JSON.stringify(tag.name, tag.email_address)}
+          {tag.name}
           <br />
-          {JSON.stringify(tag.email_address)}
+          {tag.email_address}
         </CheckableTag>
       ))}
     </Container>

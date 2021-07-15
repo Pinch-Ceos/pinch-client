@@ -5,7 +5,7 @@ import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { SENDER_LIST_REQUEST } from '../reducers';
-// import startImage from 'D:/이화여대/ceos/pinch/pinch-client/public/design/modalStart.png';
+import { SUBSCRIBTION_LIST_REQUEST } from '../reducers';
 
 const Global = createGlobalStyle`
  .ant-modal-header{
@@ -81,10 +81,16 @@ const StyledButton = styled.button`
   width: 146px;
 `;
 
+const StyledImage = styled.div`
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+
 const ModalWindow = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
+  const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
 
   const showModal = () => {
@@ -112,6 +118,11 @@ const ModalWindow = () => {
       setComponum(1);
     } else if (componum === 1) {
       setComponum(2);
+    } else if (componum === 2) {
+      dispatch({
+        type: SUBSCRIBTION_LIST_REQUEST,
+        data: selectedTags,
+      });
     }
   };
 
@@ -131,7 +142,13 @@ const ModalWindow = () => {
             <br />
             복잡한 뉴스레터에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <br />
-            <StartImage src={'/design/modalStart.png'} width="" height="" />
+            <StyledImage>
+              <Image
+                src={'/design/modalStart.png'}
+                width="191px"
+                height="210px"
+              />
+            </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
             좋아요!
@@ -153,7 +170,10 @@ const ModalWindow = () => {
         <StyledCompo>
           <StyledTitle>뉴스레터를 선택해주세요. </StyledTitle>
           <StyledBody>
-            <Tag />
+            <Tag
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
+            />
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
             {' '}

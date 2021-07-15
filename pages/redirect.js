@@ -17,7 +17,7 @@ const redirect = () => {
   }, []);
   useEffect(() => {
     if (giveCodeDone) {
-      router.push('http://localhost:3000/main');
+      router.push(`http://localhost:3000/subscription/inbox`);
     }
   }, [giveCodeDone]);
   return <div>Loading...</div>;
