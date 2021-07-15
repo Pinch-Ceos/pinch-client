@@ -27,6 +27,14 @@ const Global = createGlobalStyle`
   .ant-card-actions {
     border: none;
   }
+  .ant-menu-title-content {
+    margin-left: 10px;
+  }
+  .body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const AppLayout = ({ children }) => {
@@ -37,7 +45,12 @@ const AppLayout = ({ children }) => {
       <Layout>
         <Header
           className="site-layout-background"
-          style={{ padding: 0, height: 200, backgroundColor: 'lightgrey' }}
+          style={{
+            padding: 0,
+            width: '100%',
+            height: 200,
+            backgroundColor: 'lightgrey',
+          }}
         />
         <Layout
           className="site-layout"
@@ -78,13 +91,13 @@ const AppLayout = ({ children }) => {
                     }}
                   >
                     <Link href="/subscription/inbox">
-                      <a>&nbsp;Inbox</a>
+                      <a>Inbox</a>
                     </Link>
                   </Menu.Item>
                   <SubMenu
                     key="2"
-                    icon="📚"
-                    title="구독 중인 뉴스레터"
+                    icon="📚 "
+                    title=" 구독 중인 뉴스레터"
                     style={{
                       color: 'black',
                       fontWeight: 'bold',
@@ -115,13 +128,17 @@ const AppLayout = ({ children }) => {
                       borderRadius: 10,
                     }}
                   >
-                    &nbsp;저장한 뉴스레터
+                    저장한 뉴스레터
                   </Menu.Item>
                 </Menu>
               </Sider>
             </Col>
             <Col xs={24} md={18}>
-              <Content style={{ margin: '0 16px' }}>{children}</Content>
+              <Content
+                style={{ margin: '0 16px', width: '100%', height: '100%' }}
+              >
+                {children}
+              </Content>
             </Col>
             <Col md={1}></Col>
           </Row>
