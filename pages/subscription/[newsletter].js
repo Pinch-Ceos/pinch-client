@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
-import { LOAD_MAIL_REQUEST } from '../../reducers';
+import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
 
 const Mail = () => {
   const router = useRouter();
@@ -16,9 +16,12 @@ const Mail = () => {
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
-  // useEffect(() => {
-  //   dispatch({});
-  // });
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+      token: cookie.Token,
+    });
+  });
 
   useEffect(() => {
     if (newsletter === 'inbox') {

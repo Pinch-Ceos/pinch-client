@@ -3,6 +3,7 @@ import produce from 'immer';
 import faker from 'faker';
 
 const initalState = {
+  user_id: null,
   email_address: null,
   name: null,
   token: null,
@@ -151,6 +152,7 @@ const rootReducer = (state = initalState, action) =>
       case GIVE_CODE_SUCCESS:
         draft.giveCodeLoading = false;
         draft.giveCodeDone = true;
+        draft.user_id = action.data.id;
         draft.email_address = action.data.user_email_address;
         draft.name = action.data.user_name;
         draft.subscribe_list = action.data.subscriptions;

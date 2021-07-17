@@ -140,7 +140,7 @@ function subscribtionListAPI(data, token) {
 }
 function* subscribtionList(action) {
   try {
-    const result = yield call(subscribtiListAPI, action.data, action.token);
+    const result = yield call(subscribtionListAPI, action.data, action.token);
     // yield delay(1000);
     // const result = {
     //   data: [
