@@ -22,9 +22,9 @@ const initalState = {
   senderListLoading: false,
   senderListDone: false,
   senderListError: null,
-  subscribtionListLoading: false,
-  subscribtionListDone: false,
-  subscribtionListError: null,
+  subscriptionListLoading: false,
+  subscriptionListDone: false,
+  subscriptionListError: null,
   loadMailLoading: false,
   loadMailDone: false,
   loadMailError: null,
@@ -45,9 +45,9 @@ export const SENDER_LIST_REQUEST = 'SENDER_LIST_REQUEST';
 export const SENDER_LIST_SUCCESS = 'SENDER_LIST_SUCCESS';
 export const SENDER_LIST_FAILURE = 'SENDER_LIST_FAILURE';
 
-export const SUBSCRIBTION_LIST_REQUEST = 'SUBSCRIBTION_LIST_REQUEST';
-export const SUBSCRIBTION_LIST_SUCCESS = 'SUBSCRIBTION_LIST_SUCCESS';
-export const SUBSCRIBTION_LIST_FAILURE = 'SUBSCRIBTION_LIST_FAILURE';
+export const SUBSCRIPTION_LIST_REQUEST = 'SUBSCRIPTION_LIST_REQUEST';
+export const SUBSCRIPTION_LIST_SUCCESS = 'SUBSCRIPTION_LIST_SUCCESS';
+export const SUBSCRIPTION_LIST_FAILURE = 'SUBSCRIPTION_LIST_FAILURE';
 
 export const LOAD_MAIL_REQUEST = 'LOAD_MAIL_REQUEST';
 export const LOAD_MAIL_SUCCESS = 'LOAD_MAIL_SUCCESS';
@@ -90,6 +90,7 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMyInfoError = null;
         break;
       case LOAD_MY_INFO_SUCCESS:
+        console.log(action);
         draft.loadMyInfoLoading = false;
         draft.loadMyInfoDone = true;
         draft.name = action.data.user_name;
@@ -115,19 +116,19 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMailLoading = false;
         draft.loadMailError = action.error;
         break;
-      case SUBSCRIBTION_LIST_REQUEST:
-        draft.subscribtionListLoading = true;
-        draft.subscribtionListDone = false;
-        draft.subscribtionListError = null;
+      case SUBSCRIPTION_LIST_REQUEST:
+        draft.subscriptionListLoading = true;
+        draft.subscriptionListDone = false;
+        draft.subscriptionListError = null;
         break;
-      case SUBSCRIBTION_LIST_SUCCESS:
-        draft.subscribtionListLoading = false;
-        draft.subscribtionListDone = true;
+      case SUBSCRIPTION_LIST_SUCCESS:
+        draft.subscriptionListLoading = false;
+        draft.subscriptionListDone = true;
         draft.subscribe_list = action.data;
         break;
-      case SUBSCRIBTION_LIST_FAILURE:
-        draft.subscribtionListLoading = false;
-        draft.subscribtionListError = action.error;
+      case SUBSCRIPTION_LIST_FAILURE:
+        draft.subscriptionListLoading = false;
+        draft.subscriptionListError = action.error;
         break;
       case SENDER_LIST_REQUEST:
         draft.senderListLoading = true;

@@ -11,9 +11,9 @@ import {
   SENDER_LIST_REQUEST,
   SENDER_LIST_SUCCESS,
   SENDER_LIST_FAILURE,
-  SUBSCRIBTION_LIST_REQUEST,
-  SUBSCRIBTION_LIST_SUCCESS,
-  SUBSCRIBTION_LIST_FAILURE,
+  SUBSCRIPTION_LIST_REQUEST,
+  SUBSCRIPTION_LIST_SUCCESS,
+  SUBSCRIPTION_LIST_FAILURE,
   LOAD_MAIL_REQUEST,
   LOAD_MAIL_SUCCESS,
   LOAD_MAIL_FAILURE,
@@ -30,9 +30,9 @@ function logInAPI() {
 
 function* logIn(action) {
   try {
-    const result = yield call(logInAPI, action.data);
-    // yield delay(1000);
-    // const result = { data: 'http://localhost:3000/redirect' };
+    // const result = yield call(logInAPI, action.data);
+    yield delay(1000);
+    const result = { data: 'http://localhost:3000/redirect' };
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
@@ -51,30 +51,28 @@ function giveCodeAPI(data) {
 }
 function* giveCode(action) {
   try {
-    const result = yield call(giveCodeAPI, action.data);
-    // yield delay(1000);
-    // const result = {
-    //   data: {
-    //     token:
-    //       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTB9.x6yM3zZn0dtSLhKjP_pYBzLy9aOJkWru0dotJjZG1PE',
-    //     user_email_address: 'asd@asd',
-    //     user_name: 'asd',
-    //     subscribe_list: [
-    //       {
-    //         name: 'NEWNEEK',
-    //         email_address: 'whatsup@newneek.co',
-    //       },
-    //       {
-    //         name: 'UPPITY',
-    //         email_address: 'moneyletter@uppity.co.kr',
-    //       },
-    //       {
-    //         name: '디독',
-    //         email_address: 'd.dok.newsletter@gmail.com',
-    //       },
-    //     ],
-    //   },
-    // };
+    // const result = yield call(giveCodeAPI, action.data);
+    yield delay(1000);
+    const result = {
+      data: {
+        user_name: '임해진',
+        user_email_address: 'hj0816hj@gmail.com',
+        subscriptions: [
+          {
+            id: 1,
+            name: 'NEWNEEK',
+            email_address: 'whatsup@newneek.co',
+          },
+          {
+            id: 3,
+            name: '뉴스레터 이름',
+            email_address: '뉴스레터 이메일 주소',
+          },
+        ],
+        subscription_num: 2,
+        bookmark_num: 1,
+      },
+    };
     console.log(result);
     yield put({
       type: GIVE_CODE_SUCCESS,
@@ -113,12 +111,12 @@ function senderListAPI(token) {
 }
 function* senderList(action) {
   try {
-    const result = yield call(senderListAPI, action.token);
-    // yield delay(1000);
+    // const result = yield call(senderListAPI, action.token);
+    yield delay(1000);
     yield put({
       type: SENDER_LIST_SUCCESS,
-      // data: generateDummySendList(12),
-      data: result.data,
+      data: generateDummySendList(12),
+      // data: result.data,
     });
   } catch (err) {
     console.log(err);
@@ -129,47 +127,47 @@ function* senderList(action) {
   }
 }
 
-function subscribtionListAPI(data, token) {
-  return axios.post(
-    'http://127.0.0.1:8000/subscribtions',
-    {
-      headers: { 'Content-Type': 'application/json', Authorization: token },
-    },
-    data
-  ); //이거 api 어떻게 넘기는지
+function subscriptionListAPI(data, token) {
+  return axios.post('http://127.0.0.1:8000/subscriptions', data, {
+    headers: { 'Content-Type': 'application/json', Authorization: token },
+  }); //이거 api 어떻게 넘기는지
 }
-function* subscribtionList(action) {
+function* subscriptionList(action) {
   try {
-    const result = yield call(subscribtionListAPI, action.data, action.token);
-    // yield delay(1000);
-    // const result = {
-    //   data: [
-    //     {
-    //       name: 'NEWNEEK',
-    //       email_address: 'whatsup@newneek.co',
-    //     },
-    //     {
-    //       name: 'UPPITY',
-    //       email_address: 'moneyletter@uppity.co.kr',
-    //     },
-    //     {
-    //       name: '디독',
-    //       email_address: 'd.dok.newsletter@gmail.com',
-    //     },
-    //     {
-    //       name: 'ddddd',
-    //       email_address: 'letter@gmail.com',
-    //     },
-    //   ],
-    // };
+    // const result = yield call(
+    //   subscriptionListAPI,
+    //   action.data,
+    //   action.token
+    // );
+    yield delay(1000);
+    const result = {
+      data: [
+        {
+          name: 'NEWNEEK',
+          email_address: 'whatsup@newneek.co',
+        },
+        {
+          name: 'UPPITY',
+          email_address: 'moneyletter@uppity.co.kr',
+        },
+        {
+          name: '디독',
+          email_address: 'd.dok.newsletter@gmail.com',
+        },
+        {
+          name: 'ddddd',
+          email_address: 'letter@gmail.com',
+        },
+      ],
+    };
     yield put({
-      type: SUBSCRIBTION_LIST_SUCCESS,
+      type: SUBSCRIPTION_LIST_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.log(err);
     yield put({
-      type: SUBSCRIBTION_LIST_FAILURE,
+      type: SUBSCRIPTION_LIST_FAILURE,
       error: err.response,
     });
   }
@@ -182,15 +180,12 @@ function loadMailAPI(data, token) {
 }
 function* loadMail(action) {
   try {
-    const result = yield call(loadMailAPI, action.data, action.token);
-    // yield delay(1000);
+    // const result = yield call(loadMailAPI, action.data, action.token);
+    yield delay(1000);
     yield put({
       type: LOAD_MAIL_SUCCESS,
-      // data: generateDummyMail(12),
-      data: {
-        ...result.data,
-        image: faker.image.image(),
-      },
+      data: generateDummyMail(12),
+      // data: result.data,
     });
   } catch (err) {
     yield put({
@@ -207,8 +202,28 @@ function loadMyInfoAPI(token) {
 }
 function* loadMyInfo(action) {
   try {
-    const result = yield call(loadMyInfoAPI, action.data, action.token);
-    // yield delay(1000);
+    // const result = yield call(loadMyInfoAPI, action.data, action.token);
+    yield delay(1000);
+    const result = {
+      data: {
+        user_name: '임해진',
+        user_email_address: 'hj0816hj@gmail.com',
+        subscriptions: [
+          {
+            id: 1,
+            name: 'NEWNEEK',
+            email_address: 'whatsup@newneek.co',
+          },
+          {
+            id: 3,
+            name: '뉴스레터 이름',
+            email_address: '뉴스레터 이메일 주소',
+          },
+        ],
+        subscription_num: 2,
+        bookmark_num: 1,
+      },
+    };
     yield put({
       type: LOAD_MY_INFO_SUCCESS,
       data: result.data,
@@ -232,8 +247,8 @@ function* watchGiveCode() {
 function* watchSenderList() {
   yield takeLatest(SENDER_LIST_REQUEST, senderList);
 }
-function* watchSubscribtionList() {
-  yield takeLatest(SUBSCRIBTION_LIST_REQUEST, subscribtionList);
+function* watchSubscriptionList() {
+  yield takeLatest(SUBSCRIPTION_LIST_REQUEST, subscriptionList);
 }
 function* watchLoadMail() {
   yield takeLatest(LOAD_MAIL_REQUEST, loadMail);
@@ -248,7 +263,7 @@ export default function* rootSaga() {
     fork(watchLogOut),
     fork(watchGiveCode),
     fork(watchSenderList),
-    fork(watchSubscribtionList),
+    fork(watchSubscriptionList),
     fork(watchLoadMyInfo),
   ]);
 }

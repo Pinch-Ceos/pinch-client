@@ -21,7 +21,7 @@ const Mail = () => {
       type: LOAD_MY_INFO_REQUEST,
       token: cookie.Token,
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (newsletter === 'inbox') {

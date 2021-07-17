@@ -5,7 +5,7 @@ import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { SENDER_LIST_REQUEST } from '../reducers';
-import { SUBSCRIBTION_LIST_REQUEST } from '../reducers';
+import { SUBSCRIPTION_LIST_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
 const Global = createGlobalStyle`
@@ -115,7 +115,7 @@ const ModalWindow = () => {
       setComponum(2);
     } else if (componum === 2) {
       dispatch({
-        type: SUBSCRIBTION_LIST_REQUEST,
+        type: SUBSCRIPTION_LIST_REQUEST,
         data: selectedTags,
         token: cookie.Token,
       });
