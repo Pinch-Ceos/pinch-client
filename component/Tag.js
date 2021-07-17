@@ -27,7 +27,7 @@ const OverflowGradient = styled.div`
   position: relative;
   :before {
     content: '';
-    overflow: none;
+    overflow: hidden;
     position: absolute;
     left: 0;
     top: 0;
@@ -37,7 +37,7 @@ const OverflowGradient = styled.div`
   }
   :after {
     content: '';
-    overflow: none;
+    overflow: hidden;
     position: absolute;
     left: 0;
     bottom: 0;
