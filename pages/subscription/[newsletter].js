@@ -16,6 +16,10 @@ const Mail = () => {
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
+  // useEffect(() => {
+  //   dispatch({});
+  // });
+
   useEffect(() => {
     if (newsletter === 'inbox') {
       dispatch({

@@ -100,14 +100,6 @@ const ModalWindow = () => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(false);
-    }, 3000);
-  };
-
   const handleCancel = () => {
     setVisible(false);
   };
@@ -207,7 +199,6 @@ const ModalWindow = () => {
       </Button>
       <Modal
         visible={visible}
-        onOk={handleOk}
         onCancel={handleCancel}
         width={800}
         height={659}

@@ -27,6 +27,9 @@ const initalState = {
   loadMailLoading: false,
   loadMailDone: false,
   loadMailError: null,
+  loadMyInfoLoading: false,
+  loadMyInfoDone: false,
+  loadMyInfoError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -48,6 +51,10 @@ export const SUBSCRIBTION_LIST_FAILURE = 'SUBSCRIBTION_LIST_FAILURE';
 export const LOAD_MAIL_REQUEST = 'LOAD_MAIL_REQUEST';
 export const LOAD_MAIL_SUCCESS = 'LOAD_MAIL_SUCCESS';
 export const LOAD_MAIL_FAILURE = 'LOAD_MAIL_FAILURE';
+
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 
 export const generateDummyMail = (number) =>
   Array(number)
@@ -76,6 +83,22 @@ const rootReducer = (state = initalState, action) =>
       case HYDRATE:
         Object.assign(draft, action.payload);
         break;
+      case LOAD_MY_INFO_REQUEST:
+        draft.loadMyInfoLoading = true;
+        draft.loadMyInfoDone = false;
+        draft.loadMyInfoError = null;
+        break;
+      case LOAD_MY_INFO_SUCCESS:
+        draft.loadMyInfoLoading = false;
+        draft.loadMyInfoDone = true;
+        draft.name = action.data.user_name;
+        draft.email_address = action.data.user_email_address;
+        draft.subscribe_list = action.data.subscriptions;
+        break;
+      case LOAD_MY_INFO_FAILURE:
+        draft.loadMyInfoLoading = false;
+        draft.loadMyInfoError = action.error;
+        break;
       case LOAD_MAIL_REQUEST:
         draft.loadMailLoading = true;
         draft.loadMailDone = false;
@@ -97,7 +120,6 @@ const rootReducer = (state = initalState, action) =>
         draft.subscribtionListError = null;
         break;
       case SUBSCRIBTION_LIST_SUCCESS:
-        console.log(action.data);
         draft.subscribtionListLoading = false;
         draft.subscribtionListDone = true;
         draft.subscribe_list = action.data;
@@ -131,7 +153,7 @@ const rootReducer = (state = initalState, action) =>
         draft.giveCodeDone = true;
         draft.email_address = action.data.user_email_address;
         draft.name = action.data.user_name;
-        draft.subscribe_list = action.data.subscribe_list;
+        draft.subscribe_list = action.data.subscriptions;
         draft.token = action.data.token;
         break;
       case GIVE_CODE_FAILURE:
