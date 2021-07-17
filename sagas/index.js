@@ -17,11 +17,11 @@ import {
   LOAD_MAIL_REQUEST,
   LOAD_MAIL_SUCCESS,
   LOAD_MAIL_FAILURE,
-  generateDummySendList,
-  generateDummyMail,
   LOAD_MY_INFO_REQUEST,
   LOAD_MY_INFO_SUCCESS,
   LOAD_MY_INFO_FAILURE,
+  generateDummySendList,
+  generateDummyMail,
 } from '../reducers';
 
 function logInAPI() {
@@ -47,7 +47,7 @@ function* logIn(action) {
 
 function giveCodeAPI(data) {
   console.log(data);
-  return axios.get(`http://127.0.0.1:8000/callback?code=${data}`);
+  return axios.get(`http://127.0.0.1:8000/auth/callback?code=${data}`);
 }
 function* giveCode(action) {
   try {
@@ -75,6 +75,7 @@ function* giveCode(action) {
     //     ],
     //   },
     // };
+    console.log(result);
     yield put({
       type: GIVE_CODE_SUCCESS,
       data: result.data,
@@ -116,7 +117,8 @@ function* senderList(action) {
     // yield delay(1000);
     yield put({
       type: SENDER_LIST_SUCCESS,
-      data: generateDummySendList(12),
+      // data: generateDummySendList(12),
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
