@@ -1,4 +1,5 @@
 import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import faker from 'faker';
 import axios from 'axios';
 import {
   LOG_IN_REQUEST,
@@ -18,6 +19,9 @@ import {
   LOAD_MAIL_FAILURE,
   generateDummySendList,
   generateDummyMail,
+  LOAD_MY_INFO_REQUEST,
+  LOAD_MY_INFO_SUCCESS,
+  LOAD_MY_INFO_FAILURE,
 } from '../reducers';
 
 function logInAPI() {
@@ -181,7 +185,10 @@ function* loadMail(action) {
     yield put({
       type: LOAD_MAIL_SUCCESS,
       // data: generateDummyMail(12),
-      data: result.data,
+      data: {
+        ...result.data,
+        image: faker.image.image(),
+      },
     });
   } catch (err) {
     yield put({
@@ -191,6 +198,26 @@ function* loadMail(action) {
   }
 }
 
+function loadMyInfoAPI(token) {
+  return axios.get('http://127.0.0.1:8000/user', {
+    headers: { Authorization: token },
+  });
+}
+function* loadMyInfo(action) {
+  try {
+    const result = yield call(loadMyInfoAPI, action.data, action.token);
+    // yield delay(1000);
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      error: err.response,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -209,6 +236,9 @@ function* watchSubscribtionList() {
 function* watchLoadMail() {
   yield takeLatest(LOAD_MAIL_REQUEST, loadMail);
 }
+function* watchLoadMyInfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
 export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
@@ -217,5 +247,6 @@ export default function* rootSaga() {
     fork(watchGiveCode),
     fork(watchSenderList),
     fork(watchSubscribtionList),
+    fork(watchLoadMyInfo),
   ]);
 }
