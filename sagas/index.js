@@ -26,9 +26,9 @@ function logInAPI() {
 
 function* logIn(action) {
   try {
-    // const result = yield call(logInAPI, action.data);
-    yield delay(1000);
-    const result = { data: 'http://localhost:3000/redirect' };
+    const result = yield call(logInAPI, action.data);
+    // yield delay(1000);
+    // const result = { data: 'http://localhost:3000/redirect' };
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
@@ -47,30 +47,30 @@ function giveCodeAPI(data) {
 }
 function* giveCode(action) {
   try {
-    // const result = yield call(giveCodeAPI, action.data);
-    yield delay(1000);
-    const result = {
-      data: {
-        token:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTB9.x6yM3zZn0dtSLhKjP_pYBzLy9aOJkWru0dotJjZG1PE',
-        user_email_address: 'asd@asd',
-        user_name: 'asd',
-        subscribe_list: [
-          {
-            name: 'NEWNEEK',
-            email_address: 'whatsup@newneek.co',
-          },
-          {
-            name: 'UPPITY',
-            email_address: 'moneyletter@uppity.co.kr',
-          },
-          {
-            name: '디독',
-            email_address: 'd.dok.newsletter@gmail.com',
-          },
-        ],
-      },
-    };
+    const result = yield call(giveCodeAPI, action.data);
+    // yield delay(1000);
+    // const result = {
+    //   data: {
+    //     token:
+    //       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTB9.x6yM3zZn0dtSLhKjP_pYBzLy9aOJkWru0dotJjZG1PE',
+    //     user_email_address: 'asd@asd',
+    //     user_name: 'asd',
+    //     subscribe_list: [
+    //       {
+    //         name: 'NEWNEEK',
+    //         email_address: 'whatsup@newneek.co',
+    //       },
+    //       {
+    //         name: 'UPPITY',
+    //         email_address: 'moneyletter@uppity.co.kr',
+    //       },
+    //       {
+    //         name: '디독',
+    //         email_address: 'd.dok.newsletter@gmail.com',
+    //       },
+    //     ],
+    //   },
+    // };
     yield put({
       type: GIVE_CODE_SUCCESS,
       data: result.data,
@@ -102,14 +102,14 @@ function* logOut() {
   }
 }
 function senderListAPI(token) {
-  return axios.get('api/user/email-sender-list', {
+  return axios.get('http://127.0.0.1:8000/user/email-senders', {
     headers: { Authorization: token },
   });
 }
 function* senderList(action) {
   try {
-    // const result = yield call(senderListAPI,action.token);
-    yield delay(1000);
+    const result = yield call(senderListAPI, action.token);
+    // yield delay(1000);
     yield put({
       type: SENDER_LIST_SUCCESS,
       data: generateDummySendList(12),
@@ -125,7 +125,7 @@ function* senderList(action) {
 
 function subscribtionListAPI(data, token) {
   return axios.post(
-    'api/user/subscribtions',
+    'http://127.0.0.1:8000/subscribtions',
     {
       headers: { 'Content-Type': 'application/json', Authorization: token },
     },
@@ -134,28 +134,31 @@ function subscribtionListAPI(data, token) {
 }
 function* subscribtionList(action) {
   try {
-    // const result = yield call(subscribtiListAPI, action.data, action.token);
-    yield delay(1000);
+    const result = yield call(subscribtiListAPI, action.data, action.token);
+    // yield delay(1000);
+    // const result = {
+    //   data: [
+    //     {
+    //       name: 'NEWNEEK',
+    //       email_address: 'whatsup@newneek.co',
+    //     },
+    //     {
+    //       name: 'UPPITY',
+    //       email_address: 'moneyletter@uppity.co.kr',
+    //     },
+    //     {
+    //       name: '디독',
+    //       email_address: 'd.dok.newsletter@gmail.com',
+    //     },
+    //     {
+    //       name: 'ddddd',
+    //       email_address: 'letter@gmail.com',
+    //     },
+    //   ],
+    // };
     yield put({
       type: SUBSCRIBTION_LIST_SUCCESS,
-      data: [
-        {
-          name: 'NEWNEEK',
-          email_address: 'whatsup@newneek.co',
-        },
-        {
-          name: 'UPPITY',
-          email_address: 'moneyletter@uppity.co.kr',
-        },
-        {
-          name: '디독',
-          email_address: 'd.dok.newsletter@gmail.com',
-        },
-        {
-          name: 'ddddd',
-          email_address: 'letter@gmail.com',
-        },
-      ],
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
@@ -167,17 +170,18 @@ function* subscribtionList(action) {
 }
 
 function loadMailAPI(data, token) {
-  return axios.get(`api/email?subscription=${data}`, {
+  return axios.get(`http://127.0.0.1:8000/email?subscription=${data}`, {
     headers: { Authorization: token },
   });
 }
 function* loadMail(action) {
   try {
-    // const result = yield call(loadMailAPI, action.data, action.token);
-    yield delay(1000);
+    const result = yield call(loadMailAPI, action.data, action.token);
+    // yield delay(1000);
     yield put({
       type: LOAD_MAIL_SUCCESS,
-      data: generateDummyMail(12),
+      // data: generateDummyMail(12),
+      data: result.data,
     });
   } catch (err) {
     yield put({
