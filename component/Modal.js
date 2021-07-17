@@ -15,7 +15,6 @@ const Global = createGlobalStyle`
   }
 
   .ant-modal-content{
-    /* background: #2B2E32; 왜 색 다른지 */
     border: none;
     border-radius: 30;
     display: flex;
@@ -69,6 +68,7 @@ const StyledBody = styled.div`
   color: #b0b1b6;
   text-align: center;
   width: 98%;
+  word-break: break-word;
 `;
 
 const StyledButton = styled.button`
@@ -167,7 +167,12 @@ const ModalWindow = () => {
           <StyledTitle style={{ paddingBottom: 'none' }}>
             뉴스레터를 선택해주세요.{' '}
           </StyledTitle>
-          <StyledBody style={{ height: '33vh' }}>
+          <StyledBody style={{ height: '38vh' }}>
+            <StyledBody>
+              이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
+              <br />
+              당신의 메일함도 한층 더 깔끔해질 거에요.😊
+            </StyledBody>
             <Tag
               selectedTags={selectedTags}
               setSelectedTags={setSelectedTags}

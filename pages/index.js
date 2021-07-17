@@ -41,11 +41,8 @@ const LoginButton = styled.button`
 
 const BodyImage = styled.div`
   display: flex;
-  margin-left: 37.8vw;
-  margin-right: 37.8vw;
+  align-content: center;
   justify-content: center;
-  width: 351px;
-  height: 304px;
 `;
 
 const Login = () => {
@@ -75,7 +72,7 @@ const Login = () => {
         <Image src={'/design/GoogleLogin.png'} width="292px" height="51x" />
       </LoginButton>
       <BodyImage>
-        <Image src={'/design/LoginImage.png'} width="" height="" />
+        <Image src={'/design/LoginImage.png'} width="351" height="304" />
       </BodyImage>
       <div
         style={{
