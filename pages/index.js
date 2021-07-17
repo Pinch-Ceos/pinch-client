@@ -74,6 +74,7 @@ const Login = () => {
     });
   };
   useEffect(() => {
+    console.log(`${auth_uri}`);
     if (logInDone) {
       router.push(`${auth_uri}`);
     }

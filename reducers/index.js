@@ -131,7 +131,7 @@ const rootReducer = (state = initalState, action) =>
         draft.giveCodeDone = true;
         draft.email_address = action.data.user_email_address;
         draft.name = action.data.user_name;
-        draft.subscribe_list = action.data.subscribe_list;
+        draft.subscribe_list = action.data.subscriptions;
         draft.token = action.data.token;
         break;
       case GIVE_CODE_FAILURE:
