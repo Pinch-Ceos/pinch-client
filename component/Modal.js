@@ -15,10 +15,11 @@ const Global = createGlobalStyle`
   }
 
   .ant-modal-content{
-    background: #2B2E32; /*왜 색 다른지*/
+    /* background: #2B2E32; 왜 색 다른지 */
     border: none;
     border-radius: 30;
     display: flex;
+    background: none;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: none;
@@ -29,6 +30,7 @@ const Global = createGlobalStyle`
     border-bottom: none;
     border-radius: 12px;
     padding: 0;
+    
   }
   .ant-modal-footer{
     border-top: none;
@@ -43,14 +45,10 @@ const Global = createGlobalStyle`
   }
 `;
 
-const StartImage = styled(Image)`
-  margin-top: 80px;
-  margin-bottom: 80px;
-`;
 const StyledCompo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   border-radius: 12px;
 `;
@@ -70,16 +68,18 @@ const StyledBody = styled.div`
   font-size: 1em;
   color: #b0b1b6;
   text-align: center;
+  width: 98%;
 `;
 
 const StyledButton = styled.button`
   border-radius: 20px;
   padding: 20px 20px;
-  margin: 10px;
+  margin-top: 7vh;
   font-size: 1em;
   background-color: #3562ff;
   border: none;
   width: 146px;
+  z-index: 1;
 `;
 
 const StyledImage = styled.div`
@@ -172,8 +172,10 @@ const ModalWindow = () => {
     } else if (componum === 2) {
       return (
         <StyledCompo>
-          <StyledTitle>뉴스레터를 선택해주세요. </StyledTitle>
-          <StyledBody>
+          <StyledTitle style={{ paddingBottom: 'none' }}>
+            뉴스레터를 선택해주세요.{' '}
+          </StyledTitle>
+          <StyledBody style={{ height: '33vh' }}>
             <Tag
               selectedTags={selectedTags}
               setSelectedTags={setSelectedTags}
