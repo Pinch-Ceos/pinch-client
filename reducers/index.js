@@ -123,7 +123,7 @@ const rootReducer = (state = initalState, action) =>
       case SUBSCRIBTION_LIST_SUCCESS:
         draft.subscribtionListLoading = false;
         draft.subscribtionListDone = true;
-        draft.subscribe_list = action.data;
+        draft.subscribe_list = action.data.subscriptions;
         break;
       case SUBSCRIBTION_LIST_FAILURE:
         draft.subscribtionListLoading = false;

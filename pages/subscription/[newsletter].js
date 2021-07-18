@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
 
 const Mail = () => {
   const router = useRouter();
-  const { newsletter } = router.query;
+  const {newsletter} = router.query;
   const dispatch = useDispatch();
   const { mails, subscribe_list, hasMoreMails, loadMailLoading } = useSelector(
     (state) => state
@@ -21,7 +21,7 @@ const Mail = () => {
       type: LOAD_MY_INFO_REQUEST,
       token: cookie.Token,
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (newsletter === 'inbox') {

@@ -131,11 +131,11 @@ function* senderList(action) {
 
 function subscribtionListAPI(data, token) {
   return axios.post(
-    'http://127.0.0.1:8000/subscribtions',
+    'http://127.0.0.1:8000/subscriptions/',
+    data,
     {
-      headers: { 'Content-Type': 'application/json', Authorization: token },
-    },
-    data
+      headers: { Authorization: token, 'Content-Type': 'application/json' },
+    }
   ); //이거 api 어떻게 넘기는지
 }
 function* subscribtionList(action) {
@@ -162,12 +162,13 @@ function* subscribtionList(action) {
     //     },
     //   ],
     // };
+    console.log(result);
     yield put({
       type: SUBSCRIBTION_LIST_SUCCESS,
       data: result.data,
     });
   } catch (err) {
-    console.log(err);
+    console.log(err.data);
     yield put({
       type: SUBSCRIBTION_LIST_FAILURE,
       error: err.response,
@@ -184,13 +185,11 @@ function* loadMail(action) {
   try {
     const result = yield call(loadMailAPI, action.data, action.token);
     // yield delay(1000);
+    console.log(result);
     yield put({
       type: LOAD_MAIL_SUCCESS,
       // data: generateDummyMail(12),
-      data: {
-        ...result.data,
-        image: faker.image.image(),
-      },
+      data: result.data,
     });
   } catch (err) {
     yield put({
@@ -207,7 +206,7 @@ function loadMyInfoAPI(token) {
 }
 function* loadMyInfo(action) {
   try {
-    const result = yield call(loadMyInfoAPI, action.data, action.token);
+    const result = yield call(loadMyInfoAPI, action.token);
     // yield delay(1000);
     yield put({
       type: LOAD_MY_INFO_SUCCESS,
