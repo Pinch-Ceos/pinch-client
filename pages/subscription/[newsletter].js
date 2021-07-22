@@ -21,18 +21,18 @@ const Mail = () => {
   useEffect(() => {
     console.log(newsletter);
     if (newsletter === 'inbox') {
-      // dispatch({
-      //   type: LOAD_MAIL_REQUEST,
-      //   data: '',
-      //   token: cookie.Token,
-      // });
+      dispatch({
+        type: LOAD_MAIL_REQUEST,
+        data: '',
+        token: cookie.Token,
+      });
       setHeader('전체 뉴스레터');
     } else {
-      // dispatch({
-      //   type: LOAD_MAIL_REQUEST,
-      //   data: newsletter,
-      //   token: cookie.Token,
-      // });
+      dispatch({
+        type: LOAD_MAIL_REQUEST,
+        data: newsletter,
+        token: cookie.Token,
+      });
       console.log(
         subscribe_list.find((v) => v.email_address === newsletter).name
       );
@@ -88,19 +88,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
     });
-    if (context.params.newsletter === 'inbox') {
-      context.store.dispatch({
-        type: LOAD_MAIL_REQUEST,
-        data: '',
-        token: Token,
-      });
-    } else {
-      context.store.dispatch({
-        type: LOAD_MAIL_REQUEST,
-        data: context.params.newsletter,
-        token: Token,
-      });
-    }
+    // if (context.params.newsletter === 'inbox') {
+    //   context.store.dispatch({
+    //     type: LOAD_MAIL_REQUEST,
+    //     data: '',
+    //     token: Token,
+    //   });
+    // } else {
+    //   context.store.dispatch({
+    //     type: LOAD_MAIL_REQUEST,
+    //     data: context.params.newsletter,
+    //     token: Token,
+    //   });
+    // }
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }
