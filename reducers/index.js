@@ -82,8 +82,7 @@ const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case HYDRATE:
-        Object.assign(draft, action.payload);
-        break;
+        return action.payload;
       case LOAD_MY_INFO_REQUEST:
         draft.loadMyInfoLoading = true;
         draft.loadMyInfoDone = false;
@@ -124,7 +123,7 @@ const rootReducer = (state = initalState, action) =>
       case SUBSCRIPTION_LIST_SUCCESS:
         draft.subscriptionListLoading = false;
         draft.subscriptionListDone = true;
-        draft.subscribe_list = action.data;
+        draft.subscribe_list = action.data.subscriptions;
         break;
       case SUBSCRIPTION_LIST_FAILURE:
         draft.subscriptionListLoading = false;
@@ -136,7 +135,6 @@ const rootReducer = (state = initalState, action) =>
         draft.senderListError = null;
         break;
       case SENDER_LIST_SUCCESS:
-        console.log(generateDummySendList(12));
         draft.senderListLoading = false;
         draft.senderListDone = true;
         draft.sender_list = action.data;

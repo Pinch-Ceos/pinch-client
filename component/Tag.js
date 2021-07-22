@@ -86,7 +86,7 @@ const Tags = ({ selectedTags, setSelectedTags }) => {
         <Global />
         {sender_list.map((tag) => (
           <CheckableTag
-            key={tag.name}
+            key={tag.email_address}
             checked={selectedTags.indexOf(tag) > -1}
             onChange={(checked) => handleChange(tag, checked)}
           >

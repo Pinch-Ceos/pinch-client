@@ -35,6 +35,9 @@ const Global = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+  .ant-layout-content {
+    width: 100%;
+  }
 `;
 
 const AppLayout = ({ children }) => {
@@ -56,9 +59,9 @@ const AppLayout = ({ children }) => {
           className="site-layout"
           style={{ paddingTop: 30, backgroundColor: 'white' }}
         >
-          <Row gutter={20} style={{ border: 'none' }}>
+          <Row gutter={20} style={{ border: 'none', width: '100%' }}>
             <Col md={1}></Col>
-            <Col xs={23} md={4}>
+            <Col xs={23} md={4} style={{ width: '100%' }}>
               <Sider
                 breakpoint
                 width={{
@@ -136,7 +139,10 @@ const AppLayout = ({ children }) => {
             <Col
               xs={24}
               md={18}
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{
+                display: 'flex',
+                width: '100%',
+              }}
             >
               <Content
                 style={{
@@ -144,7 +150,6 @@ const AppLayout = ({ children }) => {
                   margin: '0 16px',
                   width: '95%',
                   height: '100%',
-                  justifyContent: 'center',
                 }}
               >
                 {children}
