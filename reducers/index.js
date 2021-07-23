@@ -3,14 +3,14 @@ import produce from 'immer';
 import faker from 'faker';
 
 const initalState = {
-  user_id: null,
-  email_address: null,
-  name: null,
-  token: null,
+  me: null,
+  // email_address: null,
+  // name: null,
+  // token: null,
+  // subscribe_list: [],
   mails: [],
   sender_list: [],
-  subscribe_list: [],
-  bookmark: [],
+  view: null,
   hasMoreMails: true,
   auth_uri: null,
   logInLoading: false,
@@ -19,18 +19,21 @@ const initalState = {
   giveCodeLoading: false,
   giveCodeDone: false,
   giveCodeError: null,
-  senderListLoading: false,
-  senderListDone: false,
-  senderListError: null,
-  subscriptionListLoading: false,
-  subscriptionListDone: false,
-  subscriptionListError: null,
+  loadSenderLoading: false,
+  loadSenderDone: false,
+  loadSenderError: null,
+  loadSubscriptionLoading: false,
+  loadSubscriptionDone: false,
+  loadSubscriptionError: null,
   loadMailLoading: false,
   loadMailDone: false,
   loadMailError: null,
   loadMyInfoLoading: false,
   loadMyInfoDone: false,
   loadMyInfoError: null,
+  loadDetailLoading: false,
+  loadDetailDone: false,
+  loadDetailError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -41,21 +44,29 @@ export const GIVE_CODE_REQUEST = 'GIVE_CODE_REQUEST';
 export const GIVE_CODE_SUCCESS = 'GIVE_CODE_SUCCESS';
 export const GIVE_CODE_FAILURE = 'GIVE_CODE_FAILURE';
 
-export const SENDER_LIST_REQUEST = 'SENDER_LIST_REQUEST';
-export const SENDER_LIST_SUCCESS = 'SENDER_LIST_SUCCESS';
-export const SENDER_LIST_FAILURE = 'SENDER_LIST_FAILURE';
+export const LOAD_SENDER_REQUEST = 'LOAD_SENDER_REQUEST';
+export const LOAD_SENDER_SUCCESS = 'LOAD_SENDER_SUCCESS';
+export const LOAD_SENDER_FAILURE = 'LOAD_SENDER_FAILURE';
 
-export const SUBSCRIPTION_LIST_REQUEST = 'SUBSCRIPTION_LIST_REQUEST';
-export const SUBSCRIPTION_LIST_SUCCESS = 'SUBSCRIPTION_LIST_SUCCESS';
-export const SUBSCRIPTION_LIST_FAILURE = 'SUBSCRIPTION_LIST_FAILURE';
+export const LOAD_SUBSCRIPTION_REQUEST = 'LOAD_SUBSCRIPTION_REQUEST';
+export const LOAD_SUBSCRIPTION_SUCCESS = 'LOAD_SUBSCRIPTION_SUCCESS';
+export const LOAD_SUBSCRIPTION_FAILURE = 'LOAD_SUBSCRIPTION_FAILURE';
 
 export const LOAD_MAIL_REQUEST = 'LOAD_MAIL_REQUEST';
 export const LOAD_MAIL_SUCCESS = 'LOAD_MAIL_SUCCESS';
 export const LOAD_MAIL_FAILURE = 'LOAD_MAIL_FAILURE';
 
+export const LOAD_BOOKMARK_REQUEST = 'LOAD_BOOKMARK_REQUEST';
+export const LOAD_BOOKMARK_SUCCESS = 'LOAD_BOOKMARK_SUCCESS';
+export const LOAD_BOOKMARK_FAILURE = 'LOAD_BOOKMARK_FAILURE';
+
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
+
+export const LOAD_DETAIL_REQUEST = 'LOAD_DETAIL_REQUEST';
+export const LOAD_DETAIL_SUCCESS = 'LOAD_DETAIL_SUCCESS';
+export const LOAD_DETAIL_FAILURE = 'LOAD_DETAIL_FAILURE';
 
 export const generateDummyMail = (number) =>
   Array(number)
@@ -67,7 +78,6 @@ export const generateDummyMail = (number) =>
       subject: faker.name.title(),
       snippet: faker.lorem.paragraph(),
       image: faker.image.image(),
-      html: '<div>asd</div>',
     }));
 
 export const generateDummySendList = (number) =>
@@ -83,65 +93,79 @@ const rootReducer = (state = initalState, action) =>
     switch (action.type) {
       case HYDRATE:
         return action.payload;
+      case LOAD_DETAIL_REQUEST:
+        draft.loadDetailLoading = true;
+        draft.loadDetailDone = false;
+        draft.loadDetailError = null;
+        break;
+      case LOAD_DETAIL_SUCCESS:
+        draft.loadDetailLoading = false;
+        draft.loadDetailDone = true;
+        draft.view = action.data;
+        break;
+      case LOAD_DETAIL_FAILURE:
+        draft.loadDetailLoading = false;
+        draft.loadDetailError = action.error;
+        break;
       case LOAD_MY_INFO_REQUEST:
         draft.loadMyInfoLoading = true;
         draft.loadMyInfoDone = false;
         draft.loadMyInfoError = null;
         break;
       case LOAD_MY_INFO_SUCCESS:
-        console.log(action);
         draft.loadMyInfoLoading = false;
         draft.loadMyInfoDone = true;
-        draft.name = action.data.user_name;
-        draft.email_address = action.data.user_email_address;
-        draft.subscribe_list = action.data.subscriptions;
+        draft.me = action.data;
         break;
       case LOAD_MY_INFO_FAILURE:
         draft.loadMyInfoLoading = false;
         draft.loadMyInfoError = action.error;
         break;
       case LOAD_MAIL_REQUEST:
+      case LOAD_BOOKMARK_REQUEST:
         draft.loadMailLoading = true;
         draft.loadMailDone = false;
         draft.loadMailError = null;
         break;
       case LOAD_MAIL_SUCCESS:
+      case LOAD_BOOKMARK_SUCCESS:
         draft.loadMailLoading = false;
         draft.loadMailDone = true;
         draft.mails = draft.mails.concat(action.data);
         draft.hasMoreMails = action.data.length === 12;
         break;
       case LOAD_MAIL_FAILURE:
+      case LOAD_BOOKMARK_FAILURE:
         draft.loadMailLoading = false;
         draft.loadMailError = action.error;
         break;
-      case SUBSCRIPTION_LIST_REQUEST:
-        draft.subscriptionListLoading = true;
-        draft.subscriptionListDone = false;
-        draft.subscriptionListError = null;
+      case LOAD_SUBSCRIPTION_REQUEST:
+        draft.loadSubscriptionLoading = true;
+        draft.loadSubscriptionDone = false;
+        draft.loadSubscriptionError = null;
         break;
-      case SUBSCRIPTION_LIST_SUCCESS:
-        draft.subscriptionListLoading = false;
-        draft.subscriptionListDone = true;
-        draft.subscribe_list = action.data.subscriptions;
+      case LOAD_SUBSCRIPTION_SUCCESS:
+        draft.loadSubscriptionLoading = false;
+        draft.loadSubscriptionDone = true;
+        draft.me.subscriptions = action.data.subscriptions;
         break;
-      case SUBSCRIPTION_LIST_FAILURE:
-        draft.subscriptionListLoading = false;
-        draft.subscriptionListError = action.error;
+      case LOAD_SUBSCRIPTION_FAILURE:
+        draft.loadSubscriptionLoading = false;
+        draft.loadSubscriptionError = action.error;
         break;
-      case SENDER_LIST_REQUEST:
-        draft.senderListLoading = true;
-        draft.senderListDone = false;
-        draft.senderListError = null;
+      case LOAD_SENDER_REQUEST:
+        draft.loadSenderLoading = true;
+        draft.loadSenderDone = false;
+        draft.loadSenderError = null;
         break;
-      case SENDER_LIST_SUCCESS:
-        draft.senderListLoading = false;
-        draft.senderListDone = true;
+      case LOAD_SENDER_SUCCESS:
+        draft.loadSenderLoading = false;
+        draft.loadSenderDone = true;
         draft.sender_list = action.data;
         break;
-      case SENDER_LIST_FAILURE:
-        draft.senderListLoading = false;
-        draft.senderListError = action.error;
+      case LOAD_SENDER_FAILURE:
+        draft.loadSenderLoading = false;
+        draft.loadSenderError = action.error;
         break;
       case GIVE_CODE_REQUEST:
         draft.giveCodeLoading = true;
@@ -151,11 +175,7 @@ const rootReducer = (state = initalState, action) =>
       case GIVE_CODE_SUCCESS:
         draft.giveCodeLoading = false;
         draft.giveCodeDone = true;
-        draft.user_id = action.data.id;
-        draft.email_address = action.data.user_email_address;
-        draft.name = action.data.user_name;
-        draft.subscribe_list = action.data.subscriptions;
-        draft.token = action.data.token;
+        draft.me = action.data;
         break;
       case GIVE_CODE_FAILURE:
         draft.giveCodeLoading = false;

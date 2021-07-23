@@ -4,8 +4,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { SENDER_LIST_REQUEST } from '../reducers';
-import { SUBSCRIPTION_LIST_REQUEST } from '../reducers';
+import { LOAD_SENDER_REQUEST } from '../reducers';
+import { LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
 const Global = createGlobalStyle`
@@ -107,7 +107,7 @@ const ModalWindow = () => {
   const changeBody = () => {
     if (componum === 0) {
       dispatch({
-        type: SENDER_LIST_REQUEST,
+        type: LOAD_SENDER_REQUEST,
         token: cookie.Token,
       });
       setComponum(1);
@@ -115,7 +115,7 @@ const ModalWindow = () => {
       setComponum(2);
     } else if (componum === 2) {
       dispatch({
-        type: SUBSCRIPTION_LIST_REQUEST,
+        type: LOAD_SUBSCRIPTION_REQUEST,
         data: selectedTags,
         token: cookie.Token,
       });

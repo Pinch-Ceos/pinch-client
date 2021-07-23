@@ -1,37 +1,27 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
-import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
+import { LOAD_BOOKMARK_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
 
 const Mail = () => {
-  const router = useRouter();
-  const { newsletter } = router.query;
   const dispatch = useDispatch();
-  const { mails, me, hasMoreMails, loadMailLoading } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   useEffect(() => {
-    console.log(newsletter);
     dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: newsletter,
+      type: LOAD_BOOKMARK_REQUEST,
       token: cookie.Token,
     });
-    console.log(
-      me.subscriptions.find((v) => v.email_address === newsletter).name
-    );
-    setHeader(
-      me.subscriptions.find((v) => v.email_address === newsletter).name
-    );
-  }, [newsletter]);
+    setHeader('저장한 뉴스레터');
+  }, []);
 
   useEffect(() => {
     function onScroll() {
@@ -41,8 +31,7 @@ const Mail = () => {
       ) {
         if (hasMoreMails && !loadMailLoading) {
           dispatch({
-            type: LOAD_MAIL_REQUEST,
-            data: newsletter,
+            type: LOAD_BOOKMARK_REQUEST,
             token: cookie.Token,
           });
         }
@@ -52,7 +41,7 @@ const Mail = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [newsletter, mails.length, hasMoreMails, loadMailLoading]);
+  }, [mails.length, hasMoreMails, loadMailLoading]);
 
   return (
     <>
@@ -64,9 +53,7 @@ const Mail = () => {
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie
-      ? context.req.headers.cookie.substr(6)
-      : '';
+    const Token = context.req.headers.cookie.substr(6);
     // const Token = context.req.headers.cookie['Token'];
     console.log(Token);
     context.store.dispatch({
@@ -74,10 +61,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       token: Token,
     });
     // context.store.dispatch({
-    //   type: LOAD_MAIL_REQUEST,
-    //   data: context.params.newsletter,
-    //   token: Token,
-    // });
+    //     type: LOAD_BOOKMARK_REQUEST,
+    //     token: Token,
+    //   });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

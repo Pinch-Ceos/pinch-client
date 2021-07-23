@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { SENDER_LIST_REQUEST } from '../reducers';
+import { LOAD_SENDER_REQUEST } from '../reducers';
 
 const Container = styled.div`
   margin-left: 1.06%;
@@ -201,7 +201,7 @@ const ProfileLayout = () => {
 
   useEffect(() => {
     dispatch({
-      type: SENDER_LIST_REQUEST,
+      type: LOAD_SENDER_REQUEST,
     });
   }, []);
 

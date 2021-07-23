@@ -41,7 +41,7 @@ const Global = createGlobalStyle`
 `;
 
 const AppLayout = ({ children }) => {
-  const { subscribe_list } = useSelector((state) => state);
+  const { me } = useSelector((state) => state);
   return (
     <>
       <Global />
@@ -107,7 +107,7 @@ const AppLayout = ({ children }) => {
                       borderRadius: 10,
                     }}
                   >
-                    {subscribe_list.map((v) => (
+                    {me.subscriptions.map((v) => (
                       <Menu.Item
                         key={v.name}
                         style={{
@@ -131,7 +131,9 @@ const AppLayout = ({ children }) => {
                       borderRadius: 10,
                     }}
                   >
-                    저장한 뉴스레터
+                    <Link href={`/subscription/${bookmark}`}>
+                      <a>저장한 뉴스레터</a>
+                    </Link>
                   </Menu.Item>
                 </Menu>
               </Sider>

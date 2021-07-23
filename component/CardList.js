@@ -3,8 +3,10 @@ import { Meta } from 'antd/lib/list/Item';
 import Router from 'next/router';
 import React from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ModalWindow from '../component/Modal';
+import { LOAD_DETAIL_REQUEST } from '../reducers';
 
 const StyledMeta = styled(Meta)`
   .ant-list-item-meta-title {
@@ -39,10 +41,36 @@ const StyledCard = styled(Card)`
     padding: 8px;
   }
 `;
+const StyeldBookmark = styled(BsFillBookmarkFill)`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+  width: 20px;
+  height: 20px;
+`;
+
+const StyeldBookmarked = styled(BsFillBookmarkFill)`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+  width: 20px;
+  height: 20px;
+  color: #3562ff;
+`;
 
 const CardList = ({ data, header }) => {
-  const onCardClick = () => {
-    Router.push('/newsletterview');
+  const dispatch = useDispatch();
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+
+  const onCardClick = (item) => () => {
+    dispatch({
+      type: LOAD_DETAIL_REQUEST,
+      data: item.id,
+      token: cookie.Token,
+    });
+    Router.push('/letterview');
   };
   return (
     <List
@@ -71,7 +99,7 @@ const CardList = ({ data, header }) => {
           style={{ marginTop: '20px', marginLeft: 10, marginRight: 10 }}
         >
           <StyledCard
-            onClick={onCardClick}
+            onClick={onCardClick(item)}
             style={{ hight: 200, border: 'none' }}
             cover={
               <img
@@ -85,19 +113,21 @@ const CardList = ({ data, header }) => {
               />
             }
             actions={[
-              <div style={{ marginTop: 10 }}>
-                <BsFillBookmarkFill
-                  key="bookmark"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    marginLeft: 'auto',
-                    marginRight: '1em',
-                    width: 20,
-                    height: 20,
-                  }}
-                />
-              </div>,
+              item.bookmark ? (
+                <div style={{ marginTop: 10 }}>
+                  <StyeldBookmarked
+                    onClick={console.log('Click!')}
+                    key="bookmark"
+                  />
+                </div>
+              ) : (
+                <div style={{ marginTop: 10 }}>
+                  <StyeldBookmark
+                    onClick={console.log('click!')}
+                    key="bookmark"
+                  />
+                </div>
+              ),
             ]}
           >
             <StyledMeta title={item.subject} description={item.snippet} />
