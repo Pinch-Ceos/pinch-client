@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 const redirect = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { giveCodeDone, token } = useSelector((state) => state);
+  const { giveCodeDone, me } = useSelector((state) => state);
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   useEffect(() => {
@@ -18,8 +18,8 @@ const redirect = () => {
   }, []);
   useEffect(() => {
     if (giveCodeDone) {
-      setCookie('Token', token, { path: '/' });
-      router.push(`http://localhost:3000/subscription/inbox`);
+      setCookie('Token', me.token, { path: '/' });
+      router.push(`http://localhost:3000/inbox`);
     }
   }, [giveCodeDone]);
   return <div>Loading...</div>;
