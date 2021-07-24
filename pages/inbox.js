@@ -15,13 +15,16 @@ const Mail = () => {
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     dispatch({
       type: LOAD_MAIL_REQUEST,
       data: '',
+      page: page,
       token: cookie.Token,
     });
+    setPage((prev) => prev + 1);
     setHeader('전체 뉴스레터');
   }, []);
 
@@ -35,6 +38,7 @@ const Mail = () => {
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
+            page: page,
             token: cookie.Token,
           });
         }
