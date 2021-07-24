@@ -115,6 +115,7 @@ const MyEmail = styled.div`
 const SubscribtionListContainer = styled.div`
   height: 300px;
   width: 100%;
+  /* overflow: scroll; */
   ::-webkit-scrollbar {
     display: none;
   }
@@ -196,6 +197,44 @@ const MyNewsLetterList = () => {
   );
 };
 
+const MySubscribeButton = () => {
+  const [text, setText] = useState('숨기기');
+
+  const changeText = () => {
+    setText('정말 그만 보시게요? 😢');
+  };
+  const changeText2 = () => {
+    setText('숨기기');
+  };
+
+  return (
+    <Button type="button" onMouseOver={changeText} onMouseLeave={changeText2}>
+      {text}
+    </Button>
+  );
+};
+
+const MySubscribeList = () => {
+  const { sender_list } = useSelector((state) => state);
+  return (
+    <SubscribtionListContainer>
+      {sender_list.map((item) => {
+        return (
+          <p key={item.id}>
+            <div>
+              {item.name}
+              <br />
+              {item.email_address}
+            </div>
+            <MySubscribeButton />
+            {/* {MySubscribeButton()} */}
+          </p>
+        );
+      })}
+    </SubscribtionListContainer>
+  );
+};
+
 const ProfileLayout = () => {
   const dispatch = useDispatch();
 
@@ -205,40 +244,20 @@ const ProfileLayout = () => {
     });
   }, []);
 
-  const MySubscribeList = () => {
-    const { sender_list } = useSelector((state) => state);
-    const { text, setText } = useState('숨기기');
-
-    const changeText = () => {
-      setText('정말 그만 보시게요? 😢');
-    };
-    return (
-      <SubscribtionListContainer>
-        {sender_list.map((item) => {
-          return (
-            <p key={item.id}>
-              <div>
-                {item.name}
-                <br />
-                {item.email_address}
-              </div>
-              <Button type="button" onMouseOver={changeText}></Button>
-            </p>
-          );
-        })}
-      </SubscribtionListContainer>
-    );
-  };
-
   return (
     <Container>
       <Logo>Pinch</Logo>
       <Body>
-        {MyProfileContent()}
-        {MyNewsLetterContent()}
-        {MyAccountContent()}
-        {MyNewsLetterList()}
-        {MySubscribeList()}
+        <MyProfileContent />
+        <MyNewsLetterContent />
+        <MyAccountContent />
+        <MyNewsLetterList />
+        <MySubscribeList />
+        {/* {MyProfileContent()} */}
+        {/* {MyNewsLetterContent()} */}
+        {/* {MyAccountContent()} */}
+        {/* {MyNewsLetterList()} */}
+        {/* {MySubscribeList()} */}
       </Body>
     </Container>
   );
