@@ -5,7 +5,7 @@ import { END } from 'redux-saga';
 import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
 import { LOAD_BOOKMARK_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
-import wrapper from '../../store/configureStore';
+import wrapper from '../store/configureStore';
 
 const Mail = () => {
   const dispatch = useDispatch();

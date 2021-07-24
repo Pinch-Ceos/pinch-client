@@ -34,6 +34,9 @@ const initalState = {
   loadDetailLoading: false,
   loadDetailDone: false,
   loadDetailError: null,
+  deleteSubcriptionLoading: false,
+  deleteSubcriptionDone: false,
+  deleteSubcriptionError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -68,6 +71,10 @@ export const LOAD_DETAIL_REQUEST = 'LOAD_DETAIL_REQUEST';
 export const LOAD_DETAIL_SUCCESS = 'LOAD_DETAIL_SUCCESS';
 export const LOAD_DETAIL_FAILURE = 'LOAD_DETAIL_FAILURE';
 
+export const DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST';
+export const DELETE_SUBSCRIPTION_SUCCESS = 'DELETE_SUBSCRIPTION_SUCCESS';
+export const DELETE_SUBSCRIPTION_FAILURE = 'DELETE_SUBSCRIPTION_FAILURE';
+
 export const generateDummyMail = (number) =>
   Array(number)
     .fill()
@@ -87,6 +94,10 @@ export const generateDummySendList = (number) =>
       name: faker.name.findName(),
       email_address: faker.internet.email(),
     }));
+
+export const filterSubscriptionList = (id, subscriptions) => {
+  return subscriptions.filter((el) => el.indexOf(id) > -1);
+};
 
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
@@ -150,6 +161,25 @@ const rootReducer = (state = initalState, action) =>
         draft.me.subscriptions = action.data.subscriptions;
         break;
       case LOAD_SUBSCRIPTION_FAILURE:
+        draft.loadSubscriptionLoading = false;
+        draft.loadSubscriptionError = action.error;
+        break;
+      case DELETE_SUBSCRIPTION_REQUEST:
+        draft.loadSubscriptionLoading = true;
+        draft.loadSubscriptionDone = false;
+        draft.loadSubscriptionError = null;
+        break;
+      case DELETE_SUBSCRIPTION_SUCCESS:
+        draft.loadSubscriptionLoading = false;
+        draft.loadSubscriptionDone = true;
+        // draft.me.subscriptions = action.data.subscriptions;
+        draft.me.subscriptions = filterSubscriptionList(
+          action.data,
+          action.data.subscriptions
+        );
+        //filter 사용해서 action.data 값 subList에서 빼주기
+        break;
+      case DELETE_SUBSCRIPTION_FAILURE:
         draft.loadSubscriptionLoading = false;
         draft.loadSubscriptionError = action.error;
         break;
