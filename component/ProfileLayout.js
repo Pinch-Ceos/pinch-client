@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { LOAD_SENDER_REQUEST } from '../reducers';
-import { useCookies } from 'react-cookie';
+import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
+import { Cookies, useCookies } from 'react-cookie';
 
 const Container = styled.div`
   margin-left: 1.06%;
@@ -62,6 +62,10 @@ const NewsLetterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  border-radius: 12px;
+  :hover {
+    background-color: #f9f9f9;
+  }
 `;
 
 const NewsLetter = styled.div`
@@ -122,7 +126,7 @@ const SubscribtionListContainer = styled.div`
   }
 `;
 
-const MyProfileContent = (name, email_address) => {
+const MyProfileContent = ({ name, email_address }) => {
   return (
     <MyProfile>
       <ProfileImg>
@@ -152,7 +156,7 @@ const MyProfileContent = (name, email_address) => {
   );
 };
 
-const MyNewsLetterContent = (bookmark_num, subscription_num) => {
+const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
   return (
     <NewsLetterContainer>
       <NewsLetter>
@@ -167,7 +171,7 @@ const MyNewsLetterContent = (bookmark_num, subscription_num) => {
   );
 };
 
-const MyAccountContent = (email_address) => {
+const MyAccountContent = ({ email_address }) => {
   return (
     <div style={{ width: '100%' }}>
       <AccountTitle>계정설정</AccountTitle>
@@ -199,8 +203,19 @@ const MyNewsLetterList = () => {
   );
 };
 
-const MySubscribeButton = () => {
+const MySubscribeButton = ({ id }) => {
   const [text, setText] = useState('숨기기');
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const dispatch = useDispatch();
+
+  const deleteSubscribe = (id) => () => {
+    dispatch({
+      type: DELETE_SUBSCRIPTION_REQUEST,
+      data: id,
+      token: cookie.Token,
+    });
+    console.log(id);
+  };
 
   const changeText = () => {
     setText('정말 그만 보시게요? 😢');
@@ -210,14 +225,18 @@ const MySubscribeButton = () => {
   };
 
   return (
-    <Button type="button" onMouseOver={changeText} onMouseLeave={changeText2}>
+    <Button
+      type="button"
+      onMouseOver={changeText}
+      onMouseLeave={changeText2}
+      onClick={deleteSubscribe(id)}
+    >
       {text}
     </Button>
   );
 };
 
-const MySubscribeList = (subscriptions) => {
-  // const {me} = useSelector((state) => state);
+const MySubscribeList = ({ subscriptions }) => {
   return (
     <SubscribtionListContainer>
       {subscriptions.map((item) => {
@@ -228,7 +247,8 @@ const MySubscribeList = (subscriptions) => {
               <br />
               {item.email_address}
             </div>
-            <MySubscribeButton />
+            {console.log(item.id)}
+            <MySubscribeButton id={item.id} />
             {/* {MySubscribeButton()} */}
           </p>
         );
@@ -238,16 +258,7 @@ const MySubscribeList = (subscriptions) => {
 };
 
 const ProfileLayout = () => {
-  const dispatch = useDispatch();
   const { me } = useSelector((state) => state);
-  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_MY_INFO_REQUEST,
-      token: cookie.Token,
-    });
-  }, []);
 
   return (
     <Container>
@@ -263,7 +274,10 @@ const ProfileLayout = () => {
         />
         <MyAccountContent email_address={me.user_email_address} />
         <MyNewsLetterList />
-        <MySubscribeList subscriptions={me.subscriptions} />
+        <MySubscribeList
+          subscriptions={me.subscriptions}
+          // subscriptions_id={me.subscriptions.id}
+        />
         {/* {MyProfileContent()} */}
         {/* {MyNewsLetterContent()} */}
         {/* {MyAccountContent()} */}

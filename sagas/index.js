@@ -14,6 +14,9 @@ import {
   LOAD_SUBSCRIPTION_REQUEST,
   LOAD_SUBSCRIPTION_SUCCESS,
   LOAD_SUBSCRIPTION_FAILURE,
+  DELETE_SUBSCRIPTION_REQUEST,
+  DELETE_SUBSCRIPTION_SUCCESS,
+  DELETE_SUBSCRIPTION_FAILURE,
   LOAD_MAIL_REQUEST,
   LOAD_MAIL_SUCCESS,
   LOAD_MAIL_FAILURE,
@@ -184,6 +187,27 @@ function* loadSubscription(action) {
   }
 }
 
+function deleteSubscriptionAPI(action) {
+  return axios.delete(`/subscriptions/${action.data}/`, {
+    headers: { Authorization: action.token },
+  });
+}
+
+function* deleteSubscription(action) {
+  try {
+    yield call(deleteSubscriptionAPI, action);
+    yield put({
+      type: DELETE_SUBSCRIPTION_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_SUBSCRIPTION_FAILURE,
+      error: err.response,
+    });
+  }
+}
+
 function loadMailAPI(action) {
   return axios.get(`/email?subscription=${action.data}&page=${action.page}`, {
     headers: { Authorization: action.token },
@@ -314,6 +338,9 @@ function* watchLoadBookmark() {
 function* watchLoadDetail() {
   yield takeLatest(LOAD_DETAIL_REQUEST, loadDetail);
 }
+function* watchDeleteSubscription() {
+  yield takeLatest(DELETE_SUBSCRIPTION_REQUEST, deleteSubscription);
+}
 export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
@@ -325,5 +352,6 @@ export default function* rootSaga() {
     fork(watchLoadMyInfo),
     fork(watchLoadBookmark),
     fork(watchLoadDetail),
+    fork(watchDeleteSubscription),
   ]);
 }
