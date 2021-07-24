@@ -120,7 +120,8 @@ const SubscribtionListContainer = styled.div`
     display: none;
   }
 `;
-const MyProfileContent = () => {
+
+const MyProfileContent = (name, email_address) => {
   return (
     <MyProfile>
       <ProfileImg>
@@ -134,7 +135,7 @@ const MyProfileContent = () => {
             lineHeight: '36px',
           }}
         >
-          익명의독수리
+          {name}
         </div>
         <div
           style={{
@@ -143,29 +144,29 @@ const MyProfileContent = () => {
             lineHeight: '20px',
           }}
         >
-          nonameeagle@gmail.com
+          {email_address}
         </div>
       </ProfileContent>
     </MyProfile>
   );
 };
 
-const MyNewsLetterContent = () => {
+const MyNewsLetterContent = (bookmark_num, subscription_num) => {
   return (
     <NewsLetterContainer>
       <NewsLetter>
         <NewsLetterTitle>저장한 뉴스레터</NewsLetterTitle>
-        <NewsLetterCount>14</NewsLetterCount>
+        <NewsLetterCount>{bookmark_num}</NewsLetterCount>
       </NewsLetter>
       <NewsLetter>
         <NewsLetterTitle>구독 중인 뉴스레터</NewsLetterTitle>
-        <NewsLetterCount>7</NewsLetterCount>
+        <NewsLetterCount>{subscription_num}</NewsLetterCount>
       </NewsLetter>
     </NewsLetterContainer>
   );
 };
 
-const MyAccountContent = () => {
+const MyAccountContent = (email_address) => {
   return (
     <div style={{ width: '100%' }}>
       <AccountTitle>계정설정</AccountTitle>
@@ -183,7 +184,7 @@ const MyAccountContent = () => {
           height="50px"
           style={{ marginLeft: '24%' }}
         />
-        <MyEmail>nonameeagle@gmail.com</MyEmail>
+        <MyEmail>{email_address}</MyEmail>
       </EmailContent>
     </div>
   );
@@ -214,11 +215,11 @@ const MySubscribeButton = () => {
   );
 };
 
-const MySubscribeList = () => {
-  const { sender_list } = useSelector((state) => state);
+const MySubscribeList = (subscriptions) => {
+  // const {me} = useSelector((state) => state);
   return (
     <SubscribtionListContainer>
-      {sender_list.map((item) => {
+      {subscriptions.map((item) => {
         return (
           <p key={item.id}>
             <div>
@@ -237,10 +238,16 @@ const MySubscribeList = () => {
 
 const ProfileLayout = () => {
   const dispatch = useDispatch();
-
+  const { me } = useSelector((state) => state);
   useEffect(() => {
     dispatch({
       type: LOAD_SENDER_REQUEST,
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
     });
   }, []);
 
@@ -248,11 +255,17 @@ const ProfileLayout = () => {
     <Container>
       <Logo>Pinch</Logo>
       <Body>
-        <MyProfileContent />
-        <MyNewsLetterContent />
-        <MyAccountContent />
+        <MyProfileContent
+          name={me.user_name}
+          email_address={me.user_email_address}
+        />
+        <MyNewsLetterContent
+          bookmark_num={me.bookmark_num}
+          subscription_num={me.subscription_num}
+        />
+        <MyAccountContent email_address={me.user_email_address} />
         <MyNewsLetterList />
-        <MySubscribeList />
+        <MySubscribeList subscriptions={me.subscriptions} />
         {/* {MyProfileContent()} */}
         {/* {MyNewsLetterContent()} */}
         {/* {MyAccountContent()} */}
