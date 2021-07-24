@@ -184,14 +184,14 @@ function* loadSubscription(action) {
   }
 }
 
-function loadMailAPI(data, token) {
-  return axios.get(`/email?subscription=${data}&page=${0}`, {
-    headers: { Authorization: token },
+function loadMailAPI(action) {
+  return axios.get(`/email?subscription=${action.data}&page=${action.page}`, {
+    headers: { Authorization: action.token },
   });
 }
 function* loadMail(action) {
   try {
-    const result = yield call(loadMailAPI, action.data, action.token);
+    const result = yield call(loadMailAPI, action);
     // yield delay(1000);
     yield put({
       type: LOAD_MAIL_SUCCESS,
