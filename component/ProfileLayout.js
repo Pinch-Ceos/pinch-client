@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_SENDER_REQUEST } from '../reducers';
+import { useCookies } from 'react-cookie';
 
 const Container = styled.div`
   margin-left: 1.06%;
@@ -239,15 +240,12 @@ const MySubscribeList = (subscriptions) => {
 const ProfileLayout = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state);
-  useEffect(() => {
-    dispatch({
-      type: LOAD_SENDER_REQUEST,
-    });
-  }, []);
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   useEffect(() => {
     dispatch({
       type: LOAD_MY_INFO_REQUEST,
+      token: cookie.Token,
     });
   }, []);
 
