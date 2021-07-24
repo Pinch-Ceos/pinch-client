@@ -2,6 +2,7 @@ import { List, Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import Router from 'next/router';
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';

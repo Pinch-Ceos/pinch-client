@@ -131,7 +131,7 @@ const AppLayout = ({ children }) => {
                       borderRadius: 10,
                     }}
                   >
-                    <Link href={`/subscription/${bookmark}`}>
+                    <Link href={`/subscription/bookmark`}>
                       <a>저장한 뉴스레터</a>
                     </Link>
                   </Menu.Item>

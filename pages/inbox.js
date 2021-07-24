@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import AppLayout from '../../component/AppLayout';
-import CardList from '../../component/CardList';
-import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
-import wrapper from '../../store/configureStore';
+import AppLayout from '../component/AppLayout';
+import CardList from '../component/CardList';
+import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers';
+import wrapper from '../store/configureStore';
 
 const Mail = () => {
   const dispatch = useDispatch();
