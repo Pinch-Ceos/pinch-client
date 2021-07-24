@@ -17,12 +17,14 @@ const Mail = () => {
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     console.log(newsletter);
     dispatch({
       type: LOAD_MAIL_REQUEST,
       data: newsletter,
+      page: page,
       token: cookie.Token,
     });
     console.log(
@@ -43,8 +45,10 @@ const Mail = () => {
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: newsletter,
+            page: page,
             token: cookie.Token,
           });
+          setPage((prev) => prev + 1);
         }
       }
     }

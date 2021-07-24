@@ -66,12 +66,7 @@ const CardList = ({ data, header }) => {
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   const onCardClick = (item) => () => {
-    dispatch({
-      type: LOAD_DETAIL_REQUEST,
-      data: item.id,
-      token: cookie.Token,
-    });
-    Router.push('/letterview');
+    Router.push(`/letterview/${item.id}`);
   };
   return (
     <List
@@ -117,6 +112,7 @@ const CardList = ({ data, header }) => {
               item.bookmark ? (
                 <div style={{ marginTop: 10 }}>
                   <StyeldBookmarked
+                    style={{ zIndex: 1 }}
                     onClick={console.log('Click!')}
                     key="bookmark"
                   />
@@ -124,7 +120,8 @@ const CardList = ({ data, header }) => {
               ) : (
                 <div style={{ marginTop: 10 }}>
                   <StyeldBookmark
-                    onClick={console.log('click!')}
+                    style={{ zIndex: 1 }}
+                    onClick={console.log('Click!')}
                     key="bookmark"
                   />
                 </div>

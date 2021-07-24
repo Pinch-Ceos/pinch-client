@@ -268,7 +268,7 @@ function* loadMyInfo(action) {
 }
 
 function loadDetailAPI(data, token) {
-  return axios.get(`/email?email_id=${data}`, {
+  return axios.get(`/email/detail?email_id=${data}`, {
     headers: { Authorization: token },
   });
 }
