@@ -5,46 +5,6 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-`;
-
-const Title = styled.section`
-  text-align: center;
-  font-size: 2.5em;
-  font-weight: bold;
-  word-break: break-word;
-  margin-bottom: 6vh;
-`;
-
-const Logo = styled.div`
-  //임시
-  margin-top: 10vh;
-  text-align: center;
-  font-size: 1.125em;
-  font-weight: bold;
-  margin-bottom: 2vh;
-`;
-
-const LoginButton = styled.button`
-  display: flex;
-  justify-content: center;
-  background: none;
-  border: none;
-  margin-bottom: 7vh;
-  align-items: center;
-  /* border-radius: 15px; */
-`;
-
-const BodyImage = styled.div`
-  display: flex;
-  align-content: center;
-  justify-content: center;
-`;
-
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -91,3 +51,43 @@ const Login = () => {
 };
 
 export default Login;
+
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+`;
+
+const Title = styled.section`
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  word-break: break-word;
+  margin-bottom: 6vh;
+`;
+
+const Logo = styled.div`
+  //임시
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 1.125em;
+  font-weight: bold;
+  margin-bottom: 2vh;
+`;
+
+const LoginButton = styled.button`
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+  margin-bottom: 7vh;
+  align-items: center;
+  /* border-radius: 15px; */
+`;
+
+const BodyImage = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
+`;

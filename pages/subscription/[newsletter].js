@@ -17,19 +17,9 @@ const Mail = () => {
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
-    console.log(newsletter);
-    dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: newsletter,
-      page: page,
-      token: cookie.Token,
-    });
-    console.log(
-      me.subscriptions.find((v) => v.email_address === newsletter).name
-    );
     setHeader(
       me.subscriptions.find((v) => v.email_address === newsletter).name
     );
@@ -77,11 +67,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
     });
-    // context.store.dispatch({
-    //   type: LOAD_MAIL_REQUEST,
-    //   data: context.params.newsletter,
-    //   token: Token,
-    // });
+    context.store.dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: context.params.newsletter,
+      page: 1,
+      token: Token,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

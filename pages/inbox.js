@@ -15,16 +15,9 @@ const Mail = () => {
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
-    dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: '',
-      page: page,
-      token: cookie.Token,
-    });
-    setPage((prev) => prev + 1);
     setHeader('전체 뉴스레터');
   }, []);
 
@@ -41,6 +34,7 @@ const Mail = () => {
             page: page,
             token: cookie.Token,
           });
+          setPage((prev) => prev + 1);
         }
       }
     }
@@ -67,11 +61,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
     });
-    // context.store.dispatch({
-    //     type: LOAD_MAIL_REQUEST,
-    //     data: '',
-    //     token: Token,
-    //   });
+    context.store.dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: '',
+      page: 1,
+      token: Token,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

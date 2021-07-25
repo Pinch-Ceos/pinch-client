@@ -46,8 +46,6 @@ function logInAPI() {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    // yield delay(1000);
-    // const result = { data: `http://localhost:3000/redirect` };
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
@@ -68,27 +66,6 @@ function giveCodeAPI(data) {
 function* giveCode(action) {
   try {
     const result = yield call(giveCodeAPI, action.data);
-    // yield delay(1000);
-    // const result = {
-    //   data: {
-    //     user_name: '임해진',
-    //     user_email_address: 'hj0816hj@gmail.com',
-    //     subscriptions: [
-    //       {
-    //         id: 1,
-    //         name: 'NEWNEEK',
-    //         email_address: 'whatsup@newneek.co',
-    //       },
-    //       {
-    //         id: 3,
-    //         name: '뉴스레터 이름',
-    //         email_address: '뉴스레터 이메일 주소',
-    //       },
-    //     ],
-    //     subscription_num: 2,
-    //     bookmark_num: 1,
-    //   },
-    // };
     yield put({
       type: GIVE_CODE_SUCCESS,
       data: result.data,
@@ -106,7 +83,6 @@ function logOutAPI() {
 }
 function* logOut() {
   try {
-    // const result = yield call(logOutAPI);
     yield delay(1000);
     yield put({
       type: 'LOG_OUT_SUCCESS',
@@ -127,10 +103,8 @@ function loadSenderAPI(token) {
 function* loadSender(action) {
   try {
     const result = yield call(loadSenderAPI, action.token);
-    // yield delay(1000);
     yield put({
       type: LOAD_SENDER_SUCCESS,
-      // data: generateDummySendList(12),
       data: result.data,
     });
   } catch (err) {
@@ -151,29 +125,6 @@ function loadSubscriptionAPI(data, token) {
 function* loadSubscription(action) {
   try {
     const result = yield call(loadSubscriptionAPI, action.data, action.token);
-    // yield delay(1000);
-    // const result = {
-    //   data: {
-    //     subscriptions: [
-    //       {
-    //         name: 'NEWNEEK',
-    //         email_address: 'whatsup@newneek.co',
-    //       },
-    //       {
-    //         name: 'UPPITY',
-    //         email_address: 'moneyletter@uppity.co.kr',
-    //       },
-    //       {
-    //         name: '디독',
-    //         email_address: 'd.dok.newsletter@gmail.com',
-    //       },
-    //       {
-    //         name: 'ddddd',
-    //         email_address: 'letter@gmail.com',
-    //       },
-    //     ],
-    //   },
-    // };
     yield put({
       type: LOAD_SUBSCRIPTION_SUCCESS,
       data: result.data,
@@ -216,10 +167,8 @@ function loadMailAPI(action) {
 function* loadMail(action) {
   try {
     const result = yield call(loadMailAPI, action);
-    // yield delay(1000);
     yield put({
       type: LOAD_MAIL_SUCCESS,
-      // data: generateDummyMail(12),
       data: result.data,
     });
   } catch (err) {
@@ -229,18 +178,16 @@ function* loadMail(action) {
     });
   }
 }
-function loadBookmarkAPI(token) {
-  return axios.get(`/email/bookmark?page=${0}`, {
-    headers: { Authorization: token },
+function loadBookmarkAPI(action) {
+  return axios.get(`/email/bookmark?page=${action.page}`, {
+    headers: { Authorization: action.token },
   });
 }
 function* loadBookmark(action) {
   try {
-    const result = yield call(loadBookmarkAPI, action.token);
-    // yield delay(1000);
+    const result = yield call(loadBookmarkAPI, action);
     yield put({
       type: LOAD_BOOKMARK_SUCCESS,
-      // data: generateDummyBOOKMARK(12),
       data: result.data,
     });
   } catch (err) {
@@ -258,27 +205,6 @@ function loadMyInfoAPI(token) {
 function* loadMyInfo(action) {
   try {
     const result = yield call(loadMyInfoAPI, action.token);
-    // yield delay(1000);
-    // const result = {
-    //   data: {
-    //     user_name: '임해진',
-    //     user_email_address: 'hj0816hj@gmail.com',
-    //     subscriptions: [
-    //       {
-    //         id: 1,
-    //         name: 'NEWNEEK',
-    //         email_address: 'whatsup@newneek.co',
-    //       },
-    //       {
-    //         id: 3,
-    //         name: '뉴스레터 이름',
-    //         email_address: '뉴스레터 이메일 주소',
-    //       },
-    //     ],
-    //     subscription_num: 2,
-    //     bookmark_num: 1,
-    //   },
-    // };
     yield put({
       type: LOAD_MY_INFO_SUCCESS,
       data: result.data,
@@ -299,7 +225,6 @@ function loadDetailAPI(data, token) {
 function* loadDetail(action) {
   try {
     const result = yield call(loadDetailAPI, action.data, action.token);
-    // yield delay(1000);
     yield put({
       type: LOAD_DETAIL_SUCCESS,
       data: result.data,

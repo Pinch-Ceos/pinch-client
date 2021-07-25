@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import AppLayout from '../../component/AppLayout';
-import CardList from '../../component/CardList';
-import { LOAD_BOOKMARK_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
+import AppLayout from '../component/AppLayout';
+import CardList from '../component/CardList';
+import { LOAD_BOOKMARK_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers';
 import wrapper from '../store/configureStore';
 
 const Mail = () => {
@@ -14,12 +14,9 @@ const Mail = () => {
   );
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
-    dispatch({
-      type: LOAD_BOOKMARK_REQUEST,
-      token: cookie.Token,
-    });
     setHeader('저장한 뉴스레터');
   }, []);
 
@@ -32,8 +29,10 @@ const Mail = () => {
         if (hasMoreMails && !loadMailLoading) {
           dispatch({
             type: LOAD_BOOKMARK_REQUEST,
+            page: page,
             token: cookie.Token,
           });
+          setPage((prev) => prev + 1);
         }
       }
     }
@@ -60,10 +59,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
     });
-    // context.store.dispatch({
-    //     type: LOAD_BOOKMARK_REQUEST,
-    //     token: Token,
-    //   });
+    context.store.dispatch({
+      type: LOAD_BOOKMARK_REQUEST,
+      page: 1,
+      token: Token,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

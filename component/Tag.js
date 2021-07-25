@@ -4,6 +4,40 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { select } from '@redux-saga/core/effects';
 
+const Tags = ({ selectedTags, setSelectedTags }) => {
+  const { sender_list } = useSelector((state) => state);
+
+  const handleChange = (tag, checked) => {
+    const nextSelectedTags = checked
+      ? [...selectedTags, tag]
+      : selectedTags.filter((t) => t !== tag);
+    setSelectedTags(nextSelectedTags);
+  };
+
+  return (
+    <div style={{ width: '100%' }}>
+      <OverflowGradient>
+        <Container universal={true}>
+          <Global />
+          {sender_list.map((tag) => (
+            <CheckableTag
+              key={tag.name}
+              checked={selectedTags.indexOf(tag) > -1}
+              onChange={(checked) => handleChange(tag, checked)}
+            >
+              {tag.name}
+              <br />
+              {tag.email_address}
+            </CheckableTag>
+          ))}
+        </Container>
+      </OverflowGradient>
+    </div>
+  );
+};
+
+export default Tags;
+
 const Global = createGlobalStyle`
     .ant-tag{
         margin: 10px;
@@ -70,37 +104,3 @@ const Container = styled.div`
     background-color: none;
   }
 `;
-
-const Tags = ({ selectedTags, setSelectedTags }) => {
-  const { sender_list } = useSelector((state) => state);
-
-  const handleChange = (tag, checked) => {
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter((t) => t !== tag);
-    setSelectedTags(nextSelectedTags);
-  };
-
-  return (
-    <div style={{ width: '100%' }}>
-      <OverflowGradient>
-        <Container universal={true}>
-          <Global />
-          {sender_list.map((tag) => (
-            <CheckableTag
-              key={tag.name}
-              checked={selectedTags.indexOf(tag) > -1}
-              onChange={(checked) => handleChange(tag, checked)}
-            >
-              {tag.name}
-              <br />
-              {tag.email_address}
-            </CheckableTag>
-          ))}
-        </Container>
-      </OverflowGradient>
-    </div>
-  );
-};
-
-export default Tags;

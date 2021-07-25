@@ -9,58 +9,6 @@ import styled from 'styled-components';
 import ModalWindow from '../component/Modal';
 import { LOAD_DETAIL_REQUEST } from '../reducers';
 
-const StyledMeta = styled(Meta)`
-  .ant-list-item-meta-title {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: box;
-    margin-top: 4px;
-    height: 44px;
-    overflow: hidden;
-    vertical-align: center;
-    text-overflow: ellipsis;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-  .ant-list-item-meta-description {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: box;
-    height: 44px;
-    margin-top: 8px;
-    overflow: hidden;
-    vertical-align: top;
-    text-overflow: ellipsis;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-`;
-const StyledCard = styled(Card)`
-  .ant-card-body {
-    padding: 8px;
-  }
-`;
-const StyeldBookmark = styled(BsFillBookmarkFill)`
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
-  width: 20px;
-  height: 20px;
-`;
-
-const StyeldBookmarked = styled(BsFillBookmarkFill)`
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
-  width: 20px;
-  height: 20px;
-  color: #3562ff;
-`;
-
 const CardList = ({ data, header }) => {
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
@@ -103,7 +51,7 @@ const CardList = ({ data, header }) => {
                 src={item.image}
                 style={{
                   height: 146,
-                  objectFit: 'cover',
+                  objectFit: 'fill',
                   borderRadius: '15px',
                 }}
               />
@@ -136,3 +84,56 @@ const CardList = ({ data, header }) => {
   );
 };
 export default CardList;
+
+const StyledMeta = styled(Meta)`
+  .ant-list-item-meta-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    margin-top: 4px;
+    height: 44px;
+    overflow: hidden;
+    vertical-align: center;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .ant-list-item-meta-description {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    height: 44px;
+    margin-top: 8px;
+    overflow: hidden;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+`;
+const StyledCard = styled(Card)`
+  // opacity: 0.5;
+  .ant-card-body {
+    padding: 8px;
+  }
+`;
+const StyeldBookmark = styled(BsFillBookmarkFill)`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+  width: 20px;
+  height: 20px;
+`;
+
+const StyeldBookmarked = styled(BsFillBookmarkFill)`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+  width: 20px;
+  height: 20px;
+  color: #3562ff;
+`;

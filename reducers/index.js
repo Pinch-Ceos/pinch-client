@@ -4,10 +4,6 @@ import faker from 'faker';
 
 const initalState = {
   me: null,
-  // email_address: null,
-  // name: null,
-  // token: null,
-  // subscribe_list: [],
   mails: [],
   sender_list: [],
   view: null,
@@ -74,26 +70,6 @@ export const LOAD_DETAIL_FAILURE = 'LOAD_DETAIL_FAILURE';
 export const DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST';
 export const DELETE_SUBSCRIPTION_SUCCESS = 'DELETE_SUBSCRIPTION_SUCCESS';
 export const DELETE_SUBSCRIPTION_FAILURE = 'DELETE_SUBSCRIPTION_FAILURE';
-
-export const generateDummyMail = (number) =>
-  Array(number)
-    .fill()
-    .map(() => ({
-      name: faker.name.findName(),
-      email_address: faker.internet.email(),
-      datetime: faker.datatype.datetime(),
-      subject: faker.name.title(),
-      snippet: faker.lorem.paragraph(),
-      image: faker.image.image(),
-    }));
-
-export const generateDummySendList = (number) =>
-  Array(number)
-    .fill()
-    .map(() => ({
-      name: faker.name.findName(),
-      email_address: faker.internet.email(),
-    }));
 
 export const filterSubscriptionList = (id, subscriptions) => {
   return subscriptions.filter((el) => el.indexOf(id) > -1);

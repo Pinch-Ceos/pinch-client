@@ -8,85 +8,6 @@ import { LOAD_SENDER_REQUEST } from '../reducers';
 import { LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
-const Global = createGlobalStyle`
- .ant-modal-header{
-    padding: 0px 0px;
-    border-bottom: none;
-  }
-
-  .ant-modal-content{
-    border: none;
-    border-radius: 30;
-    display: flex;
-    background: none;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: none;
-  }
-  .ant-modal-body{
-    color: #b0b1b6;
-    text-align: center;
-    border-bottom: none;
-    border-radius: 12px;
-    padding: 0;
-    
-  }
-  .ant-modal-footer{
-    border-top: none;
-    display: flex;
-    justify-content: center;
-  }
-
-  .ant-btn .ant-btn-primary{
-    border-radius: 15;
-    padding: 10, 10, 15, 15;
-    margin: 0;
-  }
-`;
-
-const StyledCompo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-`;
-
-const StyledTitle = styled.div`
-  padding: 20px;
-  height: 100px;
-  border: none;
-  text-align: center;
-  background: #2b2e32;
-  color: white;
-  font-size: 2em;
-  word-break: keep-all;
-`;
-
-const StyledBody = styled.div`
-  font-size: 1em;
-  color: #b0b1b6;
-  text-align: center;
-  width: 98%;
-  word-break: break-word;
-`;
-
-const StyledButton = styled.button`
-  border-radius: 20px;
-  padding: 20px 20px;
-  margin-top: 7vh;
-  font-size: 1em;
-  background-color: #3562ff;
-  border: none;
-  width: 146px;
-  z-index: 1;
-`;
-
-const StyledImage = styled.div`
-  margin-top: 50px;
-  margin-bottom: 50px;
-`;
-
 const ModalWindow = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -224,3 +145,82 @@ const ModalWindow = () => {
 };
 
 export default ModalWindow;
+
+const Global = createGlobalStyle`
+ .ant-modal-header{
+    padding: 0px 0px;
+    border-bottom: none;
+  }
+
+  .ant-modal-content{
+    border: none;
+    border-radius: 30;
+    display: flex;
+    background: none;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: none;
+  }
+  .ant-modal-body{
+    color: #b0b1b6;
+    text-align: center;
+    border-bottom: none;
+    border-radius: 12px;
+    padding: 0;
+    
+  }
+  .ant-modal-footer{
+    border-top: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ant-btn .ant-btn-primary{
+    border-radius: 15;
+    padding: 10, 10, 15, 15;
+    margin: 0;
+  }
+`;
+
+const StyledCompo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+`;
+
+const StyledTitle = styled.div`
+  padding: 20px;
+  height: 100px;
+  border: none;
+  text-align: center;
+  background: #2b2e32;
+  color: white;
+  font-size: 2em;
+  word-break: keep-all;
+`;
+
+const StyledBody = styled.div`
+  font-size: 1em;
+  color: #b0b1b6;
+  text-align: center;
+  width: 98%;
+  word-break: break-word;
+`;
+
+const StyledButton = styled.button`
+  border-radius: 20px;
+  padding: 20px 20px;
+  margin-top: 7vh;
+  font-size: 1em;
+  background-color: #3562ff;
+  border: none;
+  width: 146px;
+  z-index: 1;
+`;
+
+const StyledImage = styled.div`
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;

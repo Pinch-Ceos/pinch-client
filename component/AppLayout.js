@@ -7,39 +7,6 @@ import { useSelector } from 'react-redux';
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const Global = createGlobalStyle`
-  .ant-row{
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-  }
-  .ant-col:first-child{
-    padding-left: 0 !important;
-  }
-  .ant-col:last-child{
-    padding-right: 0 !important;
-  }
-  .ant-menu > .ant-menu-item-selected::after {
-    border-right:none;
-  }
-  .ant-list > .ant-list-header{
-    border: none;
-  }
-  .ant-card-actions {
-    border: none;
-  }
-  .ant-menu-title-content {
-    margin-left: 10px;
-  }
-  .body{
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .ant-layout-content {
-    width: 100%;
-  }
-`;
-
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state);
   return (
@@ -164,4 +131,38 @@ const AppLayout = ({ children }) => {
     </>
   );
 };
+
 export default AppLayout;
+
+const Global = createGlobalStyle`
+  .ant-row{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  .ant-col:first-child{
+    padding-left: 0 !important;
+  }
+  .ant-col:last-child{
+    padding-right: 0 !important;
+  }
+  .ant-menu > .ant-menu-item-selected::after {
+    border-right:none;
+  }
+  .ant-list > .ant-list-header{
+    border: none;
+  }
+  .ant-card-actions {
+    border: none;
+  }
+  .ant-menu-title-content {
+    margin-left: 10px;
+  }
+  .body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .ant-layout-content {
+    width: 100%;
+  }
+`;
