@@ -31,6 +31,12 @@ import {
   LOAD_DETAIL_REQUEST,
   LOAD_DETAIL_SUCCESS,
   LOAD_DETAIL_FAILURE,
+  ADD_BOOKMARK_REQUEST,
+  ADD_BOOKMARK_SUCCESS,
+  ADD_BOOKMARK_FAILURE,
+  DELETE_BOOKMARK_REQUEST,
+  DELETE_BOOKMARK_SUCCESS,
+  DELETE_BOOKMARK_FAILURE,
 } from '../reducers';
 
 import backUrl from '../config/config';
@@ -236,6 +242,52 @@ function* loadDetail(action) {
     });
   }
 }
+function addBookmarkAPI(action) {
+  return axios.post(
+    `/bookmarks/`,
+    { email_id: action.data },
+    {
+      headers: { Authorization: action.token },
+    }
+  );
+}
+function* addBookmark(action) {
+  try {
+    const result = yield call(addBookmarkAPI, action);
+    console.log(result);
+    yield put({
+      type: ADD_BOOKMARK_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: ADD_BOOKMARK_FAILURE,
+      error: err.response,
+    });
+  }
+}
+function deleteBookmarkAPI(action) {
+  return axios.delete(`/bookmarks/${action.data}/`, {
+    headers: { Authorization: action.token },
+  });
+}
+function* deleteBookmark(action) {
+  try {
+    const result = yield call(deleteBookmarkAPI, action);
+    console.log(result);
+    yield put({
+      type: DELETE_BOOKMARK_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: DELETE_BOOKMARK_FAILURE,
+      error: err.response,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -266,6 +318,12 @@ function* watchLoadDetail() {
 function* watchDeleteSubscription() {
   yield takeLatest(DELETE_SUBSCRIPTION_REQUEST, deleteSubscription);
 }
+function* watchAddBookmark() {
+  yield takeLatest(ADD_BOOKMARK_REQUEST, addBookmark);
+}
+function* watchDeleteBookmark() {
+  yield takeLatest(DELETE_BOOKMARK_REQUEST, deleteBookmark);
+}
 export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
@@ -278,5 +336,7 @@ export default function* rootSaga() {
     fork(watchLoadBookmark),
     fork(watchLoadDetail),
     fork(watchDeleteSubscription),
+    fork(watchAddBookmark),
+    fork(watchDeleteBookmark),
   ]);
 }

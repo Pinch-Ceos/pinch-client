@@ -1,4 +1,4 @@
-import { List, Card } from 'antd';
+import { List, Card, Button } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import Router from 'next/router';
 import React from 'react';
@@ -7,14 +7,34 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ModalWindow from '../component/Modal';
-import { LOAD_DETAIL_REQUEST } from '../reducers';
-
+import {
+  ADD_BOOKMARK_REQUEST,
+  DELETE_BOOKMARK_REQUEST,
+  LOAD_DETAIL_REQUEST,
+} from '../reducers';
+import Image from 'next/image';
 const CardList = ({ data, header }) => {
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   const onCardClick = (item) => () => {
     Router.push(`/letterview/${item.id}`);
+  };
+  const onBookmarkClick = (item) => {
+    console.log(item);
+    if (item.bookmark_id) {
+      dispatch({
+        type: DELETE_BOOKMARK_REQUEST,
+        data: item.bookmark_id,
+        token: cookie.Token,
+      });
+    } else {
+      dispatch({
+        type: ADD_BOOKMARK_REQUEST,
+        data: item.id,
+        token: cookie.Token,
+      });
+    }
   };
   return (
     <List
@@ -43,6 +63,7 @@ const CardList = ({ data, header }) => {
           style={{ marginTop: '20px', marginLeft: 10, marginRight: 10 }}
         >
           <StyledCard
+            hoverable
             onClick={onCardClick(item)}
             style={{ hight: 200, border: 'none' }}
             cover={
@@ -57,22 +78,30 @@ const CardList = ({ data, header }) => {
               />
             }
             actions={[
-              item.bookmark ? (
-                <div style={{ marginTop: 10 }}>
-                  <StyeldBookmarked
-                    style={{ zIndex: 1 }}
-                    onClick={console.log('Click!')}
-                    key="bookmark"
+              item.bookmark_id ? (
+                <div>
+                  <Image
+                    src={'/design/bookmarked.png'}
+                    width="30px"
+                    height="30px"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onBookmarkClick(item);
+                    }}
                   />
                 </div>
               ) : (
-                <div style={{ marginTop: 10 }}>
-                  <StyeldBookmark
-                    style={{ zIndex: 1 }}
-                    onClick={console.log('Click!')}
-                    key="bookmark"
+                <StyledBookmark>
+                  <Image
+                    src={'/design/bookmark.png'}
+                    width="30px"
+                    height="30px"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onBookmarkClick(item);
+                    }}
                   />
-                </div>
+                </StyledBookmark>
               ),
             ]}
           >
@@ -115,25 +144,26 @@ const StyledMeta = styled(Meta)`
 `;
 const StyledCard = styled(Card)`
   // opacity: 0.5;
+  border-radius: 15px;
+  &:hover {
+    div {
+      opacity: 1;
+    }
+  }
   .ant-card-body {
     padding: 8px;
   }
+  .ant-card-actions {
+    border-radius: 15px;
+  }
+  .ant-card-actions > li > span {
+    // opacity: 0;
+    pointer-event: none;
+    &:hover {
+      color: black;
+    }
+  }
 `;
-const StyeldBookmark = styled(BsFillBookmarkFill)`
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
-  width: 20px;
-  height: 20px;
-`;
-
-const StyeldBookmarked = styled(BsFillBookmarkFill)`
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
-  width: 20px;
-  height: 20px;
-  color: #3562ff;
+const StyledBookmark = styled.div`
+  opacity: 0;
 `;

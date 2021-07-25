@@ -33,6 +33,12 @@ const initalState = {
   deleteSubcriptionLoading: false,
   deleteSubcriptionDone: false,
   deleteSubcriptionError: null,
+  addBookmarkLoading: false,
+  addBookmarkDone: false,
+  addBookmarkError: null,
+  deleteBookmarkLoading: false,
+  deleteBookmarkDone: false,
+  deleteBookmarkError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -71,6 +77,14 @@ export const DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST';
 export const DELETE_SUBSCRIPTION_SUCCESS = 'DELETE_SUBSCRIPTION_SUCCESS';
 export const DELETE_SUBSCRIPTION_FAILURE = 'DELETE_SUBSCRIPTION_FAILURE';
 
+export const ADD_BOOKMARK_REQUEST = 'ADD_BOOKMARK_REQUEST';
+export const ADD_BOOKMARK_SUCCESS = 'ADD_BOOKMARK_SUCCESS';
+export const ADD_BOOKMARK_FAILURE = 'ADD_BOOKMARK_FAILURE';
+
+export const DELETE_BOOKMARK_REQUEST = 'DELETE_BOOKMARK_REQUEST';
+export const DELETE_BOOKMARK_SUCCESS = 'DELETE_BOOKMARK_SUCCESS';
+export const DELETE_BOOKMARK_FAILURE = 'DELETE_BOOKMARK_FAILURE';
+
 export const filterSubscriptionList = (id, subscriptions) => {
   return subscriptions.filter((el) => el.indexOf(id) > -1);
 };
@@ -80,6 +94,44 @@ const rootReducer = (state = initalState, action) =>
     switch (action.type) {
       case HYDRATE:
         return action.payload;
+      case DELETE_BOOKMARK_REQUEST:
+        draft.deleteBookmarkLoading = true;
+        draft.deleteBookmarkDone = false;
+        draft.deleteBookmarkError = null;
+        break;
+      case DELETE_BOOKMARK_SUCCESS:
+        draft.deleteBookmarkLoading = false;
+        draft.deleteBookmarkDone = true;
+        console.log(action.data.email_id);
+        const delindex = draft.mails.findIndex(
+          (mail) => mail.bookmark_id === action.data
+        );
+        console.log(delindex);
+        draft.mails[delindex].bookmark_id = null;
+        break;
+      case DELETE_BOOKMARK_FAILURE:
+        draft.deleteBookmarkLoading = false;
+        draft.deleteBookmarkError = action.error;
+        break;
+      case ADD_BOOKMARK_REQUEST:
+        draft.addBookmarkLoading = true;
+        draft.addBookmarkDone = false;
+        draft.addBookmarkError = null;
+        break;
+      case ADD_BOOKMARK_SUCCESS:
+        draft.addBookmarkLoading = false;
+        draft.addBookmarkDone = true;
+        console.log(action.data.email_id);
+        const addindex = draft.mails.findIndex(
+          (mail) => mail.id === action.data.email_id
+        );
+        console.log(addindex);
+        draft.mails[addindex].bookmark_id = action.data.id;
+        break;
+      case ADD_BOOKMARK_FAILURE:
+        draft.addBookmarkLoading = false;
+        draft.addBookmarkError = action.error;
+        break;
       case LOAD_DETAIL_REQUEST:
         draft.loadDetailLoading = true;
         draft.loadDetailDone = false;
