@@ -13,6 +13,9 @@ import {
   LOAD_DETAIL_REQUEST,
 } from '../reducers';
 import Image from 'next/image';
+import Avatar from 'antd/lib/avatar/avatar';
+import moment from 'moment';
+import Link from 'next/link';
 const CardList = ({ data, header }) => {
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
@@ -50,6 +53,7 @@ const CardList = ({ data, header }) => {
       style={{
         backgroundColor: 'white',
         border: 'none',
+        width: '100%',
       }}
       header={
         <div style={{ border: 0, marginLeft: '5px', fontSize: '17px' }}>
@@ -60,59 +64,187 @@ const CardList = ({ data, header }) => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item
-          style={{ marginTop: '20px', marginLeft: 10, marginRight: 10 }}
+          style={{
+            marginTop: '20px',
+            marginLeft: 10,
+            marginRight: 10,
+          }}
         >
-          <StyledCard
-            hoverable
-            onClick={onCardClick(item)}
-            style={{ hight: 200, border: 'none' }}
-            cover={
-              <img
-                alt="example"
-                src={item.image}
-                style={{
-                  height: 146,
-                  objectFit: 'fill',
-                  borderRadius: '15px',
-                }}
+          {item.image ? (
+            <Link
+              href={`/letterview/${item.id}?name=${item.name}&subject=${item.subject}&bookmark_id=${item.bookmark_id}`}
+            >
+              <a>
+                <StyledCard
+                  hoverable
+                  onClick={onCardClick(item)}
+                  style={{ hight: 200, border: 'none' }}
+                  cover={
+                    <img
+                      alt="cover"
+                      src={item.image}
+                      style={{
+                        height: 146,
+                        objectFit: 'fill',
+                        borderRadius: '15px',
+                      }}
+                    />
+                  }
+                  actions={[
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'start',
+                        marginLeft: 8,
+                        textAlign: 'left',
+                      }}
+                    >
+                      {moment(item.datetime).format('YYYY.MM.DD')}
+                      <br />
+                      {item.name}
+                    </div>,
+                    item.bookmark_id ? (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'flex-end',
+                          marginRight: 24,
+                        }}
+                      >
+                        <Image
+                          src={'/design/bookmarked.png'}
+                          width="30px"
+                          height="30px"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onBookmarkClick(item);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <StyledBookmark>
+                        <Image
+                          src={'/design/bookmark.png'}
+                          width="30px"
+                          height="30px"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onBookmarkClick(item);
+                          }}
+                        />
+                      </StyledBookmark>
+                    ),
+                  ]}
+                >
+                  <StyledMeta title={item.subject} description={item.snippet} />
+                </StyledCard>
+              </a>
+            </Link>
+          ) : (
+            <StyledCard
+              hoverable
+              onClick={onCardClick(item)}
+              style={{ border: 'none' }}
+              actions={[
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'start',
+                    marginLeft: 8,
+                  }}
+                >
+                  {moment(item.datetime).format('YYYY.MM.DD')}
+                  <br />
+                  {item.name}
+                </div>,
+                item.bookmark_id ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      marginRight: 24,
+                    }}
+                  >
+                    <Image
+                      src={'/design/bookmarked.png'}
+                      width="30px"
+                      height="30px"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onBookmarkClick(item);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <StyledBookmark>
+                    <Image
+                      src={'/design/bookmark.png'}
+                      width="30px"
+                      height="30px"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onBookmarkClick(item);
+                      }}
+                    />
+                  </StyledBookmark>
+                ),
+              ]}
+            >
+              <StyeldMeta2
+                avatar={
+                  <div style={{ marginTop: 16 }}>
+                    <Avatar style={{ width: 36, height: 36 }}>
+                      {item.name[0]}
+                    </Avatar>
+                  </div>
+                }
+                title={item.subject}
+                description={item.snippet}
               />
-            }
-            actions={[
-              item.bookmark_id ? (
-                <div>
-                  <Image
-                    src={'/design/bookmarked.png'}
-                    width="30px"
-                    height="30px"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onBookmarkClick(item);
-                    }}
-                  />
-                </div>
-              ) : (
-                <StyledBookmark>
-                  <Image
-                    src={'/design/bookmark.png'}
-                    width="30px"
-                    height="30px"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onBookmarkClick(item);
-                    }}
-                  />
-                </StyledBookmark>
-              ),
-            ]}
-          >
-            <StyledMeta title={item.subject} description={item.snippet} />
-          </StyledCard>
+            </StyledCard>
+          )}
         </List.Item>
       )}
     />
   );
 };
 export default CardList;
+
+const StyeldMeta2 = styled(Meta)`
+  flex-direction: column;
+  .ant-list-item-meta-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .ant-list-item-meta-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    margin-top: 12px;
+    height: 44px;
+    overflow: hidden;
+    vertical-align: center;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .ant-list-item-meta-description {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: box;
+    height: 66px;
+    margin-top: 8px;
+    margin-bottom: 60px;
+    overflow: hidden;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+`;
 
 const StyledMeta = styled(Meta)`
   .ant-list-item-meta-title {
@@ -156,14 +288,20 @@ const StyledCard = styled(Card)`
   .ant-card-actions {
     border-radius: 15px;
   }
+  .ant-card-actions > li:not(:last-child) {
+    border: none;
+  }
   .ant-card-actions > li > span {
     // opacity: 0;
     pointer-event: none;
     &:hover {
-      color: black;
+      color: rgba(0, 0, 0, 0.45);
     }
   }
 `;
 const StyledBookmark = styled.div`
   opacity: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 24px;
 `;
