@@ -53,7 +53,7 @@ const AppLayout = ({ children }) => {
               >
                 <div className="logo" />
                 <Menu defaultSelectedKeys={['1']} mode="inline">
-                  <Menu.Item
+                  <StyledMenuItem
                     key="1"
                     icon="👀"
                     style={{
@@ -65,8 +65,8 @@ const AppLayout = ({ children }) => {
                     <Link href="/inbox" style={{ color: 'red' }}>
                       <a>Inbox</a>
                     </Link>
-                  </Menu.Item>
-                  <SubMenu
+                  </StyledMenuItem>
+                  <StyledSubMenu
                     key="2"
                     icon="📚 "
                     title=" 구독 중인 뉴스레터"
@@ -78,7 +78,7 @@ const AppLayout = ({ children }) => {
                     }}
                   >
                     {me.subscriptions.map((v) => (
-                      <Menu.Item
+                      <StyledMenuItem
                         key={v.name}
                         style={{
                           color: 'black',
@@ -92,10 +92,10 @@ const AppLayout = ({ children }) => {
                         <Link href={`/subscription/${v.email_address}`}>
                           <a>{v.name}</a>
                         </Link>
-                      </Menu.Item>
+                      </StyledMenuItem>
                     ))}
-                  </SubMenu>
-                  <Menu.Item
+                  </StyledSubMenu>
+                  <StyledMenuItem
                     key="sub1"
                     icon="📌"
                     style={{
@@ -107,7 +107,7 @@ const AppLayout = ({ children }) => {
                     <Link href={`/bookmark`}>
                       <a>저장한 뉴스레터</a>
                     </Link>
-                  </Menu.Item>
+                  </StyledMenuItem>
                 </Menu>
               </Sider>
             </Col>
@@ -140,8 +140,20 @@ const AppLayout = ({ children }) => {
 };
 
 export default AppLayout;
-
+const StyledMenuItem = styled(Menu.Item)`
+  a:active {
+    background-color: white;
+  }
+`;
+const StyledSubMenu = styled(Menu.SubMenu)`
+  a:active {
+    background-color: white !important;
+  }
+`;
 const Global = createGlobalStyle`
+  *{
+    background-color: white;
+  }
   .ant-row{
     margin-right: 0 !important;
     margin-left: 0 !important;
@@ -155,8 +167,21 @@ const Global = createGlobalStyle`
   .ant-menu > .ant-menu-item-selected::after {
     border-right:none;
   }
+  .ant-menu .ant-menu-root .ant-menu-inline .ant-menu-light{
+    background-color:white;
+  }
+  .ant-menu-submenu-title::active{
+    background-color:white;
+  }
+  .ant-menu-submenu-title{
+    background-color:white;
+  }
+  .ant-list-header::active{
+    background-color:white;
+  }
   .ant-list > .ant-list-header{
     border: none;
+    background-color:white;
   }
   .ant-card-actions {
     border: none;
@@ -177,6 +202,7 @@ const Global = createGlobalStyle`
   }
   .ant-menu-item-selected a, .ant-menu-item-selected a:hover {
     color: black;
+    background-color: white;
   }
   .ant-menu-item a:hover {
     color: black;
@@ -184,10 +210,29 @@ const Global = createGlobalStyle`
   .ant-menu-submenu-title:hover {
     color: black;
   }
+  .ant-menu-submenu-arrow {
+    display:none;
+  } 
+  .ant-menu-submenu-inline{
+    background-color: white !important;
+  }
+  .ant-menu-submenu-inline ::active{
+    background-color: white !important;
+  }
+  .ant-menu-item-active {
+    background-color: white !important;
+  }
+  .ant-menu-submenu::active .ant-menu-submenu-inline::active .ant-menu-submenu-active::active .ant-menu-item-active::active .ant-menu-item-selected::active{
+    background-color: white !important;
+  }
+  .ant-menu-item::active .ant-menu-item-selected::active{
+    background-color: white !important;
+  }
   .ant-menu-light .ant-menu-item:hover, .ant-menu-light .ant-menu-item-active, .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-light .ant-menu-submenu-active, .ant-menu-light .ant-menu-submenu-title:hover{
     color: black;
   }
   .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
     border: none;
   }
+  
 `;
