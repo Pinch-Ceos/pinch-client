@@ -85,10 +85,6 @@ export const DELETE_BOOKMARK_REQUEST = 'DELETE_BOOKMARK_REQUEST';
 export const DELETE_BOOKMARK_SUCCESS = 'DELETE_BOOKMARK_SUCCESS';
 export const DELETE_BOOKMARK_FAILURE = 'DELETE_BOOKMARK_FAILURE';
 
-export const filterSubscriptionList = (id, subscriptions) => {
-  return subscriptions.filter((el) => el.indexOf(id) > -1);
-};
-
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -200,12 +196,9 @@ const rootReducer = (state = initalState, action) =>
       case DELETE_SUBSCRIPTION_SUCCESS:
         draft.loadSubscriptionLoading = false;
         draft.loadSubscriptionDone = true;
-        // draft.me.subscriptions = action.data.subscriptions;
-        draft.me.subscriptions = filterSubscriptionList(
-          action.data,
-          action.data.subscriptions
+        draft.me.subscriptions = draft.me.subscriptions.filter(
+          (value) => value.id !== action.data
         );
-        //filter 사용해서 action.data 값 subList에서 빼주기
         break;
       case DELETE_SUBSCRIPTION_FAILURE:
         draft.loadSubscriptionLoading = false;
