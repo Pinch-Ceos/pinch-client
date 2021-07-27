@@ -41,6 +41,9 @@ const CardList = ({ data, header }) => {
       });
     }
   };
+  // const card = (item) => {
+  //   if()
+  // }
   return (
     <List
       grid={{
@@ -72,6 +75,7 @@ const CardList = ({ data, header }) => {
             marginRight: 10,
           }}
         >
+          {/* {card(item)} */}
           {item.image ? (
             <StyledCard
               hoverable

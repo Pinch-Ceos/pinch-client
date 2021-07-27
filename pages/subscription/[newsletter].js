@@ -23,6 +23,12 @@ const Mail = () => {
     setHeader(
       me.subscriptions.find((v) => v.email_address === newsletter).name
     );
+    dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: newsletter,
+      page: 1,
+      token: cookie.Token,
+    });
   }, [newsletter]);
 
   useEffect(() => {
@@ -65,12 +71,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
-      token: Token,
-    });
-    context.store.dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: context.params.newsletter,
-      page: 1,
       token: Token,
     });
     context.store.dispatch(END);

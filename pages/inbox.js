@@ -19,6 +19,12 @@ const Mail = () => {
 
   useEffect(() => {
     setHeader('전체 뉴스레터');
+    dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: '',
+      page: 1,
+      token: cookie.Token,
+    });
   }, []);
 
   useEffect(() => {
@@ -59,12 +65,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
-      token: Token,
-    });
-    context.store.dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: '',
-      page: 1,
       token: Token,
     });
     context.store.dispatch(END);

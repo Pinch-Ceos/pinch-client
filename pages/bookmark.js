@@ -18,6 +18,11 @@ const Mail = () => {
 
   useEffect(() => {
     setHeader('저장한 뉴스레터');
+    dispatch({
+      type: LOAD_BOOKMARK_REQUEST,
+      page: 1,
+      token: cookie.Token,
+    });
   }, []);
 
   useEffect(() => {
@@ -57,11 +62,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
-      token: Token,
-    });
-    context.store.dispatch({
-      type: LOAD_BOOKMARK_REQUEST,
-      page: 1,
       token: Token,
     });
     context.store.dispatch(END);
