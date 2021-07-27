@@ -1,10 +1,10 @@
 import { Modal, Button } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
-import { useDispatch } from 'react-redux';
-import { LOAD_SENDER_REQUEST,LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
 const ModalWindow = () => {
@@ -14,6 +14,7 @@ const ModalWindow = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const { loadSenderLoading } = useSelector((state) => state);
 
   const showModal = () => {
     setComponum(0);
@@ -24,24 +25,8 @@ const ModalWindow = () => {
     setVisible(false);
   };
 
-  const changeBody = () => {
-    if (componum === 0) {
-      setIsLoading(true);
-      dispatch({
-        type: LOAD_SENDER_REQUEST,
-        token: cookie.Token,
-      });
-      setComponum(1);
-    } else if (componum === 1) {
-      setComponum(2);
-    } else if (componum === 2) {
-      handleCancel();
-      dispatch({
-        type: LOAD_SUBSCRIPTION_REQUEST,
-        data: selectedTags,
-        token: cookie.Token,
-      });
-    }
+  const LoadingComponent = () => {
+    return <>{loadSenderLoading === false ? setComponum(2) : setComponum(1)}</>;
   };
 
   const test = () => {
@@ -50,7 +35,34 @@ const ModalWindow = () => {
     }, 1000);
   };
 
-  const modalBody = () => {
+  useEffect(() => {
+    {
+      loadSenderLoading === false ? setComponum(2) : setComponum(1);
+    }
+  }, [loadSenderLoading]);
+
+  const changeBody = () => {
+    if (componum === 0) {
+      dispatch({
+        type: LOAD_SENDER_REQUEST,
+        token: cookie.Token,
+      });
+      console.log(loadSenderLoading);
+      // LoadingComponent();
+      // setComponum(1);
+    }
+    // else if (componum === 1) {
+    //   setComponum(2);}
+    else if (componum === 2) {
+      handleCancel();
+      dispatch({
+        type: LOAD_SUBSCRIPTION_REQUEST,
+        data: selectedTags,
+        token: cookie.Token,
+      });
+    }
+  };
+  const ModalBody = () => {
     if (componum === 0) {
       return (
         <StyledCompo>
@@ -138,7 +150,7 @@ const ModalWindow = () => {
         }}
         footer={[<div />]}
       >
-        {modalBody()}
+        <ModalBody/>
       </Modal>
     </>
   );
