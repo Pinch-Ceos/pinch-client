@@ -16,6 +16,8 @@ import Image from 'next/image';
 import Avatar from 'antd/lib/avatar/avatar';
 import moment from 'moment';
 import Link from 'next/link';
+import ImageCard from './ImageCard';
+import NoImageCard from './NoImageCard';
 const CardList = ({ data, header }) => {
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
@@ -41,9 +43,11 @@ const CardList = ({ data, header }) => {
       });
     }
   };
-  // const card = (item) => {
-  //   if()
-  // }
+  const card = (item) => {
+    if (item.bookmark_id) {
+      return <ImageCard item={item} />;
+    }
+  };
   return (
     <List
       grid={{
@@ -77,131 +81,133 @@ const CardList = ({ data, header }) => {
         >
           {/* {card(item)} */}
           {item.image ? (
-            <StyledCard
-              hoverable
-              onClick={onCardClick(item)}
-              style={{ hight: 200, border: 'none' }}
-              cover={
-                <img
-                  alt="cover"
-                  src={item.image}
-                  style={{
-                    height: 146,
-                    objectFit: 'fill',
-                    borderRadius: '15px',
-                  }}
-                />
-              }
-              actions={[
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    marginLeft: 8,
-                    textAlign: 'left',
-                  }}
-                >
-                  {moment(item.datetime).format('YYYY.MM.DD')}
-                  <br />
-                  {item.name}
-                </div>,
-                item.bookmark_id ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      marginRight: 24,
-                    }}
-                  >
-                    <Image
-                      src={'/design/bookmarked.png'}
-                      width="30px"
-                      height="30px"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onBookmarkClick(item);
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <StyledBookmark>
-                    <Image
-                      src={'/design/bookmark.png'}
-                      width="30px"
-                      height="30px"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onBookmarkClick(item);
-                      }}
-                    />
-                  </StyledBookmark>
-                ),
-              ]}
-            >
-              <StyledMeta title={item.subject} description={item.snippet} />
-            </StyledCard>
+            <ImageCard item={item} />
           ) : (
-            <StyledCard
-              hoverable
-              onClick={onCardClick(item)}
-              style={{ border: 'none' }}
-              actions={[
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    marginLeft: 8,
-                  }}
-                >
-                  {moment(item.datetime).format('YYYY.MM.DD')}
-                  <br />
-                  {item.name}
-                </div>,
-                item.bookmark_id ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      marginRight: 24,
-                    }}
-                  >
-                    <Image
-                      src={'/design/bookmarked.png'}
-                      width="30px"
-                      height="30px"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onBookmarkClick(item);
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <StyledBookmark>
-                    <Image
-                      src={'/design/bookmark.png'}
-                      width="30px"
-                      height="30px"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onBookmarkClick(item);
-                      }}
-                    />
-                  </StyledBookmark>
-                ),
-              ]}
-            >
-              <StyeldMeta2
-                avatar={
-                  <div style={{ marginTop: 16 }}>
-                    <Avatar style={{ width: 36, height: 36 }}>
-                      {item.name[0]}
-                    </Avatar>
-                  </div>
-                }
-                title={item.subject}
-                description={item.snippet}
-              />
-            </StyledCard>
+            <NoImageCard item={item} />
+            // <StyledCard
+            //   hoverable
+            //   onClick={onCardClick(item)}
+            //   style={{ hight: 200, border: 'none' }}
+            //   cover={
+            //     <img
+            //       alt="cover"
+            //       src={item.image}
+            //       style={{
+            //         height: 146,
+            //         objectFit: 'fill',
+            //         borderRadius: '15px',
+            //       }}
+            //     />
+            //   }
+            //   actions={[
+            //     <div
+            //       style={{
+            //         display: 'flex',
+            //         justifyContent: 'start',
+            //         marginLeft: 8,
+            //         textAlign: 'left',
+            //       }}
+            //     >
+            //       {moment(item.datetime).format('YYYY.MM.DD')}
+            //       <br />
+            //       {item.name}
+            //     </div>,
+            //     item.bookmark_id ? (
+            //       <div
+            //         style={{
+            //           display: 'flex',
+            //           justifyContent: 'flex-end',
+            //           marginRight: 24,
+            //         }}
+            //       >
+            //         <Image
+            //           src={'/design/bookmarked.png'}
+            //           width="30px"
+            //           height="30px"
+            //           onClick={(event) => {
+            //             event.stopPropagation();
+            //             onBookmarkClick(item);
+            //           }}
+            //         />
+            //       </div>
+            //     ) : (
+            //       <StyledBookmark>
+            //         <Image
+            //           src={'/design/bookmark.png'}
+            //           width="30px"
+            //           height="30px"
+            //           onClick={(event) => {
+            //             event.stopPropagation();
+            //             onBookmarkClick(item);
+            //           }}
+            //         />
+            //       </StyledBookmark>
+            //     ),
+            //   ]}
+            // >
+            //   <StyledMeta title={item.subject} description={item.snippet} />
+            // </StyledCard>
+            // <StyledCard
+            //   hoverable
+            //   onClick={onCardClick(item)}
+            //   style={{ border: 'none' }}
+            //   actions={[
+            //     <div
+            //       style={{
+            //         display: 'flex',
+            //         justifyContent: 'start',
+            //         marginLeft: 8,
+            //       }}
+            //     >
+            //       {moment(item.datetime).format('YYYY.MM.DD')}
+            //       <br />
+            //       {item.name}
+            //     </div>,
+            //     item.bookmark_id ? (
+            //       <div
+            //         style={{
+            //           display: 'flex',
+            //           justifyContent: 'flex-end',
+            //           marginRight: 24,
+            //         }}
+            //       >
+            //         <Image
+            //           src={'/design/bookmarked.png'}
+            //           width="30px"
+            //           height="30px"
+            //           onClick={(event) => {
+            //             event.stopPropagation();
+            //             onBookmarkClick(item);
+            //           }}
+            //         />
+            //       </div>
+            //     ) : (
+            //       <StyledBookmark>
+            //         <Image
+            //           src={'/design/bookmark.png'}
+            //           width="30px"
+            //           height="30px"
+            //           onClick={(event) => {
+            //             event.stopPropagation();
+            //             onBookmarkClick(item);
+            //           }}
+            //         />
+            //       </StyledBookmark>
+            //     ),
+            //   ]}
+            // >
+            //   <StyeldMeta2
+            //     avatar={
+            //       <div style={{ marginTop: 16 }}>
+            //         <Avatar style={{ width: 36, height: 36 }}>
+            //           {item.name[0]}
+            //         </Avatar>
+            //       </div>
+            //     }
+            //     title={item.subject}
+            //     description={item.snippet}
+            //   />
+            // </StyledCard>
           )}
         </List.Item>
       )}

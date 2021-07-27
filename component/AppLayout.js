@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -22,15 +23,52 @@ const AppLayout = ({ children }) => {
       <Global />
       <Layout>
         {hasHeader() ? null : (
-          <Header
-            className="site-layout-background"
-            style={{
-              padding: 0,
-              width: '100%',
-              height: 200,
-              backgroundColor: 'lightgrey',
-            }}
-          />
+          <Row>
+            <Col xs={0} sm={24}>
+              <Header
+                className="site-layout-background"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: 0,
+                  width: '100%',
+                  height: 200,
+                  backgroundColor: 'lightgrey',
+                }}
+              >
+                <form>
+                  <div
+                    style={{
+                      height: 50,
+                      width: 500,
+                      background: 'white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      border: '2px solid #C0C0C0',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    <SearchOutlined
+                      style={{ fontSize: '150%', color: 'gray' }}
+                    />
+                    <input
+                      placeholder="어떤 뉴스레터를 찾고 있나요?"
+                      style={{
+                        border: 'none',
+                        height: 40,
+                        width: 450,
+                        outline: 'none',
+                        fontSize: '15px',
+                        marginLeft: '10px',
+                      }}
+                    />
+                  </div>
+                </form>
+              </Header>
+            </Col>
+          </Row>
         )}
         <Layout
           className="site-layout"
@@ -151,9 +189,6 @@ const StyledSubMenu = styled(Menu.SubMenu)`
   }
 `;
 const Global = createGlobalStyle`
-  *{
-    background-color: white;
-  }
   .ant-row{
     margin-right: 0 !important;
     margin-left: 0 !important;
