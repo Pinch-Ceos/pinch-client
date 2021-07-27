@@ -4,12 +4,11 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { LOAD_SENDER_REQUEST } from '../reducers';
-import { LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
+import { LOAD_SENDER_REQUEST,LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
 const ModalWindow = () => {
-  const [loading, setLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -27,6 +26,7 @@ const ModalWindow = () => {
 
   const changeBody = () => {
     if (componum === 0) {
+      setIsLoading(true);
       dispatch({
         type: LOAD_SENDER_REQUEST,
         token: cookie.Token,
@@ -35,6 +35,7 @@ const ModalWindow = () => {
     } else if (componum === 1) {
       setComponum(2);
     } else if (componum === 2) {
+      handleCancel();
       dispatch({
         type: LOAD_SUBSCRIPTION_REQUEST,
         data: selectedTags,
@@ -100,7 +101,6 @@ const ModalWindow = () => {
             />
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
-            {' '}
             다 선택했어요!
           </StyledButton>
         </StyledCompo>
