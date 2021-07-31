@@ -44,6 +44,7 @@ const NoImageCard = ({ item }) => {
             display: 'flex',
             justifyContent: 'start',
             marginLeft: 8,
+            textAlign: 'left',
           }}
         >
           {moment(item.datetime).format('YYYY.MM.DD')}
@@ -90,6 +91,7 @@ const NoImageCard = ({ item }) => {
             display: 'flex',
             justifyContent: 'start',
             marginLeft: 8,
+            textAlign: 'left',
           }}
         >
           {moment(item.datetime).format('YYYY.MM.DD')}
@@ -130,6 +132,7 @@ const NoImageCard = ({ item }) => {
             display: 'flex',
             justifyContent: 'start',
             marginLeft: 8,
+            textAlign: 'left',
           }}
         >
           {moment(item.datetime).format('YYYY.MM.DD')}

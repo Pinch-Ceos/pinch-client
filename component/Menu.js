@@ -90,7 +90,7 @@ const MenuBar = styled.div`
 `;
 const MenuContainer = styled.div`
   // width: 260px;
-  width: 130%;
+  width: 190%;
   /* height: ${(props) => (props.length + 1) * '32px' + '48'}; */
   height: auto;
   display: ${(props) => (props.selected ? 'flex' : 'none')};

@@ -2,15 +2,26 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
+import Header from './headertest';
 import { createGlobalStyle } from 'styled-components';
+import { useRouter } from 'next/router';
 
 const Pinch = ({ Component }) => {
+  const router = useRouter();
+  const topBar = () => {
+    const address = router.pathname.split('/')[1];
+    if (!address || address === 'redirect') {
+      return null;
+    }
+    return <Header />;
+  };
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
         <title>Pinch</title>
       </Head>
+      {topBar()}
       <Component />
     </>
   );
