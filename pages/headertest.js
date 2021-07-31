@@ -17,7 +17,7 @@ const Header = () => {
         justifyContent: 'space-between',
       }}
     >
-      <div style={{ cursor: 'pointer', marginTop: 1 }}>
+      <div style={{ cursor: 'pointer', marginTop: 1, marginLeft: 15 }}>
         <Image
           onClick={onClickMark}
           src={'/design/pinchmark.png'}
@@ -31,8 +31,8 @@ const Header = () => {
         </div>
         <div
           style={{
-            marginLeft: '10px',
-            marginRight: '10px',
+            marginLeft: '15px',
+            marginRight: '20px',
             cursor: 'pointer',
             verticalAlign: 'center',
           }}

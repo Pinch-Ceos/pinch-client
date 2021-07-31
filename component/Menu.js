@@ -8,7 +8,6 @@ const MenuLayout = () => {
   const [selectedInbox, setSelectedInbox] = useState(false);
   const [selectedSubscription, setSelectedSubscription] = useState(false);
   const [selectedBookmark, setSelectedBookmark] = useState(false);
-  const [selectedSub, setSelectedSub] = useState('');
   const { me } = useSelector((state) => state);
   const router = useRouter();
   useEffect(() => {
@@ -75,10 +74,6 @@ const MenuLayout = () => {
 };
 export default MenuLayout;
 
-const Dot = styled.div`
-  color: blue;
-`;
-
 const MenuBar = styled.div`
   display: flex;
   flex-direction: column;
@@ -89,9 +84,7 @@ const MenuBar = styled.div`
   z-index: 9999;
 `;
 const MenuContainer = styled.div`
-  // width: 260px;
-  width: 190%;
-  /* height: ${(props) => (props.length + 1) * '32px' + '48'}; */
+  width: calc(100% + 40px);
   height: auto;
   display: ${(props) => (props.selected ? 'flex' : 'none')};
   flex-direction: column;
@@ -102,8 +95,6 @@ const MenuContainer = styled.div`
   top: 13px;
 `;
 const Menu = styled.button`
-  // width: 260px;
-  // height: 50px;
   height: auto;
   border-radius: 8px;
   border: none;
@@ -125,7 +116,6 @@ const Menu = styled.button`
 `;
 
 const SubMenu = styled.div`
-  // width: 260px;
   width: 100%;
   background-color: white;
   padding-left: 20px;
