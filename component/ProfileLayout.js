@@ -52,7 +52,7 @@ const MyAccountContent = ({ email_address }) => {
         <EmailLabel>이메일</EmailLabel>
         <EmailBox>
           <GoogleImg
-            src={process.env.PUBLIC_URL + '/design/GoogleLogin.png'}
+            src={process.env.PUBLIC_URL + '/design/GoogleLogin_Profile.png'}
             alt="GoogleLogin"
           />
           <MyEmail>{email_address}</MyEmail>
@@ -102,7 +102,7 @@ const MySubscribeButton = ({ id }) => {
   );
 };
 
-cconst MySubscribeList = ({ subscriptions }) => {
+const MySubscribeList = ({ subscriptions }) => {
   const [isHover, setIsHover] = useState(false);
   const isHoverNow = () => {
     setIsHover(true);
@@ -122,13 +122,13 @@ cconst MySubscribeList = ({ subscriptions }) => {
               style={{ width: 24, height: 24 }}
             />
             <ToolTip isHover={isHover}>
-            <ToolTipContainer isHover={isHover}>
-              <ToolTipTitle isHover={isHover}>뉴스레터 추가하기</ToolTipTitle>
-              <ToolTipSub isHover={isHover}>
-                메일함 속 새로운 뉴스레터를 추가해보세요!
-              </ToolTipSub>
-            </ToolTipContainer>
-          </ToolTip>
+              <ToolTipContainer isHover={isHover}>
+                <ToolTipTitle isHover={isHover}>뉴스레터 추가하기</ToolTipTitle>
+                <ToolTipSub isHover={isHover}>
+                  메일함 속 새로운 뉴스레터를 추가해보세요!
+                </ToolTipSub>
+              </ToolTipContainer>
+            </ToolTip>
           </PlusButton>
         </span>
       </SubscriptionTitle>
@@ -150,7 +150,7 @@ cconst MySubscribeList = ({ subscriptions }) => {
 const ProfileLayout = () => {
   const { me } = useSelector((state) => state);
 
-  rreturn (
+  rreturn(
     <>
       <GlobalStyle />
       <Container>
