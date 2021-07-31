@@ -9,10 +9,7 @@ const MyProfileContent = ({ name, email_address }) => {
   return (
     <MyProfile>
       <ProfileImg>
-        <img
-          src={process.env.PUBLIC_URL + '/design/profileImg.png'}
-          alt="profile img"
-        />
+        <Image src={'/design/profileImg.png'} width="149" height="149" />
       </ProfileImg>
       <ProfileContent>
         <ProfileName>{name}</ProfileName>
@@ -51,10 +48,13 @@ const MyAccountContent = ({ email_address }) => {
       <EmailContent>
         <EmailLabel>이메일</EmailLabel>
         <EmailBox>
-          <GoogleImg
-            src={process.env.PUBLIC_URL + '/design/GoogleLogin_Profile.png'}
-            alt="GoogleLogin"
-          />
+          <GoogleImg>
+            <Image
+              src={'/design/GoogleLogin_Profile.png'}
+              width="44"
+              height="44"
+            />
+          </GoogleImg>
           <MyEmail>{email_address}</MyEmail>
         </EmailBox>
       </EmailContent>
@@ -75,9 +75,6 @@ const MySubscribeButton = ({ id }) => {
       token: cookie.Token,
     });
     console.log(id);
-  };
-  const deleteSubscribe = (id) => () => {
-    return console.log(id);
   };
 
   const changeText = () => {
@@ -116,11 +113,7 @@ const MySubscribeList = ({ subscriptions }) => {
         뉴스레터 관리
         <span tooltop-text="뉴스레터 추가하기<br/>메일함 속 새로운 뉴스레터를 추가해보세요!">
           <PlusButton onMouseOver={isHoverNow} onMouseLeave={notHoverNow}>
-            <img
-              src={process.env.PUBLIC_URL + '/design/ProfilePlus.png'}
-              alt="plus button"
-              style={{ width: 24, height: 24 }}
-            />
+            <Image src={'/design/ProfilePlus.png'} width="24" height="24" />
             <ToolTip isHover={isHover}>
               <ToolTipContainer isHover={isHover}>
                 <ToolTipTitle isHover={isHover}>뉴스레터 추가하기</ToolTipTitle>
@@ -150,7 +143,7 @@ const MySubscribeList = ({ subscriptions }) => {
 const ProfileLayout = () => {
   const { me } = useSelector((state) => state);
 
-  rreturn(
+  return (
     <>
       <GlobalStyle />
       <Container>
@@ -190,6 +183,10 @@ const GlobalStyle = createGlobalStyle`
 }
 * {
     font-family: 'Spoqa Han Sans Neo';
+    /* overflow-x: hidden; */
+    /* ::-webkit-scrollbar{
+      display:none;
+    } */
 }
 
 [tooltip-text]:hover{
@@ -394,7 +391,7 @@ const EmailBox = styled.div`
   display: flex;
 `;
 
-const GoogleImg = styled.img`
+const GoogleImg = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   margin-right: 0.625rem;
