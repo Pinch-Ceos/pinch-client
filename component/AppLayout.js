@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Layout, Row, Col } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { createGlobalStyle } from 'styled-components';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import Router from 'next/router';
 import MenuLayout from './Menu';
 
@@ -153,15 +151,6 @@ const Global = createGlobalStyle`
   .ant-menu > .ant-menu-item-selected::after {
     border-right:none;
   }
-  .ant-menu .ant-menu-root .ant-menu-inline .ant-menu-light{
-    background-color:white;
-  }
-  .ant-menu-submenu-title::active{
-    background-color:white;
-  }
-  .ant-menu-submenu-title{
-    background-color:white;
-  }
   .ant-list-header::active{
     background-color:white;
   }
@@ -171,9 +160,6 @@ const Global = createGlobalStyle`
   }
   .ant-card-actions {
     border: none;
-  }
-  .ant-menu-title-content {
-    margin-left: 10px;
   }
   .body{
     margin: 0;
