@@ -23,9 +23,7 @@ const CardList = ({ data, header }) => {
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
 
   const onCardClick = (item) => () => {
-    Router.push(
-      `/letterview/${item.id}?name=${item.name}&subject=${item.subject}&bookmark_id=${item.bookmark_id}`
-    );
+    Router.push(`/letterview/${item.id}`);
   };
   const onBookmarkClick = (item) => {
     console.log(item);
@@ -41,11 +39,6 @@ const CardList = ({ data, header }) => {
         data: item.id,
         token: cookie.Token,
       });
-    }
-  };
-  const card = (item) => {
-    if (item.bookmark_id) {
-      return <ImageCard item={item} />;
     }
   };
   return (

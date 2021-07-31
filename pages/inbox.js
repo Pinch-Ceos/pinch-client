@@ -8,7 +8,7 @@ import CardList from '../component/CardList';
 import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers';
 import wrapper from '../store/configureStore';
 
-const Mail = () => {
+const Inbox = () => {
   const dispatch = useDispatch();
   const { mails, hasMoreMails, loadMailLoading } = useSelector(
     (state) => state
@@ -71,4 +71,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await context.store.sagaTask.toPromise();
   }
 );
-export default Mail;
+export default Inbox;

@@ -1,21 +1,36 @@
-import React from 'react';
-import { Layout, Menu, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Layout, Row, Col } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Router from 'next/router';
+import MenuLayout from './Menu';
 
 const { Header, Content, Sider } = Layout;
-const { SubMenu } = Menu;
 
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state);
   const router = useRouter();
+  const [searchValue, setSearchValue] = useState('');
+  const address = router.pathname.split('/')[1];
+  useEffect(() => {
+    if (address === 'search') {
+      setSearchValue(router.query.value);
+    }
+  }, [router]);
   const hasHeader = () => {
-    const address = router.pathname.split('/');
-    return address[1] === 'letterview';
+    return address === 'letterview';
+  };
+  const onChangeInput = (e) => {
+    setSearchValue(e.target.value);
+  };
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    console.log(searchValue);
+    Router.push(`/search/${searchValue}`);
   };
 
   return (
@@ -37,7 +52,7 @@ const AppLayout = ({ children }) => {
                   backgroundColor: 'lightgrey',
                 }}
               >
-                <form>
+                <form onSubmit={onSubmitForm}>
                   <div
                     style={{
                       height: 50,
@@ -54,6 +69,8 @@ const AppLayout = ({ children }) => {
                       style={{ fontSize: '150%', color: 'gray' }}
                     />
                     <input
+                      value={searchValue}
+                      onChange={onChangeInput}
                       placeholder="어떤 뉴스레터를 찾고 있나요?"
                       style={{
                         border: 'none',
@@ -90,63 +107,7 @@ const AppLayout = ({ children }) => {
                 style={{ backgroundColor: 'white', border: 0 }}
               >
                 <div className="logo" />
-                <Menu defaultSelectedKeys={['1']} mode="inline">
-                  <StyledMenuItem
-                    key="1"
-                    icon="👀"
-                    style={{
-                      color: 'red',
-                      fontWeight: 'bold',
-                      borderRadius: 10,
-                    }}
-                  >
-                    <Link href="/inbox" style={{ color: 'red' }}>
-                      <a>Inbox</a>
-                    </Link>
-                  </StyledMenuItem>
-                  <StyledSubMenu
-                    key="2"
-                    icon="📚 "
-                    title=" 구독 중인 뉴스레터"
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      borderRadius: 10,
-                      background: 'white',
-                    }}
-                  >
-                    {me.subscriptions.map((v) => (
-                      <StyledMenuItem
-                        key={v.name}
-                        style={{
-                          color: 'black',
-                          fontWeight: 'bold',
-                          background: 'white',
-                          paddingTop: 10,
-                          margin: 0,
-                          borderRadius: 10,
-                        }}
-                      >
-                        <Link href={`/subscription/${v.email_address}`}>
-                          <a>{v.name}</a>
-                        </Link>
-                      </StyledMenuItem>
-                    ))}
-                  </StyledSubMenu>
-                  <StyledMenuItem
-                    key="sub1"
-                    icon="📌"
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      borderRadius: 10,
-                    }}
-                  >
-                    <Link href={`/bookmark`}>
-                      <a>저장한 뉴스레터</a>
-                    </Link>
-                  </StyledMenuItem>
-                </Menu>
+                <MenuLayout />
               </Sider>
             </Col>
             <Col
@@ -178,16 +139,6 @@ const AppLayout = ({ children }) => {
 };
 
 export default AppLayout;
-const StyledMenuItem = styled(Menu.Item)`
-  a:active {
-    background-color: white;
-  }
-`;
-const StyledSubMenu = styled(Menu.SubMenu)`
-  a:active {
-    background-color: white !important;
-  }
-`;
 const Global = createGlobalStyle`
   .ant-row{
     margin-right: 0 !important;
@@ -232,42 +183,4 @@ const Global = createGlobalStyle`
   .ant-layout-content {
     width: 100%;
   }
-  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: white;
-  }
-  .ant-menu-item-selected a, .ant-menu-item-selected a:hover {
-    color: black;
-    background-color: white;
-  }
-  .ant-menu-item a:hover {
-    color: black;
-  }
-  .ant-menu-submenu-title:hover {
-    color: black;
-  }
-  .ant-menu-submenu-arrow {
-    display:none;
-  } 
-  .ant-menu-submenu-inline{
-    background-color: white !important;
-  }
-  .ant-menu-submenu-inline ::active{
-    background-color: white !important;
-  }
-  .ant-menu-item-active {
-    background-color: white !important;
-  }
-  .ant-menu-submenu::active .ant-menu-submenu-inline::active .ant-menu-submenu-active::active .ant-menu-item-active::active .ant-menu-item-selected::active{
-    background-color: white !important;
-  }
-  .ant-menu-item::active .ant-menu-item-selected::active{
-    background-color: white !important;
-  }
-  .ant-menu-light .ant-menu-item:hover, .ant-menu-light .ant-menu-item-active, .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-light .ant-menu-submenu-active, .ant-menu-light .ant-menu-submenu-title:hover{
-    color: black;
-  }
-  .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
-    border: none;
-  }
-  
 `;

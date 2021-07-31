@@ -37,6 +37,12 @@ import {
   DELETE_BOOKMARK_REQUEST,
   DELETE_BOOKMARK_SUCCESS,
   DELETE_BOOKMARK_FAILURE,
+  LOAD_DETAIL_INFO_REQUEST,
+  LOAD_DETAIL_INFO_SUCCESS,
+  LOAD_DETAIL_INFO_FAILURE,
+  LOAD_SEARCH_MAIL_REQUEST,
+  LOAD_SEARCH_MAIL_SUCCESS,
+  LOAD_SEARCH_MAIL_FAILURE,
 } from '../reducers';
 
 import backUrl from '../config/config';
@@ -184,6 +190,28 @@ function* loadMail(action) {
     });
   }
 }
+function loadSearchMailAPI(action) {
+  return axios.get(
+    `/email?search=${encodeURIComponent(action.data)}&page=${action.page}`,
+    {
+      headers: { Authorization: action.token },
+    }
+  );
+}
+function* loadSearchMail(action) {
+  try {
+    const result = yield call(loadSearchMailAPI, action);
+    yield put({
+      type: LOAD_SEARCH_MAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_SEARCH_MAIL_FAILURE,
+      error: err.response,
+    });
+  }
+}
 function loadBookmarkAPI(action) {
   return axios.get(`/email/bookmark?page=${action.page}`, {
     headers: { Authorization: action.token },
@@ -288,6 +316,27 @@ function* deleteBookmark(action) {
     });
   }
 }
+function loadDetailInfoAPI(action) {
+  return axios.get(`/email/detail/info?email_id=${action.data}`, {
+    headers: { Authorization: action.token },
+  });
+}
+function* loadDetailInfo(action) {
+  try {
+    const result = yield call(loadDetailInfoAPI, action);
+    console.log(result);
+    yield put({
+      type: LOAD_DETAIL_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_DETAIL_INFO_FAILURE,
+      error: err.response,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -305,6 +354,9 @@ function* watchLoadSubscription() {
 }
 function* watchLoadMail() {
   yield takeLatest(LOAD_MAIL_REQUEST, loadMail);
+}
+function* watchLoadSearchMail() {
+  yield takeLatest(LOAD_SEARCH_MAIL_REQUEST, loadSearchMail);
 }
 function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
@@ -324,6 +376,9 @@ function* watchAddBookmark() {
 function* watchDeleteBookmark() {
   yield takeLatest(DELETE_BOOKMARK_REQUEST, deleteBookmark);
 }
+function* watchLoadDetailInfo() {
+  yield takeLatest(LOAD_DETAIL_INFO_REQUEST, loadDetailInfo);
+}
 export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
@@ -335,8 +390,10 @@ export default function* rootSaga() {
     fork(watchLoadMyInfo),
     fork(watchLoadBookmark),
     fork(watchLoadDetail),
+    fork(watchLoadDetailInfo),
     fork(watchDeleteSubscription),
     fork(watchAddBookmark),
     fork(watchDeleteBookmark),
+    fork(watchLoadSearchMail),
   ]);
 }

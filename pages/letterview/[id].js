@@ -6,6 +6,7 @@ import wrapper from '../../store/configureStore';
 import {
   ADD_BOOKMARK_REQUEST,
   DELETE_BOOKMARK_REQUEST,
+  LOAD_DETAIL_INFO_REQUEST,
   LOAD_DETAIL_REQUEST,
   LOAD_MY_INFO_REQUEST,
 } from '../../reducers';
@@ -15,21 +16,18 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 const NewsLetterView = () => {
-  const { view } = useSelector((state) => state);
+  const { view, viewInfo } = useSelector((state) => state);
   const router = useRouter();
   const data = router.query;
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const onBookmarkClick = () => {
     console.log('onclick');
-    if (data.bookmark_id !== 'null') {
+    if (viewInfo.bookmark_id !== null) {
       dispatch({
         type: DELETE_BOOKMARK_REQUEST,
-        data: parseInt(data.bookmark_id, 10),
+        data: viewInfo.bookmark_id,
         token: cookie.Token,
       });
     } else {
@@ -54,8 +52,10 @@ const NewsLetterView = () => {
         >
           <div style={{ width: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ fontSize: '20px' }}>{data.name}</div>
-              {data.bookmark_id !== 'null' ? (
+              <div style={{ fontSize: '20px' }}>
+                {viewInfo && viewInfo.name}
+              </div>
+              {viewInfo && viewInfo.bookmark_id !== null ? (
                 <BookmarkWrapper>
                   <Image
                     src={'/design/bookmarked.png'}
@@ -84,7 +84,7 @@ const NewsLetterView = () => {
               )}
             </div>
             <div style={{ marginTop: 10, marginBottom: 10 }}>
-              {data.subject}
+              {viewInfo && viewInfo.subject}
             </div>
           </div>
           <iframe
@@ -115,6 +115,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch({
       type: LOAD_DETAIL_REQUEST,
+      token: Token,
+      data: context.params.id,
+    });
+    context.store.dispatch({
+      type: LOAD_DETAIL_INFO_REQUEST,
       token: Token,
       data: context.params.id,
     });

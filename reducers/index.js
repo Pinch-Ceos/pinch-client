@@ -7,6 +7,7 @@ const initalState = {
   mails: [],
   sender_list: [],
   view: null,
+  viewInfo: null,
   hasMoreMails: true,
   auth_uri: null,
   logInLoading: false,
@@ -18,9 +19,6 @@ const initalState = {
   loadSenderLoading: false,
   loadSenderDone: false,
   loadSenderError: null,
-  loadSubscriptionLoading: false,
-  loadSubscriptionDone: false,
-  loadSubscriptionError: null,
   loadMailLoading: false,
   loadMailDone: false,
   loadMailError: null,
@@ -39,6 +37,9 @@ const initalState = {
   deleteBookmarkLoading: false,
   deleteBookmarkDone: false,
   deleteBookmarkError: null,
+  loadDetailInfoLoading: false,
+  loadDetailInfoDone: false,
+  loadDetailInfoError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -61,6 +62,10 @@ export const LOAD_MAIL_REQUEST = 'LOAD_MAIL_REQUEST';
 export const LOAD_MAIL_SUCCESS = 'LOAD_MAIL_SUCCESS';
 export const LOAD_MAIL_FAILURE = 'LOAD_MAIL_FAILURE';
 
+export const LOAD_SEARCH_MAIL_REQUEST = 'LOAD_SEARCH_MAIL_REQUEST';
+export const LOAD_SEARCH_MAIL_SUCCESS = 'LOAD_SEARCH_MAIL_SUCCESS';
+export const LOAD_SEARCH_MAIL_FAILURE = 'LOAD_SEARCH_MAIL_FAILURE';
+
 export const LOAD_BOOKMARK_REQUEST = 'LOAD_BOOKMARK_REQUEST';
 export const LOAD_BOOKMARK_SUCCESS = 'LOAD_BOOKMARK_SUCCESS';
 export const LOAD_BOOKMARK_FAILURE = 'LOAD_BOOKMARK_FAILURE';
@@ -72,6 +77,10 @@ export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const LOAD_DETAIL_REQUEST = 'LOAD_DETAIL_REQUEST';
 export const LOAD_DETAIL_SUCCESS = 'LOAD_DETAIL_SUCCESS';
 export const LOAD_DETAIL_FAILURE = 'LOAD_DETAIL_FAILURE';
+
+export const LOAD_DETAIL_INFO_REQUEST = 'LOAD_DETAIL_INFO_REQUEST';
+export const LOAD_DETAIL_INFO_SUCCESS = 'LOAD_DETAIL_INFO_SUCCESS';
+export const LOAD_DETAIL_INFO_FAILURE = 'LOAD_DETAIL_INFO_FAILURE';
 
 export const DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST';
 export const DELETE_SUBSCRIPTION_SUCCESS = 'DELETE_SUBSCRIPTION_SUCCESS';
@@ -90,6 +99,20 @@ const rootReducer = (state = initalState, action) =>
     switch (action.type) {
       case HYDRATE:
         return action.payload;
+      case LOAD_DETAIL_INFO_REQUEST:
+        draft.loadDetailInfoLoading = true;
+        draft.loadDetailInfoDone = false;
+        draft.loadDetailInfoError = null;
+        break;
+      case LOAD_DETAIL_INFO_SUCCESS:
+        draft.loadDetailInfoLoading = false;
+        draft.loadDetailInfoDone = true;
+        draft.viewInfo = action.data;
+        break;
+      case LOAD_DETAIL_INFO_FAILURE:
+        draft.loadDetailInfoLoading = false;
+        draft.loadDetailInfoError = action.error;
+        break;
       case DELETE_BOOKMARK_REQUEST:
         draft.deleteBookmarkLoading = true;
         draft.deleteBookmarkDone = false;
@@ -98,11 +121,9 @@ const rootReducer = (state = initalState, action) =>
       case DELETE_BOOKMARK_SUCCESS:
         draft.deleteBookmarkLoading = false;
         draft.deleteBookmarkDone = true;
-        console.log(action.data.email_id);
         const delindex = draft.mails.findIndex(
           (mail) => mail.bookmark_id === action.data
         );
-        console.log(delindex);
         draft.mails[delindex].bookmark_id = null;
         break;
       case DELETE_BOOKMARK_FAILURE:
@@ -156,12 +177,14 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMyInfoLoading = false;
         draft.loadMyInfoError = action.error;
         break;
+      case LOAD_SEARCH_MAIL_REQUEST:
       case LOAD_MAIL_REQUEST:
       case LOAD_BOOKMARK_REQUEST:
         draft.loadMailLoading = true;
         draft.loadMailDone = false;
         draft.loadMailError = null;
         break;
+      case LOAD_SEARCH_MAIL_SUCCESS:
       case LOAD_MAIL_SUCCESS:
       case LOAD_BOOKMARK_SUCCESS:
         draft.loadMailLoading = false;
@@ -169,6 +192,7 @@ const rootReducer = (state = initalState, action) =>
         draft.mails = draft.mails.concat(action.data);
         draft.hasMoreMails = action.data.length === 12;
         break;
+      case LOAD_SEARCH_MAIL_FAILURE:
       case LOAD_MAIL_FAILURE:
       case LOAD_BOOKMARK_FAILURE:
         draft.loadMailLoading = false;

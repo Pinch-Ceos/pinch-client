@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
-import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
+import { LOAD_MY_INFO_REQUEST, LOAD_SEARCH_MAIL_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
 
-const Subscription = () => {
+const Search = () => {
   const router = useRouter();
-  const { newsletter } = router.query;
+  const { value } = router.query;
   const dispatch = useDispatch();
-  const { mails, me, hasMoreMails, loadMailLoading } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -20,16 +20,14 @@ const Subscription = () => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    setHeader(
-      me.subscriptions.find((v) => v.email_address === newsletter).name
-    );
+    setHeader('3개의 뉴스레터');
     dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: newsletter,
+      type: LOAD_SEARCH_MAIL_REQUEST,
+      data: value,
       page: 1,
       token: cookie.Token,
     });
-  }, [newsletter]);
+  }, [value]);
 
   useEffect(() => {
     function onScroll() {
@@ -39,8 +37,8 @@ const Subscription = () => {
       ) {
         if (hasMoreMails && !loadMailLoading) {
           dispatch({
-            type: LOAD_MAIL_REQUEST,
-            data: newsletter,
+            type: LOAD_SEARCH_MAIL_REQUEST,
+            data: value,
             page: page,
             token: cookie.Token,
           });
@@ -52,7 +50,7 @@ const Subscription = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [newsletter, mails.length, hasMoreMails, loadMailLoading]);
+  }, [value, mails.length, hasMoreMails, loadMailLoading]);
 
   return (
     <>
@@ -76,4 +74,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await context.store.sagaTask.toPromise();
   }
 );
-export default Subscription;
+export default Search;
