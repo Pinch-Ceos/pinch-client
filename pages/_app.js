@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
 import Header from './headertest';
+import Footer from './footer';
 import { createGlobalStyle } from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -15,6 +16,15 @@ const Pinch = ({ Component }) => {
     }
     return <Header />;
   };
+
+  const footer = () => {
+    const address = router.pathname.split('/')[1];
+    if (!address || address === 'redirect') {
+      return null;
+    }
+    return <Footer />;
+  };
+
   return (
     <>
       <Head>
@@ -22,7 +32,7 @@ const Pinch = ({ Component }) => {
         <title>Pinch</title>
       </Head>
       {topBar()}
-      <Component />
+      <Component />]{footer()}
     </>
   );
 };

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Image from 'next/image';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
 import { Cookies, useCookies } from 'react-cookie';
+import Router from 'next/router';
 
 const MyProfileContent = ({ name, email_address }) => {
   return (
@@ -20,6 +22,14 @@ const MyProfileContent = ({ name, email_address }) => {
 };
 
 const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
+  const savedNewsLetterOnClick = () => {
+    Router.push(`/bookmark`);
+  };
+
+  const subscribedNewsLetterOnClick = () => {
+    Router.push(`/inbox`); //이부분 구독 가장 상단의 뉴스레터로?
+  };
+
   return (
     <NewsLetterContainer>
       {/* <ProfileIllust
@@ -30,11 +40,15 @@ const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
       <NewsLetterInfoContainer>
         <NewsLetter>
           <Label>저장한 뉴스레터</Label>
-          <NewsLetterCount>{bookmark_num}</NewsLetterCount>
+          <NewsLetterCount onClick={savedNewsLetterOnClick}>
+            {bookmark_num}
+          </NewsLetterCount>
         </NewsLetter>
         <NewsLetter>
           <Label>구독 중인 뉴스레터</Label>
-          <NewsLetterCount>{subscription_num}</NewsLetterCount>
+          <NewsLetterCount onClick={subscribedNewsLetterOnClick}>
+            {subscription_num}
+          </NewsLetterCount>
         </NewsLetter>
       </NewsLetterInfoContainer>
     </NewsLetterContainer>
@@ -139,6 +153,21 @@ const MySubscribeList = ({ subscriptions }) => {
     </>
   );
 };
+const LogOut = () => {
+  const [cookie, setCookie, removeCookie] = useCookies();
+  let history = useHistory();
+
+  function logout(e) {
+    // removeCookie('LoginData');
+    history.push('/');
+  }
+
+  return (
+    <LogOutContainer>
+      <LogOutButton onClick={logout}>로그아웃</LogOutButton>
+    </LogOutContainer>
+  );
+};
 
 const ProfileLayout = () => {
   const { me } = useSelector((state) => state);
@@ -147,7 +176,6 @@ const ProfileLayout = () => {
     <>
       <GlobalStyle />
       <Container>
-        <Logo>Pinch</Logo>
         <Body>
           <MyProfileContent
             name={me.user_name}
@@ -159,6 +187,7 @@ const ProfileLayout = () => {
           />
           <MyAccountContent email_address={me.user_email_address} />
           <MySubscribeList subscriptions={me.subscriptions} />
+          <LogOut />
         </Body>
       </Container>
     </>
@@ -202,8 +231,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Container = styled.div`
-  margin-left: 1.04%;
-  margin-right: 1.04%; //픽셀처리할지 퍼센트 처리할지 고민
   height: 100%;
   width: 100%;
 `;
@@ -218,20 +245,14 @@ const Button = styled.div`
     border: none;
   }
 `;
-const Logo = styled.div`
-  margin-left: 13%;
-  margin-right: 13%; //픽셀처리할지 퍼센트 처리할지 고민
-  margin-top: 28px;
-  margin-bottom: 10px;
-  text-align: left;
-`;
+
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-  margin-left: 28.19%;
-  margin-right: 28.19%;
+  margin-right: 28.646%;
+  margin-left: 28.646%;
+  justify-content: center;
 `;
 
 const MyProfile = styled.div`
@@ -540,4 +561,24 @@ const ToolTipSub = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   color: #a2a2a2;
+`;
+const LogOutContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-bottom: 4.5rem;
+  padding-top: 9rem;
+  flex-direction: row-reverse;
+`;
+
+const LogOutButton = styled.button`
+  background: #f9f9f9;
+  border-radius: 100px;
+  width: 180px;
+  height: 3.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: center;
+  color: #aeaeae;
+  border: none;
 `;
