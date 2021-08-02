@@ -5,7 +5,15 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-const Login = () => {
+const TopBar = () => {
+  return (
+    <Logo>
+      <Image src={'/design/pinchmark.png'} width="67.22" height="22" />
+    </Logo>
+  );
+};
+
+const MainBox = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { logInDone, auth_uri } = useSelector((state) => state);
@@ -14,38 +22,49 @@ const Login = () => {
       type: LOG_IN_REQUEST,
     });
   };
+
   useEffect(() => {
     console.log(`${auth_uri}`);
     if (logInDone) {
       router.push(`${auth_uri}`);
     }
   }, [logInDone]);
+
   return (
-    <Container>
-      <Logo>Pinch</Logo>
+    <MainContainer>
       <Title>
         성장하는 당신을 위한
         <br />
-        간편한 뉴스레터 인박스{' '}
+        간편한 뉴스레터 인박스
       </Title>
       <LoginButton onClick={responseGoogle}>
-        <Image src={'/design/GoogleLogin.png'} width="292px" height="51x" />
+        <Image src={'/design/GoogleLogin.png'} width="292" height="51" />
       </LoginButton>
       <BodyImage>
-        <Image src={'/design/LoginImage.png'} width="351" height="304" />
+        <Image src={'/design/LoginImage.png'} width="" height="" />
       </BodyImage>
-      <section
-        style={{
-          color: 'grey',
-          wordBreak: 'break-word',
-          textAlign: 'center',
-          marginBottom: '5vh',
-        }}
-      >
-        로그인은 개인정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
-        <br />
-        서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.{' '}
-      </section>
+    </MainContainer>
+  );
+};
+
+const BottomBar = () => {
+  return (
+    <BottomText>
+      로그인은 개인정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
+      <br />
+      서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
+    </BottomText>
+  );
+};
+
+const Login = () => {
+  return (
+    <Container>
+      <TopBar />
+      <ExceptLogo>
+        <MainBox />
+        <BottomBar />
+      </ExceptLogo>
     </Container>
   );
 };
@@ -53,6 +72,19 @@ const Login = () => {
 export default Login;
 
 const Container = styled.section`
+  height: 100%;
+  width: 100%;
+  padding-bottom: 60px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center; */
+`;
+const ExceptLogo = styled.div`
+  /* width: 100%; */
+  /* height: 100%; */
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,34 +92,60 @@ const Container = styled.section`
 `;
 
 const Title = styled.section`
-  text-align: center;
-  font-size: 2.5em;
+  /* width: 100%; */
+  margin-top: 8.645%;
   font-weight: bold;
-  word-break: break-word;
-  margin-bottom: 6vh;
+  font-size: 2.5rem;
+  line-height: 3.125rem;
+  text-align: center;
+  color: #111111;
+  margin-bottom: 2.916%;
 `;
 
 const Logo = styled.div`
-  //임시
-  margin-top: 10vh;
-  text-align: center;
-  font-size: 1.125em;
-  font-weight: bold;
-  margin-bottom: 2vh;
+  /* width: 100%; */
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 580px; */
+  /* margin-bottom: 18.1%;
+  margin-top: 28.62%; */
 `;
 
 const LoginButton = styled.button`
   display: flex;
+  /* margin-left: 18.763%; */
+  /* margin-right: 18.763%; */
+  height: 8.793%;
   justify-content: center;
   background: none;
   border: none;
-  margin-bottom: 7vh;
   align-items: center;
-  /* border-radius: 15px; */
+  margin-bottom: 7.55%;
 `;
 
 const BodyImage = styled.div`
+  margin-left: 0.31%;
+  margin-right: 1.77%;
   display: flex;
   align-content: center;
   justify-content: center;
+  height: 37.568%;
+  margin-bottom: 5.468%;
+`;
+
+const BottomText = styled.div`
+  font-weight: normal;
+  font-size: 0.813rem;
+  line-height: 1rem;
+  text-align: center;
+  color: #777777;
 `;
