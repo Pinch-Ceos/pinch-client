@@ -8,13 +8,12 @@ import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 
 const ModalWindow = () => {
-  const [isloading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
   const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  const { loadSenderLoading } = useSelector((state) => state);
+  const { loadSenderLoading, me } = useSelector((state) => state);
 
   const showModal = () => {
     setComponum(0);
@@ -25,21 +24,17 @@ const ModalWindow = () => {
     setVisible(false);
   };
 
-  const LoadingComponent = () => {
-    return <>{loadSenderLoading === false ? setComponum(2) : setComponum(1)}</>;
-  };
-
-  const test = () => {
-    setTimeout(() => {
-      changeBody();
-    }, 1000);
-  };
-
   useEffect(() => {
     {
       loadSenderLoading === false ? setComponum(2) : setComponum(1);
     }
   }, [loadSenderLoading]);
+
+  useEffect(() => {
+    if (me.subscription_num === 0) {
+      showModal();
+    }
+  }, []);
 
   const changeBody = () => {
     if (componum === 0) {
@@ -47,13 +42,7 @@ const ModalWindow = () => {
         type: LOAD_SENDER_REQUEST,
         token: cookie.Token,
       });
-      console.log(loadSenderLoading);
-      // LoadingComponent();
-      // setComponum(1);
-    }
-    // else if (componum === 1) {
-    //   setComponum(2);}
-    else if (componum === 2) {
+    } else if (componum === 2) {
       handleCancel();
       dispatch({
         type: LOAD_SUBSCRIPTION_REQUEST,
@@ -62,6 +51,7 @@ const ModalWindow = () => {
       });
     }
   };
+
   const ModalBody = () => {
     if (componum === 0) {
       return (
@@ -92,7 +82,6 @@ const ModalWindow = () => {
           <StyledBody>
             최근 7일 간 <br /> User님의 메일로 온 뉴스레터들을 찾고 있어요.
           </StyledBody>
-          {test()}
         </StyledCompo>
       );
     } else if (componum === 2) {
@@ -123,7 +112,7 @@ const ModalWindow = () => {
   return (
     <>
       <Global />
-      <Button
+      {/* <Button
         type="button"
         onClick={showModal}
         style={{
@@ -134,7 +123,7 @@ const ModalWindow = () => {
         }}
       >
         🦔
-      </Button>
+      </Button> */}
       <Modal
         visible={visible}
         onCancel={handleCancel}
@@ -150,7 +139,7 @@ const ModalWindow = () => {
         }}
         footer={[<div />]}
       >
-        <ModalBody/>
+        <ModalBody />
       </Modal>
     </>
   );
