@@ -75,14 +75,8 @@ const Container = styled.section`
   height: 100%;
   width: 100%;
   padding-bottom: 60px;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center; */
 `;
 const ExceptLogo = styled.div`
-  /* width: 100%; */
-  /* height: 100%; */
   margin: 0;
   padding: 0;
   display: flex;
@@ -92,7 +86,6 @@ const ExceptLogo = styled.div`
 `;
 
 const Title = styled.section`
-  /* width: 100%; */
   margin-top: 8.645%;
   font-weight: bold;
   font-size: 2.5rem;
@@ -103,7 +96,6 @@ const Title = styled.section`
 `;
 
 const Logo = styled.div`
-  /* width: 100%; */
   height: 60px;
   display: flex;
   justify-content: center;
@@ -115,15 +107,10 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* height: 580px; */
-  /* margin-bottom: 18.1%;
-  margin-top: 28.62%; */
 `;
 
 const LoginButton = styled.button`
   display: flex;
-  /* margin-left: 18.763%; */
-  /* margin-right: 18.763%; */
   height: 8.793%;
   justify-content: center;
   background: none;
