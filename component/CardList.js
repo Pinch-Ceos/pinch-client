@@ -9,7 +9,10 @@ import ModalWindow from '../component/Modal';
 import { ADD_BOOKMARK_REQUEST, DELETE_BOOKMARK_REQUEST } from '../reducers';
 import ImageCard from './ImageCard';
 import NoImageCard from './NoImageCard';
+import Image from 'next/image';
+
 const CardList = ({ data, header }) => {
+
   return (
     <List
       grid={{
@@ -48,3 +51,4 @@ const CardList = ({ data, header }) => {
   );
 };
 export default CardList;
+
