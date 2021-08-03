@@ -59,13 +59,15 @@ const BottomBar = () => {
 
 const Login = () => {
   return (
-    <Container>
-      <TopBar />
-      <ExceptLogo>
-        <MainBox />
-        <BottomBar />
-      </ExceptLogo>
-    </Container>
+    <>
+      <Container>
+        <TopBar />
+        <ExceptLogo>
+          <MainBox />
+          <BottomBar />
+        </ExceptLogo>
+      </Container>
+    </>
   );
 };
 

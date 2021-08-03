@@ -33,7 +33,8 @@ const Pinch = ({ Component }) => {
         <title>Pinch</title>
       </Head>
       {topBar()}
-      <Component />]{footer()}
+      <Component />
+      {footer()}
     </Body>
   );
 };
@@ -62,5 +63,5 @@ body {
 const Body = styled.div`
   width: 100%;
   height: 100%;
-  background: #f9f9f9;
+  // background: #f9f9f9;
 `;
