@@ -1,18 +1,10 @@
 import { List, Card } from 'antd';
-import { Meta } from 'antd/lib/list/Item';
-import Router from 'next/router';
 import React from 'react';
-import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import ModalWindow from '../component/Modal';
-import { ADD_BOOKMARK_REQUEST, DELETE_BOOKMARK_REQUEST } from '../reducers';
 import ImageCard from './ImageCard';
 import NoImageCard from './NoImageCard';
-import Image from 'next/image';
 
 const CardList = ({ data, header }) => {
-
   return (
     <List
       grid={{
@@ -51,4 +43,3 @@ const CardList = ({ data, header }) => {
   );
 };
 export default CardList;
-

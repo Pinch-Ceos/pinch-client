@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
-import Header from './headertest';
+import Header from '../component/TopBar';
 import Footer from './footer';
 import { createGlobalStyle } from 'styled-components';
 import { useRouter } from 'next/router';
