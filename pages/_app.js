@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
 import Header from '../component/TopBar';
-import Footer from './footer';
+import Footer from '../component/Footer';
 import { createGlobalStyle } from 'styled-components';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ const Pinch = ({ Component }) => {
   const router = useRouter();
   const topBar = () => {
     const address = router.pathname.split('/')[1];
-    if (!address || address === 'redirect') {
+    if (!address || address === 'redirect' || address === 'indextest') {
       return null;
     }
     return <Header />;
@@ -20,7 +20,7 @@ const Pinch = ({ Component }) => {
 
   const footer = () => {
     const address = router.pathname.split('/')[1];
-    if (!address || address === 'redirect') {
+    if (!address || address === 'redirect' || address === 'indextest') {
       return null;
     }
     return <Footer />;

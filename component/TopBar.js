@@ -95,7 +95,7 @@ const Header = () => {
             marginTop: '10px',
           }}
         >
-          <SearchOutlined style={{ fontSize: '170%', color: 'gray' }} />
+          <SearchOutlined style={{ fontSize: '150%', color: 'gray' }} />
           <input
             value={searchValue}
             onChange={onChangeInput}
