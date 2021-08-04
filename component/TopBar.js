@@ -41,7 +41,7 @@ const Header = () => {
           justifyContent: 'space-between',
         }}
       >
-        <div style={{ cursor: 'pointer', marginTop: 1, marginLeft: 15 }}>
+        <div style={{ cursor: 'pointer', marginTop: 7, marginLeft: 15 }}>
           <Image
             onClick={onClickMark}
             src={'/design/pinchmark.png'}
@@ -81,11 +81,11 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <StyeldForm onSubmit={onSubmitForm} toggle={toggle}>
-        <div
+      <StyledForm onSubmit={onSubmitForm} toggle={toggle}>
+        <InputWrapper
           style={{
             height: 50,
-            width: '100%',
+            width: '92%',
             background: 'white',
             display: 'flex',
             justifyContent: 'center',
@@ -103,14 +103,14 @@ const Header = () => {
             style={{
               border: 'none',
               height: 40,
-              width: '100%',
+              width: '87%',
               outline: 'none',
               fontSize: '15px',
               marginLeft: '10px',
             }}
           />
-        </div>
-      </StyeldForm>
+        </InputWrapper>
+      </StyledForm>
     </>
   );
 };
@@ -126,9 +126,29 @@ const StyledSearchOutlined = styled(SearchOutlined)`
   font-size: 150%;
   margintop: 2px;
 `;
-const StyeldForm = styled.form`
+const StyledForm = styled.form`
   display: ${(props) => (props.toggle ? 'flex' : 'none')};
   @media screen and (min-width: 576px) {
     display: none;
+  }
+  align-item: center;
+  justify-content: center;
+`;
+const InputWrapper = styled.div`
+  height: 50;
+  width: 92%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #c0c0c0;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  &: hover {
+    box-shadow: 2px 2px 2px 2px #e0e0e0;
+  }
+  &:focus-within {
+    box-shadow: 2px 2px 2px 2px #e0e0e0;
   }
 `;

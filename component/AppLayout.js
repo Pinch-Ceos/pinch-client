@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import MenuLayout from './Menu';
+import styled from 'styled-components';
 
 const { Header, Content, Sider } = Layout;
 
@@ -46,41 +47,22 @@ const AppLayout = ({ children }) => {
                   alignItems: 'center',
                   padding: 0,
                   width: '100%',
-                  height: 200,
+                  height: 260,
                   backgroundColor: 'lightgrey',
                 }}
               >
-                <form onSubmit={onSubmitForm}>
-                  <div
-                    style={{
-                      height: 50,
-                      width: 500,
-                      background: 'white',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      border: '2px solid #C0C0C0',
-                      borderRadius: '10px',
-                    }}
-                  >
+                <StyledForm onSubmit={onSubmitForm}>
+                  <InputWrapper>
                     <SearchOutlined
                       style={{ fontSize: '150%', color: 'gray' }}
                     />
-                    <input
+                    <StyledInput
                       value={searchValue}
                       onChange={onChangeInput}
                       placeholder="어떤 뉴스레터를 찾고 있나요?"
-                      style={{
-                        border: 'none',
-                        height: 40,
-                        width: 450,
-                        outline: 'none',
-                        fontSize: '15px',
-                        marginLeft: '10px',
-                      }}
                     />
-                  </div>
-                </form>
+                  </InputWrapper>
+                </StyledForm>
               </Header>
             </Col>
           </Row>
@@ -137,6 +119,39 @@ const AppLayout = ({ children }) => {
 };
 
 export default AppLayout;
+
+const StyledForm = styled.form`
+  border-radius: 10px;
+  &:focus-within {
+    box-shadow: 3px 3px 3px 3px #c0c0c0;
+  }
+  &:hover {
+    box-shadow: 3px 3px 3px 3px #c0c0c0;
+  }
+`;
+
+const InputWrapper = styled.div`
+  height: 62px;
+  width: 90vw;
+  max-width: 620px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #c0c0c0;
+  border-radius: 10px;
+`;
+
+const StyledInput = styled.input`
+  border: none;
+  height: 58px;
+  width: 80vw;
+  max-width: 540px;
+  outline: none;
+  font-size: 15px;
+  margin-left: 10px;
+`;
+
 const Global = createGlobalStyle`
   .ant-row{
     margin-right: 0 !important;

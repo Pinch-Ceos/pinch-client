@@ -3,6 +3,7 @@ import React from 'react';
 import ModalWindow from '../component/Modal';
 import ImageCard from './ImageCard';
 import NoImageCard from './NoImageCard';
+import styled from 'styled-components';
 
 const CardList = ({ data, header }) => {
   return (
@@ -29,7 +30,7 @@ const CardList = ({ data, header }) => {
       }
       dataSource={data}
       renderItem={(item) => (
-        <List.Item
+        <StyledItem
           style={{
             marginTop: '20px',
             marginLeft: 10,
@@ -37,9 +38,17 @@ const CardList = ({ data, header }) => {
           }}
         >
           {item.image ? <ImageCard item={item} /> : <NoImageCard item={item} />}
-        </List.Item>
+        </StyledItem>
       )}
     />
   );
 };
 export default CardList;
+
+const StyledItem = styled(List.Item)`
+  &:hover {
+    .ant-list-item-meta-title {
+      text-decoration: underline;
+    }
+  }
+`;
