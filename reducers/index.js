@@ -1,6 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import produce from 'immer';
-import faker from 'faker';
 
 const initalState = {
   me: null,

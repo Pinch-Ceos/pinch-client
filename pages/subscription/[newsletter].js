@@ -20,6 +20,8 @@ const Subscription = () => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
+    const readFilter = localStorage.getItem('filterToggle');
+    console.log(readFilter);
     setHeader(
       me.subscriptions.find((v) => v.email_address === newsletter).name
     );
@@ -28,6 +30,7 @@ const Subscription = () => {
       data: newsletter,
       page: 1,
       token: cookie.Token,
+      read: readFilter,
     });
   }, [newsletter]);
 

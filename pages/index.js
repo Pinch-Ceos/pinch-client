@@ -35,7 +35,7 @@ const MainBox = () => {
       <Title>
         성장하는 당신을 위한
         <br />
-        간편한 뉴스레터 인박스
+        가장 간편한 뉴스레터 인박스
       </Title>
       <LoginButton onClick={responseGoogle}>
         <Image src={'/design/GoogleLogin.png'} width="292" height="51" />
@@ -76,25 +76,24 @@ export default Login;
 const Container = styled.section`
   height: 100%;
   width: 100%;
-  padding-bottom: 60px;
 `;
 const ExceptLogo = styled.div`
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
+  vertical-align: center;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 `;
 
 const Title = styled.section`
-  margin-top: 8.645%;
+  margin-top: 11vh;
   font-weight: bold;
-  font-size: 2.5rem;
-  line-height: 3.125rem;
+  font-size: max(25px, 2.5vw);
   text-align: center;
   color: #111111;
-  margin-bottom: 2.916%;
+  margin-bottom: 7vh;
 `;
 
 const Logo = styled.div`
@@ -105,6 +104,7 @@ const Logo = styled.div`
 `;
 
 const MainContainer = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +118,7 @@ const LoginButton = styled.button`
   background: none;
   border: none;
   align-items: center;
-  margin-bottom: 7.55%;
+  margin-bottom: 12vh;
 `;
 
 const BodyImage = styled.div`
@@ -128,12 +128,13 @@ const BodyImage = styled.div`
   align-content: center;
   justify-content: center;
   height: 37.568%;
-  margin-bottom: 5.468%;
+  margin-bottom: 10vh;
 `;
 
 const BottomText = styled.div`
+  width: 95%;
   font-weight: normal;
-  font-size: 0.813rem;
+  font-size: max(10.5px, 1vw);
   line-height: 1rem;
   text-align: center;
   color: #777777;

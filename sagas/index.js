@@ -172,9 +172,12 @@ function* deleteSubscription(action) {
 }
 
 function loadMailAPI(action) {
-  return axios.get(`/email?subscription=${action.data}&page=${action.page}`, {
-    headers: { Authorization: action.token },
-  });
+  return axios.get(
+    `/email?subscription=${action.data}&page=${action.page}&unread=${action.read}`,
+    {
+      headers: { Authorization: action.token },
+    }
+  );
 }
 function* loadMail(action) {
   try {
