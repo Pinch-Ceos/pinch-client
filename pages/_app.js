@@ -60,10 +60,11 @@ body, html {
   height: 100%;
   background: #f9f9f9;
 }
+@media screen and (max-width: 768px) { html { font-size: 12px; } }
+
 `;
 
 const Body = styled.div`
   width: 100%;
   height: 100%;
-  // background: #f9f9f9;
 `;

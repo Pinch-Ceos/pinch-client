@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
 import { Cookies, useCookies } from 'react-cookie';
 import Router from 'next/router';
+import { Tooltip } from 'antd';
 
 const MyProfileContent = ({ name, email_address }) => {
   return (
@@ -112,32 +113,31 @@ const MySubscribeButton = ({ id }) => {
     </DeleteButton>
   );
 };
+const text = (
+  <span>
+    <div>뉴스레터 추가하기</div>
+    <div>메일함 속 새로운 뉴스레터를 추가해보세요!</div>
+  </span>
+);
 
 const MySubscribeList = ({ subscriptions }) => {
-  const [isHover, setIsHover] = useState(false);
-  const isHoverNow = () => {
-    setIsHover(true);
+  const onClick = () => {
+    console.log('눌렷당');
   };
-  const notHoverNow = () => {
-    setIsHover(false);
-  };
+
   return (
     <>
       <SubscriptionTitle>
         뉴스레터 관리
-        <span tooltop-text="뉴스레터 추가하기<br/>메일함 속 새로운 뉴스레터를 추가해보세요!">
-          <PlusButton onMouseOver={isHoverNow} onMouseLeave={notHoverNow}>
-            <Image src={'/design/ProfilePlus.png'} width="24" height="24" />
-            <ToolTip isHover={isHover}>
-              <ToolTipContainer isHover={isHover}>
-                <ToolTipTitle isHover={isHover}>뉴스레터 추가하기</ToolTipTitle>
-                <ToolTipSub isHover={isHover}>
-                  메일함 속 새로운 뉴스레터를 추가해보세요!
-                </ToolTipSub>
-              </ToolTipContainer>
-            </ToolTip>
-          </PlusButton>
-        </span>
+        <div className="demo">
+          <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
+            <Tooltip placement="topRight" title={text}>
+              <PlusButton onClick={onClick}>
+                <Image src={'/design/ProfilePlus.png'} width="24" height="24" />
+              </PlusButton>
+            </Tooltip>
+          </div>
+        </div>
       </SubscriptionTitle>
       {subscriptions.map((item) => {
         return (
@@ -234,6 +234,13 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const Button = styled.div`
@@ -251,8 +258,9 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 28.646%;
-  margin-left: 28.646%;
+  width: 90%;
+  height: 100%;
+  max-width: 820px;
   justify-content: center;
 `;
 
@@ -285,7 +293,7 @@ const ProfileName = styled.div`
 
 const ProfileEmail = styled.div`
   font-weight: normal;
-  font-size: 0.875px;
+  font-size: 0.875%;
   line-height: 1.25rem;
   color: #999999;
 `;
@@ -300,6 +308,10 @@ const NewsLetterContainer = styled.div`
   width: 100%;
   border-radius: 12px;
   background-color: #f9f9f9;
+  font-size: 16px;
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const NewsLetterRead = styled.div`
@@ -314,7 +326,7 @@ const NewsLetterRead = styled.div`
   border-radius: 100px;
   text-align: center;
   font-weight: normal;
-  font-size: 1.25rem;
+  font-size: 1.25em;
   line-height: 1.875rem;
   color: #444444;
   :hover {
@@ -447,7 +459,7 @@ const SubscriptionTitle = styled.div`
   justify-content: space-between;
 `;
 
-const PlusButton = styled.button`
+const PlusButton = styled(Button)`
   background: none;
   /* position: relative; */
   width: 2.875rem;
@@ -525,44 +537,6 @@ const SubscribeNewsEmail = styled.div`
   color: #999999;
 `;
 
-const ToolTip = styled.div`
-  display: ${(props) => (props.isHover ? 'block' : 'none')};
-  background: #ffffff;
-  position: absolute;
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
-  border-radius: 4px;
-  width: 17.5rem;
-  height: 5.25rem;
-`;
-
-const ToolTipContainer = styled.div`
-  display: ${(props) => (props.isHover ? 'flex' : 'none')};
-  /* position: absolute; */
-  width: 89.28%;
-  height: 5.25rem;
-  :hover {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-`;
-
-const ToolTipTitle = styled.div`
-  display: ${(props) => (props.isHover ? 'block' : 'none')};
-  /* position: absolute; */
-  font-weight: normal;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: #171920;
-`;
-const ToolTipSub = styled.div`
-  display: ${(props) => (props.isHover ? 'block' : 'none')};
-  /* position: absolute; */
-  font-weight: normal;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: #a2a2a2;
-`;
 const LogOutContainer = styled.div`
   display: flex;
   width: 100%;
