@@ -190,9 +190,14 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMailDone = false;
         draft.loadMailError = null;
         break;
+      case LOAD_BOOKMARK_SUCCESS:
+        draft.loadMailLoading = false;
+        draft.loadMailDone = true;
+        draft.mails = draft.mails.concat(action.data);
+        draft.hasMoreMails = action.data.length === 12;
+        break;
       case LOAD_SEARCH_MAIL_SUCCESS:
       case LOAD_MAIL_SUCCESS:
-      case LOAD_BOOKMARK_SUCCESS:
         draft.loadMailLoading = false;
         draft.loadMailDone = true;
         draft.mails = draft.mails.concat(action.data.email_list);

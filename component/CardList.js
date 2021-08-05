@@ -1,9 +1,9 @@
 import { List, Card } from 'antd';
 import React from 'react';
-import ModalWindow from '../component/Modal';
 import ImageCard from './ImageCard';
 import NoImageCard from './NoImageCard';
 import styled from 'styled-components';
+import CardListHeader from './CardListHeader';
 
 const CardList = ({ data, header }) => {
   return (
@@ -22,12 +22,7 @@ const CardList = ({ data, header }) => {
         border: 'none',
         width: '100%',
       }}
-      header={
-        <div style={{ border: 0, marginLeft: '5px', fontSize: '17px' }}>
-          {header}
-          <ModalWindow />
-        </div>
-      }
+      header={<CardListHeader header={header} />}
       dataSource={data}
       renderItem={(item) => (
         <StyledItem
