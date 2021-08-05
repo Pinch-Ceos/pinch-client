@@ -33,7 +33,8 @@ const Pinch = ({ Component }) => {
         <title>Pinch</title>
       </Head>
       {topBar()}
-      <Component />]{footer()}
+      <Component />
+      {footer()}
     </Body>
   );
 };
@@ -54,8 +55,10 @@ const GlobalStyles = createGlobalStyle`
   font-weight: medium;
   font-style: normal;
 }
-body {
+body, html {
   font-family: 'Spoqa Han Sans Neo';
+  height: 100%;
+  background: #f9f9f9;
 }
 `;
 

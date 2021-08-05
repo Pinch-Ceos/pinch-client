@@ -9,6 +9,7 @@ import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers';
 import wrapper from '../store/configureStore';
 import styled from 'styled-components';
 import Image from 'next/image';
+import Modal from '../component/Modal';
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ const Inbox = () => {
         <>
           <Header>{header}</Header>
           <EmptyContainer>
+            <Modal />
             <Image src={'/design/emptyInbox.png'} width="252" height="263" />
             <TextLabel>아무것도 없네요!</TextLabel>
           </EmptyContainer>
@@ -72,7 +74,6 @@ const Inbox = () => {
     <>
       <AppLayout>{ChangeBody()}</AppLayout>
       {console.log(me.subscription_num)}
-      {console.log(mails)}
     </>
   );
 };

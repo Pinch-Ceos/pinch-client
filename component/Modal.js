@@ -60,14 +60,13 @@ const ModalWindow = () => {
           <StyledBody>
             핀치에 뉴스레터를 추가해 보세요.
             <br />
-            복잡한 뉴스레터에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
-            <br />
+            복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <StyledImage>
-              <Image
+              {/* <Image
                 src={'/design/modalStart.png'}
                 width="191px"
                 height="210px"
-              />
+              /> */}
             </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
@@ -79,28 +78,27 @@ const ModalWindow = () => {
       return (
         <StyledCompo>
           <StyledTitle>잠시만 기다려주세요. </StyledTitle>
-          <StyledBody>
-            최근 7일 간 <br /> User님의 메일로 온 뉴스레터들을 찾고 있어요.
-          </StyledBody>
+          <StyledImage>
+            <Image src={'/design/modalLoader.gif'} width="200" height="200" />
+          </StyledImage>
+          <Label>
+            최근 7일 간 User님의 메일로 온<br />
+            뉴스레터들을 찾고 있어요.
+          </Label>
         </StyledCompo>
       );
     } else if (componum === 2) {
       return (
         <StyledCompo>
-          <StyledTitle style={{ paddingBottom: 'none' }}>
-            뉴스레터를 선택해주세요.{' '}
-          </StyledTitle>
-          <StyledBody style={{ height: '38vh' }}>
-            <StyledBody>
-              이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
-              <br />
-              당신의 메일함도 한층 더 깔끔해질 거에요.😊
-            </StyledBody>
-            <Tag
-              selectedTags={selectedTags}
-              setSelectedTags={setSelectedTags}
-            />
+          <StyledTitle>뉴스레터를 선택해주세요. </StyledTitle>
+          {/* <StyledBody> */}
+          <StyledBody>
+            이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
+            <br />
+            당신의 메일함도 한층 더 깔끔해질 거에요.😊
           </StyledBody>
+          <Tag selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+          {/* </StyledBody> */}
           <StyledButton type="button" onClick={changeBody}>
             다 선택했어요!
           </StyledButton>
@@ -112,29 +110,18 @@ const ModalWindow = () => {
   return (
     <>
       <Global />
-      {/* <Button
-        type="button"
-        onClick={showModal}
-        style={{
-          padding: '5',
-          marginLeft: '5',
-          background: 'none',
-          border: 'none',
-        }}
-      >
-        🦔
-      </Button> */}
       <Modal
         visible={visible}
         onCancel={handleCancel}
-        width={800}
+        width={797}
         height={659}
         style={{
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          borderRadius: 30,
+          borderRadius: 12,
+          boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
           background: '#2B2E32',
         }}
         footer={[<div />]}
@@ -192,36 +179,51 @@ const StyledCompo = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  padding: 20px;
-  height: 100px;
-  border: none;
   text-align: center;
+  font-weight: bold;
   background: #2b2e32;
-  color: white;
-  font-size: 2em;
+  color: #e5e6eb;
+  font-size: 2.5rem;
+  line-height: 3.125rem;
   word-break: keep-all;
+  margin-top: 86px;
+  margin-bottom: 36px;
 `;
 
 const StyledBody = styled.div`
-  font-size: 1em;
+  font-size: 1.125rem;
+  font-weight: normal;
   color: #b0b1b6;
   text-align: center;
-  width: 98%;
   word-break: break-word;
+  margin-bottom: 5.28%;
+`;
+
+const Label = styled.div`
+  font-size: 1.125rem;
+  font-weight: normal;
+  color: #b0b1b6;
+  text-align: center;
+  word-break: break-word;
+  margin-bottom: 14.11%;
 `;
 
 const StyledButton = styled.button`
-  border-radius: 20px;
-  padding: 20px 20px;
-  margin-top: 7vh;
-  font-size: 1em;
+  border-radius: 100px;
+  padding: 18px 14px;
+  margin-bottom: 40px;
+  font-weight: normal;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  line-height: 1.5rem;
   background-color: #3562ff;
   border: none;
-  width: 146px;
-  z-index: 1;
+  width: 246px;
+  z-index: 999;
 `;
 
 const StyledImage = styled.div`
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 8.8%;
+  margin-bottom: 11.53%;
 `;

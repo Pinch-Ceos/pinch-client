@@ -77,7 +77,7 @@ const OverflowGradient = styled.div`
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 220px;
+    height: 170px;
     background: linear-gradient(transparent, #2b2e32);
     pointer-events: none;
   }
@@ -86,8 +86,8 @@ const OverflowGradient = styled.div`
 const { CheckableTag } = Tag;
 const Container = styled.div`
   padding-top: 25px;
-  padding-bottom: 110px;
-  height: 300px;
+  padding-bottom: 80px;
+  height: 303px;
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
