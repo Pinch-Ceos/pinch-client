@@ -9,7 +9,12 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import Avatar from 'antd/lib/avatar/avatar';
-import { StyledBookmark, UnreadCard, ReadCard } from './ImageCard';
+import {
+  StyledBookmark,
+  UnreadCard,
+  ReadCard,
+  ActionsWrapper,
+} from './ImageCard';
 
 const NoImageCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -39,7 +44,7 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -50,7 +55,7 @@ const NoImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <div
           style={{
             display: 'flex',
@@ -72,7 +77,7 @@ const NoImageCard = ({ item }) => {
     >
       <StyeldMeta
         avatar={
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
           </div>
         }
@@ -86,7 +91,7 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -97,7 +102,7 @@ const NoImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <StyledBookmark>
           <Image
             src={'/design/bookmark.png'}
@@ -113,7 +118,7 @@ const NoImageCard = ({ item }) => {
     >
       <StyeldMeta
         avatar={
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
           </div>
         }
@@ -127,7 +132,7 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -138,7 +143,7 @@ const NoImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <StyledBookmark>
           <Image
             src={'/design/bookmark.png'}
@@ -154,7 +159,7 @@ const NoImageCard = ({ item }) => {
     >
       <StyeldMeta
         avatar={
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
           </div>
         }
@@ -169,6 +174,7 @@ export default NoImageCard;
 
 const StyeldMeta = styled(Meta)`
   flex-direction: column;
+  margin-top: 16px;
   .ant-list-item-meta-content {
     display: flex;
     flex-direction: column;

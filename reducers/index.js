@@ -121,6 +121,10 @@ const rootReducer = (state = initalState, action) =>
       case DELETE_BOOKMARK_SUCCESS:
         draft.deleteBookmarkLoading = false;
         draft.deleteBookmarkDone = true;
+        if (draft.viewInfo) {
+          draft.viewInfo.bookmark_id = null;
+          break;
+        }
         const delindex = draft.mails.findIndex(
           (mail) => mail.bookmark_id === action.data
         );
@@ -138,11 +142,13 @@ const rootReducer = (state = initalState, action) =>
       case ADD_BOOKMARK_SUCCESS:
         draft.addBookmarkLoading = false;
         draft.addBookmarkDone = true;
-        console.log(action.data.email_id);
+        if (draft.viewInfo) {
+          draft.viewInfo.bookmark_id = action.data.id;
+          break;
+        }
         const addindex = draft.mails.findIndex(
           (mail) => mail.id === action.data.email_id
         );
-        console.log(addindex);
         draft.mails[addindex].bookmark_id = action.data.id;
         break;
       case ADD_BOOKMARK_FAILURE:
@@ -189,8 +195,8 @@ const rootReducer = (state = initalState, action) =>
       case LOAD_BOOKMARK_SUCCESS:
         draft.loadMailLoading = false;
         draft.loadMailDone = true;
-        draft.mails = draft.mails.concat(action.data);
-        draft.hasMoreMails = action.data.length === 12;
+        draft.mails = draft.mails.concat(action.data.email_list);
+        draft.hasMoreMails = action.data.email_list.length === 12;
         break;
       case LOAD_SEARCH_MAIL_FAILURE:
       case LOAD_MAIL_FAILURE:

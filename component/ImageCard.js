@@ -33,7 +33,6 @@ const ImageCard = ({ item }) => {
   };
   return item.bookmark_id ? (
     <UnreadCard
-      hoverable
       onClick={onCardClick(item)}
       style={{ hight: 200, border: 'none' }}
       cover={
@@ -48,7 +47,7 @@ const ImageCard = ({ item }) => {
         />
       }
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -59,7 +58,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <div
           style={{
             display: 'flex',
@@ -83,7 +82,6 @@ const ImageCard = ({ item }) => {
     </UnreadCard>
   ) : item.read ? (
     <ReadCard
-      hoverable
       onClick={onCardClick(item)}
       style={{ hight: 200, border: 'none' }}
       cover={
@@ -98,7 +96,7 @@ const ImageCard = ({ item }) => {
         />
       }
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -109,7 +107,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <StyledBookmark>
           <Image
             src={'/design/bookmark.png'}
@@ -127,7 +125,6 @@ const ImageCard = ({ item }) => {
     </ReadCard>
   ) : (
     <UnreadCard
-      hoverable
       onClick={onCardClick(item)}
       style={{ hight: 200, border: 'none' }}
       cover={
@@ -142,7 +139,7 @@ const ImageCard = ({ item }) => {
         />
       }
       actions={[
-        <div
+        <ActionsWrapper
           style={{
             display: 'flex',
             justifyContent: 'start',
@@ -153,7 +150,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           {item.name}
-        </div>,
+        </ActionsWrapper>,
         <StyledBookmark>
           <Image
             src={'/design/bookmark.png'}
@@ -174,6 +171,16 @@ const ImageCard = ({ item }) => {
 
 export default ImageCard;
 
+export const ActionsWrapper = styled.div`
+  display: flex;
+  justifycontent: start;
+  marginleft: 8;
+  textalign: left;
+  &:hover {
+    color: rgba(0, 0, 0, 0.45);
+  }
+`;
+
 export const StyledBookmark = styled.div`
   opacity: 0;
   display: flex;
@@ -183,9 +190,13 @@ export const StyledBookmark = styled.div`
 
 export const UnreadCard = styled(Card)`
   border-radius: 15px;
+  cursor: pointer;
   &:hover {
     div {
       opacity: 1;
+    }
+    .ant-card-cover img {
+      box-shadow: 0 0 10px #b0b0b0;
     }
   }
   .ant-card-body {
@@ -202,10 +213,14 @@ export const UnreadCard = styled(Card)`
 export const ReadCard = styled(Card)`
   opacity: 0.4;
   border-radius: 15px;
+  cursor: pointer;
   &:hover {
     opacity: 1;
     div {
       opacity: 1;
+    }
+    .ant-card-cover img {
+      box-shadow: 0 0 10px #a0a0a0;
     }
   }
   .ant-card-body {

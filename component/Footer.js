@@ -25,7 +25,8 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.div`
-  width: 100%;
+  // width: 100%;
+  widht: 100vw;
   height: 254px;
   display: flex;
   justify-content: center;
@@ -35,7 +36,8 @@ const Container = styled.div`
 `;
 
 const CenterContainer = styled.div`
-  width: 545px;
+  // width: 545px;
+  width: 90vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -58,7 +60,8 @@ const Label = styled.div`
 
 const CenterBox = styled.div`
   border-bottom: 1px solid #c4c4c4;
-  width: 100%;
+  width: 90vw;
+  max-width: 545px;
   padding-bottom: 1rem;
   display: flex;
   justify-content: space-between;
