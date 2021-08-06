@@ -1,32 +1,42 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
+import Router from 'next/router';
 
-const CardListHeader = ({ header }) => {
+const CardListHeader = ({ header, setPage }) => {
   const router = useRouter();
   const address = router.pathname.split('/')[1];
-  const [toggle, setToggle] = useState();
+  const [cookie, setCookie, removeCookie] = useCookies(['Filter']);
+  const [toggle, setToggle] = useState(false);
 
   const onClickToggle = () => {
     setToggle(!toggle);
-    localStorage.setItem('filterToggle', JSON.stringify(!toggle));
+    setPage(2);
+    if (!toggle) {
+      setCookie('Filter', 'True', { path: '/' });
+    } else {
+      setCookie('Filter', 'False', { path: '/' });
+    }
+    if (address === 'subscription') {
+      Router.push(`/subscription/${router.query.newsletter}`);
+    } else if (address === 'inbox') {
+      Router.push('/inbox');
+    }
   };
 
   useEffect(() => {
-    if (localStorage.getItem('filterToggle') === 'true') {
+    if (cookie['Filter'] === 'True') {
       setToggle(true);
     } else {
       setToggle(false);
     }
-    console.log(toggle);
-  }, []);
+  });
 
   const filterToggle = () => {
-    console.log(toggle);
     if (toggle) {
       return (
         <Image
-          style={{ cursor: 'pointer' }}
           src={'/design/filterOn.png'}
           width="30px"
           height="30px"
@@ -36,7 +46,6 @@ const CardListHeader = ({ header }) => {
     }
     return (
       <Image
-        style={{ cursor: 'pointer' }}
         src={'/design/filterOff.png'}
         width="30px"
         height="30px"
@@ -72,11 +81,33 @@ const CardListHeader = ({ header }) => {
             {header}
           </div>
         </div>
-        <div>{filterToggle()}</div>
+        <div style={{ cursor: 'pointer' }}>{filterToggle()}</div>
+      </div>
+    );
+  } else if (address === 'inbox') {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            fontSize: '20px',
+            marginLeft: 10,
+          }}
+        >
+          {header}
+        </div>
+        <div style={{ cursor: 'pointer' }}>{filterToggle()}</div>
       </div>
     );
   }
-  return header;
+  return <div style={{ fontSize: '20px' }}>{header}</div>;
 };
 
 export default CardListHeader;

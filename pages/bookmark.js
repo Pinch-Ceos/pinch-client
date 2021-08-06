@@ -8,6 +8,7 @@ import { LOAD_BOOKMARK_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers';
 import wrapper from '../store/configureStore';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { getCookie } from './subscription/[newsletter]';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,6 @@ const Bookmark = () => {
 
   useEffect(() => {
     setHeader(me.user_name.concat('님의 저장한 뉴스레터'));
-    dispatch({
-      type: LOAD_BOOKMARK_REQUEST,
-      page: 1,
-      token: cookie.Token,
-    });
   }, []);
 
   useEffect(() => {
@@ -77,11 +73,16 @@ const Bookmark = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie.substr(6);
-    // const Token = context.req.headers.cookie['Token'];
-    console.log(Token);
+    const Token = getCookie(context.req.headers.cookie, 'Token')
+      ? getCookie(context.req.headers.cookie, 'Token')
+      : '';
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+      token: Token,
+    });
+    context.store.dispatch({
+      type: LOAD_BOOKMARK_REQUEST,
+      page: 1,
       token: Token,
     });
     context.store.dispatch(END);

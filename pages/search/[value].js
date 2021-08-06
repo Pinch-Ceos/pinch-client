@@ -7,6 +7,7 @@ import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
 import { LOAD_MY_INFO_REQUEST, LOAD_SEARCH_MAIL_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
+import { getCookie } from './subscription/[newsletter]';
 
 const Search = () => {
   const router = useRouter();
@@ -62,8 +63,8 @@ const Search = () => {
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie
-      ? context.req.headers.cookie.substr(6)
+    const Token = getCookie(context.req.headers.cookie, 'Token')
+      ? getCookie(context.req.headers.cookie, 'Token')
       : '';
     console.log(Token);
     context.store.dispatch({
