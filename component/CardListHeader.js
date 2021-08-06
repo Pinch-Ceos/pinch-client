@@ -31,7 +31,7 @@ const CardListHeader = ({ header, setPage }) => {
     } else {
       setToggle(false);
     }
-  });
+  }, []);
 
   const filterToggle = () => {
     if (toggle) {

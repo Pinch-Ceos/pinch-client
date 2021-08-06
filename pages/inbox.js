@@ -32,6 +32,7 @@ const Inbox = () => {
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMoreMails && !loadMailLoading) {
+          console.log(cookie.Filter);
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
@@ -48,7 +49,7 @@ const Inbox = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mails.length, hasMoreMails, loadMailLoading]);
+  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
 
   const ChangeBody = () => {
     if (me.subscription_num === 0 || mails === null) {
