@@ -131,7 +131,7 @@ const StyledForm = styled.form`
 `;
 
 const InputWrapper = styled.div`
-  height: 62px;
+  height: 70px;
   width: 90vw;
   max-width: 620px;
   background: white;
@@ -144,12 +144,16 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   border: none;
-  height: 58px;
+  height: 62px;
   width: 80vw;
   max-width: 540px;
   outline: none;
-  font-size: 15px;
+  font-family: 'Sans Neo Medium';
+  font-size: 20px;
   margin-left: 10px;
+  ::placeholder {
+    color: #999999;
+  }
 `;
 
 const Global = createGlobalStyle`

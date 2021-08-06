@@ -7,6 +7,7 @@ const initalState = {
   sender_list: [],
   view: null,
   viewInfo: null,
+  num_of_email: null,
   hasMoreMails: true,
   auth_uri: null,
   logInLoading: false,
@@ -200,6 +201,7 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMailLoading = false;
         draft.loadMailDone = true;
         draft.mails = draft.mails.concat(action.data.email_list);
+        draft.num_of_email = action.data.num_of_email;
         draft.hasMoreMails = action.data.email_list.length === 12;
         break;
       case LOAD_SEARCH_MAIL_FAILURE:

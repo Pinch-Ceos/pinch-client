@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
+import { useSelector } from 'react-redux';
 
 const CardListHeader = ({ header, setPage }) => {
   const router = useRouter();
   const address = router.pathname.split('/')[1];
   const [cookie, setCookie, removeCookie] = useCookies(['Filter']);
   const [toggle, setToggle] = useState(false);
+  const { num_of_email } = useSelector((state) => state);
 
   const onClickToggle = () => {
     setToggle(!toggle);
@@ -55,33 +57,44 @@ const CardListHeader = ({ header, setPage }) => {
   };
   if (address === 'subscription') {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ display: 'flex' }}>
-            <Image
-              src={'/design/subscriptionIcon.png'}
-              width="36px"
-              height="36px"
-            />
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: 'flex' }}>
+              <Image
+                src={'/design/subscriptionIcon.png'}
+                width="36px"
+                height="36px"
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '30px',
+                marginLeft: 10,
+                fontWeight: 'bold',
+              }}
+            >
+              {header}
+            </div>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '30px',
-              marginLeft: 10,
-            }}
-          >
-            {header}
+          <div style={{ cursor: 'pointer', marginRight: 10 }}>
+            {filterToggle()}
           </div>
         </div>
-        <div style={{ cursor: 'pointer' }}>{filterToggle()}</div>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+          <Image src={'/design/frontnumber.png'} width="14px" height="18px" />
+          <div style={{ fontSize: 20, marginLeft: 9 }}>
+            {num_of_email > 99 ? `99+개` : `${num_of_email}개`}
+          </div>
+        </div>
       </div>
     );
   } else if (address === 'inbox') {
@@ -97,8 +110,9 @@ const CardListHeader = ({ header, setPage }) => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            fontSize: '20px',
+            fontSize: '24px',
             marginLeft: 10,
+            fontWeight: 'bold',
           }}
         >
           {header}
@@ -107,7 +121,7 @@ const CardListHeader = ({ header, setPage }) => {
       </div>
     );
   }
-  return <div style={{ fontSize: '20px' }}>{header}</div>;
+  return <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{header}</div>;
 };
 
 export default CardListHeader;

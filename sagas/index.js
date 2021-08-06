@@ -1,5 +1,4 @@
 import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
-import faker from 'faker';
 import axios from 'axios';
 import {
   LOG_IN_REQUEST,
@@ -23,8 +22,6 @@ import {
   LOAD_MY_INFO_REQUEST,
   LOAD_MY_INFO_SUCCESS,
   LOAD_MY_INFO_FAILURE,
-  generateDummySendList,
-  generateDummyMail,
   LOAD_BOOKMARK_REQUEST,
   LOAD_BOOKMARK_SUCCESS,
   LOAD_BOOKMARK_FAILURE,
