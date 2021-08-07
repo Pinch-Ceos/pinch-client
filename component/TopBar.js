@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { Avatar } from 'antd';
 import Router from 'next/router';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -114,7 +112,6 @@ const RightBox = styled.div`
 `;
 
 const StyledAlarm = styled.div`
-  /* margin-top: 5px; */
   cursor: pointer;
   margin-left: 13px;
   width: 21px;
