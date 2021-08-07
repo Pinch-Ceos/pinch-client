@@ -9,6 +9,8 @@ import wrapper from '../store/configureStore';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { getCookie } from './subscription/[newsletter]';
+import { LoadingWrapper } from './inbox';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -47,7 +49,14 @@ const Bookmark = () => {
 
   const ChangeBody = () => {
     if (me.bookmark_num !== 0) {
-      return <CardList data={mails} header={header} />;
+      return (
+        <>
+          <CardList data={mails} header={header} setPage={setPage} />
+          <LoadingWrapper>
+            {loadMailLoading ? <LoadingOutlined /> : null}
+          </LoadingWrapper>
+        </>
+      );
     } else {
       return (
         <>
@@ -63,10 +72,7 @@ const Bookmark = () => {
 
   return (
     <>
-      <AppLayout>
-        {ChangeBody()}
-        {console.log(me.bookmark_num)}
-      </AppLayout>
+      <AppLayout>{ChangeBody()}</AppLayout>
     </>
   );
 };

@@ -7,6 +7,8 @@ import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
 import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
+import { LoadingWrapper } from '../inbox';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const Subscription = () => {
   const router = useRouter();
@@ -53,6 +55,9 @@ const Subscription = () => {
     <>
       <AppLayout>
         <CardList data={mails} header={header} setPage={setPage} />
+        <LoadingWrapper>
+          {loadMailLoading ? <LoadingOutlined /> : null}
+        </LoadingWrapper>
       </AppLayout>
     </>
   );

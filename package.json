@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "build": "next build"
+    "build": "next build",
+    "start": "next start"
   },
   "author": "seungBum",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "next": "^10.2.3",
     "next-images": "^1.8.1",
     "next-redux-wrapper": "^6.0.2",
+    "pm2": "^5.1.0",
     "react": "^17.0.2",
     "react-animate-on-scroll": "^2.1.5",
     "react-bootstrap": "^1.6.1",

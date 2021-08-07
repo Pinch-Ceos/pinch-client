@@ -20,7 +20,7 @@ const redirect = () => {
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
       setCookie('Filter', 'False', { path: '/' });
-      router.push(`http://localhost:3000/inbox`);
+      router.push(`/inbox`);
     }
   }, [giveCodeDone]);
   return <div>Loading...</div>;

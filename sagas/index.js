@@ -49,7 +49,12 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
 function logInAPI() {
-  return axios.get(`/auth/login`);
+  return axios.get(
+    `/auth/login`
+    // {
+    //   headers: { accept: 'application/json', 'Access-Control-Allow-Origin': '*' },
+    // }
+  );
 }
 
 function* logIn(action) {
@@ -70,7 +75,16 @@ function* logIn(action) {
 function giveCodeAPI(data) {
   console.log(data);
   console.log({ code: data });
-  return axios.post(`/auth/callback?code=${data}/`, { code: data });
+  return axios.post(
+    `/auth/callback?code=${data}/`,
+    { code: data }
+    // {
+    //   headers: {
+    //     accept: 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //   },
+    // }
+  );
 }
 function* giveCode(action) {
   try {
@@ -179,11 +193,14 @@ function loadMailAPI(action) {
 function* loadMail(action) {
   try {
     const result = yield call(loadMailAPI, action);
+    console.log(result);
     yield put({
       type: LOAD_MAIL_SUCCESS,
       data: result.data,
     });
   } catch (err) {
+    console.log(err);
+    console.log('ASDASD');
     yield put({
       type: LOAD_MAIL_FAILURE,
       error: err.response,
@@ -206,6 +223,7 @@ function* loadSearchMail(action) {
       data: result.data,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: LOAD_SEARCH_MAIL_FAILURE,
       error: err.response,
@@ -225,6 +243,7 @@ function* loadBookmark(action) {
       data: result.data,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: LOAD_BOOKMARK_FAILURE,
       error: err.response,
@@ -244,6 +263,7 @@ function* loadMyInfo(action) {
       data: result.data,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: LOAD_MY_INFO_FAILURE,
       error: err.response,
@@ -264,6 +284,7 @@ function* loadDetail(action) {
       data: result.data,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: LOAD_DETAIL_FAILURE,
       error: err.response,

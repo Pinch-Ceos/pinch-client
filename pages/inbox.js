@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Modal from '../component/Modal';
 import { getCookie } from './subscription/[newsletter]';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -64,7 +65,14 @@ const Inbox = () => {
         </>
       );
     } else {
-      return <CardList data={mails} header={header} setPage={setPage} />;
+      return (
+        <>
+          <CardList data={mails} header={header} setPage={setPage} />
+          <LoadingWrapper>
+            {loadMailLoading ? <LoadingOutlined /> : null}
+          </LoadingWrapper>
+        </>
+      );
     }
   };
 
@@ -100,6 +108,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 export default Inbox;
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 300%;
+  margin: 20px;
+`;
 
 const EmptyContainer = styled.div`
   margin-top: 206px;
