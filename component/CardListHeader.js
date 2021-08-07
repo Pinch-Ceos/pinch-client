@@ -5,6 +5,8 @@ import { useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { useSelector } from 'react-redux';
 
+const profileImage = () => {};
+
 const CardListHeader = ({ header, setPage }) => {
   const router = useRouter();
   const address = router.pathname.split('/')[1];

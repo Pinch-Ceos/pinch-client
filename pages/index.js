@@ -8,7 +8,7 @@ import Image from 'next/image';
 const TopBar = () => {
   return (
     <Logo>
-      <Image src={'/design/pinchmark.png'} width="67.22" height="22" />
+      <Image src={'/design/pinchmark.png'} width="80" height="22" />
     </Logo>
   );
 };
@@ -90,7 +90,7 @@ const ExceptLogo = styled.div`
 const Title = styled.section`
   margin-top: 11vh;
   font-weight: bold;
-  font-size: max(25px, 2.5vw);
+  font-size: max(25px, 2.2vw);
   text-align: center;
   color: #111111;
   margin-bottom: 7vh;
@@ -134,8 +134,8 @@ const BodyImage = styled.div`
 const BottomText = styled.div`
   width: 95%;
   font-weight: normal;
-  font-size: max(10.5px, 1vw);
-  line-height: 1rem;
+  font-size: max(11px, 0.8vw);
+  line-height: max(15px, 1.2vw);
   text-align: center;
   color: #777777;
 `;

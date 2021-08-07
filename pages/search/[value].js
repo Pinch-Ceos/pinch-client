@@ -7,7 +7,7 @@ import AppLayout from '../../component/AppLayout';
 import CardList from '../../component/CardList';
 import { LOAD_MY_INFO_REQUEST, LOAD_SEARCH_MAIL_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
-import { getCookie } from './subscription/[newsletter]';
+import { getCookie } from '../subscription/[newsletter]';
 
 const Search = () => {
   const router = useRouter();

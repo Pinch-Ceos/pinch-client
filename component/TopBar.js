@@ -39,14 +39,16 @@ const Header = () => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
+          height: 48,
         }}
       >
         <div style={{ cursor: 'pointer', marginTop: 7, marginLeft: 15 }}>
           <Image
             onClick={onClickMark}
             src={'/design/pinchmark.png'}
-            width="60px"
-            height="27px"
+            width="80px"
+            height="22px"
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>

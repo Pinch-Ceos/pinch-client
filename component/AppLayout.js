@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Router from 'next/router';
 import MenuLayout from './Menu';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const { Header, Content, Sider } = Layout;
 
@@ -38,12 +39,12 @@ const AppLayout = ({ children }) => {
       <Layout>
         {hasHeader() ? null : (
           <Row>
-            <Col xs={0} sm={24}>
+            <Col xs={0} sm={0} md={24}>
               <Header
                 className="site-layout-background"
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 0,
                   width: '100%',
@@ -51,6 +52,7 @@ const AppLayout = ({ children }) => {
                   backgroundColor: 'lightgrey',
                 }}
               >
+                <Image src={'/design/left.png'} width="540px" height="260px" />
                 <StyledForm onSubmit={onSubmitForm}>
                   <InputWrapper>
                     <SearchOutlined
@@ -63,6 +65,7 @@ const AppLayout = ({ children }) => {
                     />
                   </InputWrapper>
                 </StyledForm>
+                <Image src={'/design/right.png'} width="540px" height="260px" />
               </Header>
             </Col>
           </Row>
@@ -120,6 +123,12 @@ const AppLayout = ({ children }) => {
 
 export default AppLayout;
 
+const LeftImageWrapper = styled.div`
+  // display: flex;
+  // align-items: flex-end;
+  align-self: flex-end;
+`;
+
 const StyledForm = styled.form`
   border-radius: 10px;
   &:focus-within {
@@ -132,7 +141,7 @@ const StyledForm = styled.form`
 
 const InputWrapper = styled.div`
   height: 70px;
-  width: 90vw;
+  width: 38vw;
   max-width: 620px;
   background: white;
   display: flex;
@@ -145,7 +154,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   border: none;
   height: 62px;
-  width: 80vw;
+  width: 34vw;
   max-width: 540px;
   outline: none;
   font-family: 'Sans Neo Medium';

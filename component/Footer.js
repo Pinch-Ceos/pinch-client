@@ -7,8 +7,8 @@ const Footer = () => {
     <Container>
       <CenterContainer>
         <Logo>
-          {/* <Image src={'/design/pinchmark.png'} width="" height="" /> */}
-          putlogohere
+          <Image src={'/design/pinchmark.png'} width="80" height="22" />
+          {/* putlogohere */}
         </Logo>
         <CenterBox>
           <Label>개인정보 처리방침</Label>
