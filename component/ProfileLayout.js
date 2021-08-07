@@ -8,11 +8,15 @@ import { Cookies, useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { Tooltip } from 'antd';
 
-const MyProfileContent = ({ name, email_address }) => {
+const MyProfileContent = ({ name, email_address, profile_picture }) => {
   return (
     <MyProfile>
       <ProfileImg>
-        <Image src={'/design/profileImg.png'} width="149" height="149" />
+        <img
+          src={`${profile_picture}`}
+          alt="here"
+          style={{ width: '9.313em', height: '9.313em' }}
+        />
       </ProfileImg>
       <ProfileContent>
         <ProfileName>{name}</ProfileName>
@@ -33,10 +37,6 @@ const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
 
   return (
     <NewsLetterContainer>
-      {/* <ProfileIllust
-        src={process.env.PUBLIC_URL + '/design/ProfileIllust.png'}
-        alt="Profile Bird"
-      /> */}
       <NewsLetterRead>🚀 지금까지 999+개의 뉴스레터를 읽었어요!</NewsLetterRead>
       <NewsLetterInfoContainer>
         <NewsLetter>
@@ -64,10 +64,10 @@ const MyAccountContent = ({ email_address }) => {
         <EmailLabel>이메일</EmailLabel>
         <EmailBox>
           <GoogleImg>
-            <Image
+            <img
               src={'/design/GoogleLogin_Profile.png'}
-              width="44"
-              height="44"
+              alt="loginimg"
+              style={{ width: '1.813em', height: '1.5em' }}
             />
           </GoogleImg>
           <MyEmail>{email_address}</MyEmail>
@@ -121,19 +121,19 @@ const text = (
 );
 
 const MySubscribeList = ({ subscriptions }) => {
-  const onClick = () => {
-    console.log('눌렷당');
-  };
-
   return (
     <>
       <SubscriptionTitle>
-        뉴스레터 관리
+        <ManageTitle>뉴스레터 관리</ManageTitle>
         <div className="demo">
           <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
             <Tooltip placement="topRight" title={text}>
-              <PlusButton onClick={onClick}>
-                <Image src={'/design/ProfilePlus.png'} width="24" height="24" />
+              <PlusButton>
+                <img
+                  src={'/design/ProfilePlus.png'}
+                  alt="plus"
+                  style={{ width: '1.5em', height: '1.5em' }}
+                />
               </PlusButton>
             </Tooltip>
           </div>
@@ -158,7 +158,6 @@ const LogOut = () => {
   let history = useHistory();
 
   function logout(e) {
-    // removeCookie('LoginData');
     history.push('/');
   }
 
@@ -180,6 +179,7 @@ const ProfileLayout = () => {
           <MyProfileContent
             name={me.user_name}
             email_address={me.user_email_address}
+            profile_picture={me.profile_picture}
           />
           <MyNewsLetterContent
             bookmark_num={me.bookmark_num}
@@ -239,7 +239,7 @@ const Container = styled.div`
   align-items: center;
   font-size: 16px;
   @media screen and (max-width: 768px) {
-    font-size: 12px;
+    font-size: 11px;
   }
 `;
 
@@ -267,16 +267,23 @@ const Body = styled.div`
 const MyProfile = styled.div`
   width: 100%;
   height: 9.313rem;
-  margin-top: 4.5rem;
-  margin-bottom: 9rem;
+  margin-top: 4.5em;
+  margin-bottom: 9em;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
 const ProfileImg = styled.div`
-  /* flex-grow: 1; */
+  border-radius: 100px;
+  height: 9.313em;
+  width: 9.313em;
   margin-right: 2.5rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
 `;
 
@@ -286,21 +293,20 @@ const ProfileContent = styled.div`
 
 const ProfileName = styled.div`
   font-weight: bold;
-  font-size: 1.75rem;
-  line-height: 2.25rem;
+  font-size: 1.75em;
+  line-height: 2.25em;
   color: #171920;
 `;
 
 const ProfileEmail = styled.div`
   font-weight: normal;
-  font-size: 0.875%;
-  line-height: 1.25rem;
+  font-size: 0.875em;
+  line-height: 1.25em;
   color: #999999;
 `;
 
 const NewsLetterContainer = styled.div`
-  height: 17.75rem;
-  margin-bottom: 9rem;
+  margin-bottom: 9em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -308,10 +314,6 @@ const NewsLetterContainer = styled.div`
   width: 100%;
   border-radius: 12px;
   background-color: #f9f9f9;
-  font-size: 16px;
-  @media screen and (max-width: 768px) {
-    font-size: 12px;
-  }
 `;
 
 const NewsLetterRead = styled.div`
@@ -319,34 +321,36 @@ const NewsLetterRead = styled.div`
   margin-top: 3.125rem;
   margin-bottom: 2rem;
   background: #ffffff;
-  padding-top: 1.188rem;
-  padding-bottom: 0.875rem;
+  padding-top: 1.125rem;
+  padding-bottom: 15px;
   padding-right: 3.125rem;
   padding-left: 3.125rem;
   border-radius: 100px;
   text-align: center;
   font-weight: normal;
   font-size: 1.25em;
-  line-height: 1.875rem;
+  line-height: 1.875em;
   color: #444444;
   :hover {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
   }
 `;
+
 const ProfileIllust = styled.img`
   left: 499px;
   bottom: -190px;
   /* z-index: 999; */
   position: relative;
 `;
+
 const NewsLetterInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  /* height: 100%; */
   margin-bottom: 3.125rem;
 `;
+
 const NewsLetter = styled.div`
   display: flex;
   flex-direction: column;
@@ -358,18 +362,17 @@ const NewsLetter = styled.div`
 const Label = styled.div`
   width: auto;
   text-align: center;
-  /* width: 100%; */
   font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.875rem;
+  font-size: 1.25em;
+  line-height: 1.875em;
   color: #b0b1b6;
 `;
+
 const NewsLetterCount = styled.button`
-  margin-top: 0.563rem;
+  margin-top: 0.625em;
   width: auto;
   font-weight: bold;
-  font-size: 2.5rem;
-  line-height: 3.125rem;
+  font-size: 2.5em;
   color: #2b2e32;
   border: none;
   background-color: #f9f9f9;
@@ -387,8 +390,8 @@ const AccountContainer = styled.div`
 
 const AccountTitle = styled.div`
   font-weight: bold;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1.5em;
+  line-height: 2em;
   color: #171920;
   font-weight: bold;
   text-align: left;
@@ -403,7 +406,6 @@ const EmailContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
   width: 100%;
 `;
 
@@ -411,8 +413,8 @@ const EmailLabel = styled.div`
   font-weight: normal;
   width: 3.125rem;
   margin-right: 0.375rem;
-  font-size: 1.125rem;
-  line-height: 1.625rem;
+  font-size: 1.125em;
+  line-height: 1.625em;
   color: #171920;
   margin-right: 34.63%;
 `;
@@ -426,30 +428,30 @@ const EmailBox = styled.div`
 `;
 
 const GoogleImg = styled.div`
+  height: 2.75em;
+  width: 2.75em;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   margin-right: 0.625rem;
   margin-left: 0.625rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-  border-radius: 0.5rem;
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MyEmail = styled.div`
+  margin-left: 0.75em;
   margin-top: 1.125rem;
   margin-bottom: 1.125rem;
   font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 1em;
+  line-height: 1.5em;
   color: #999999;
 `;
 
 const SubscriptionTitle = styled.div`
-  font-weight: bold;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  color: #171920;
-  font-weight: bold;
-  text-align: left;
   width: 100%;
   padding-bottom: 0.938rem;
   border-bottom: 1px solid #dadada;
@@ -461,25 +463,17 @@ const SubscriptionTitle = styled.div`
 
 const PlusButton = styled(Button)`
   background: none;
-  /* position: relative; */
-  width: 2.875rem;
-  height: 2.875rem;
+  /* width: 2.875em; */
+  /* height: 2.875em; */
+  width: 1.5em;
+  height: 1.5em;
+  padding: 1.375em;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 100px;
+  background: #f3f3f3;
   border: none;
-  :hover {
-    border: none;
-    position: relative;
-    background-color: #f3f3f3;
-    border-radius: 100px;
-  }
-  :hover::after {
-    position: absolute;
-    /* top: 105%; */
-    bottom: 1000%;
-    right: 0;
-  }
   a:active {
     border: none;
   }
@@ -505,11 +499,11 @@ const DeleteButton = styled.button`
   justify-content: center;
   font-weight: 500;
   padding: 0;
-  font-size: 1.125rem;
+  font-size: 1.125em;
   border: none;
   color: #616161;
   font-weight: 500;
-  line-height: 1.625rem;
+  line-height: 1.625em;
   :hover {
     border: none;
   }
@@ -525,15 +519,15 @@ const Subscribe = styled.div`
 
 const SubscribeNewsName = styled.div`
   font-weight: normal;
-  font-size: 1.25rem;
-  line-height: 1.875rem;
+  font-size: 1.25em;
+  line-height: 1.875em;
   color: #171920;
 `;
 
 const SubscribeNewsEmail = styled.div`
   font-weight: normal;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 0.875em;
+  line-height: 1.25em;
   color: #999999;
 `;
 
@@ -548,12 +542,20 @@ const LogOutContainer = styled.div`
 const LogOutButton = styled.button`
   background: #f9f9f9;
   border-radius: 100px;
-  width: 180px;
-  height: 3.5rem;
+  width: 11.25em;
+  height: 3.5em;
   font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 1em;
+  line-height: 1.5em;
   text-align: center;
   color: #aeaeae;
   border: none;
+`;
+
+const ManageTitle = styled.div`
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 2em;
+  color: #171920;
+  text-align: left;
 `;
