@@ -40,24 +40,11 @@ const AppLayout = ({ children }) => {
         {hasHeader() ? null : (
           <Row>
             <Col xs={0} sm={0} md={24}>
-              <Header
-                className="site-layout-background"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 0,
-                  width: '100%',
-                  height: 260,
-                  backgroundColor: 'white',
-                }}
-              >
+              <StyledHeader className="site-layout-background">
                 <Image src={'/design/left.png'} width="540px" height="260px" />
                 <StyledForm onSubmit={onSubmitForm}>
                   <InputWrapper>
-                    <SearchOutlined
-                      style={{ fontSize: '150%', color: 'gray' }}
-                    />
+                    <StyledSearch />
                     <StyledInput
                       value={searchValue}
                       onChange={onChangeInput}
@@ -66,14 +53,11 @@ const AppLayout = ({ children }) => {
                   </InputWrapper>
                 </StyledForm>
                 <Image src={'/design/right.png'} width="540px" height="260px" />
-              </Header>
+              </StyledHeader>
             </Col>
           </Row>
         )}
-        <Layout
-          className="site-layout"
-          style={{ paddingTop: 30, backgroundColor: 'white' }}
-        >
+        <StyledLayout className="site-layout">
           <Row gutter={20} style={{ border: 'none', width: '100%' }}>
             <Col md={1}></Col>
             <Col xs={23} md={4} style={{ width: '100%' }}>
@@ -101,21 +85,11 @@ const AppLayout = ({ children }) => {
                 width: '100%',
               }}
             >
-              <Content
-                style={{
-                  display: 'flex',
-                  margin: '0 16px',
-                  width: '95%',
-                  height: '100%',
-                  flexDirection: 'column',
-                }}
-              >
-                {children}
-              </Content>
+              <StyledContent>{children}</StyledContent>
             </Col>
             <Col md={1}></Col>
           </Row>
-        </Layout>
+        </StyledLayout>
       </Layout>
     </>
   );
@@ -127,6 +101,29 @@ const LeftImageWrapper = styled.div`
   // display: flex;
   // align-items: flex-end;
   align-self: flex-end;
+`;
+
+const StyledContent = styled(Content)`
+  display: flex;
+  margin: 0px 16px;
+  width: 95%;
+  height: 100%;
+  flex-direction: column;
+`;
+
+const StyledLayout = styled(Layout)`
+  padding-top: 30px;
+  background-color: white;
+`;
+
+const StyledHeader = styled(Header)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 260px;
+  background-color: #fafafa;
 `;
 
 const StyledForm = styled.form`
@@ -163,6 +160,11 @@ const StyledInput = styled.input`
   ::placeholder {
     color: #999999;
   }
+`;
+
+const StyledSearch = styled(SearchOutlined)`
+  font-size: 150%;
+  color: gray;
 `;
 
 const Global = createGlobalStyle`

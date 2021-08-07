@@ -97,7 +97,6 @@ const TextWrapper = styled.div`
 
 const MenuText = styled.div`
   font-size: 18px;
-  // font-weight: bold;
 `;
 
 const ImageWrapper = styled.div`
@@ -109,7 +108,6 @@ const ImageWrapper = styled.div`
 const MenuBar = styled.div`
   display: flex;
   flex-direction: column;
-  // width: 280px;
   height: 100%;
   border-radius: 15px;
   background-color: white;
@@ -128,8 +126,6 @@ const MenuContainer = styled.div`
   top: 13px;
 `;
 const Menu = styled.div`
-  // display: flex;
-  // align-items: center;
   height: auto;
   border-radius: 8px;
   border: none;
@@ -160,6 +156,7 @@ const SubMenu = styled.div`
   padding-bottom: 12px;
   height: 16px;
   font-size: 16px;
+  font-weight: 500;
   display: ${(props) => (props.selected ? 'flex' : 'none')};
   color: ${(props) => (props.subselected ? 'black' : '#C2C2C2')};
   margin-bottom: 16px;

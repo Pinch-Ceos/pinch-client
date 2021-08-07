@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import Image from 'next/image';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
@@ -14,7 +13,7 @@ const MyProfileContent = ({ name, email_address, profile_picture }) => {
       <ProfileImg>
         <img
           src={`${profile_picture}`}
-          alt="here"
+          alt="profileImage"
           style={{ width: '9.313em', height: '9.313em' }}
         />
       </ProfileImg>
@@ -32,7 +31,7 @@ const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
   };
 
   const subscribedNewsLetterOnClick = () => {
-    Router.push(`/inbox`); //이부분 구독 가장 상단의 뉴스레터로?
+    Router.push(`/inbox`);
   };
 
   return (
@@ -287,9 +286,7 @@ const ProfileImg = styled.div`
   padding: 0;
 `;
 
-const ProfileContent = styled.div`
-  /* flex-grow: 4.5; 이부분 어떡하징...*/
-`;
+const ProfileContent = styled.div``;
 
 const ProfileName = styled.div`
   font-weight: bold;

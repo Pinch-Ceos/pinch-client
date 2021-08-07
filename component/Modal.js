@@ -62,11 +62,7 @@ const ModalWindow = () => {
             <br />
             복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <StyledImage>
-              {/* <Image
-                src={'/design/modalStart.png'}
-                width="191px"
-                height="210px"
-              /> */}
+              <img src={'/design/modalStart.png'} alt="modal start" />
             </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
@@ -91,14 +87,12 @@ const ModalWindow = () => {
       return (
         <StyledCompo>
           <StyledTitle>뉴스레터를 선택해주세요. </StyledTitle>
-          {/* <StyledBody> */}
           <StyledBody>
             이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
             <br />
             당신의 메일함도 한층 더 깔끔해질 거에요.😊
           </StyledBody>
           <Tag selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-          {/* </StyledBody> */}
           <StyledButton type="button" onClick={changeBody}>
             다 선택했어요!
           </StyledButton>

@@ -5,8 +5,10 @@ import Router from 'next/router';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const { me } = useSelector((state) => state);
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -35,81 +37,33 @@ const Header = () => {
   };
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 48,
-        }}
-      >
-        <div style={{ cursor: 'pointer', marginTop: 7, marginLeft: 15 }}>
-          <Image
-            onClick={onClickMark}
-            src={'/design/pinchmark.png'}
-            width="80px"
-            height="22px"
-          />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ cursor: 'pointer' }}>
+      <Bar>
+        <Logo onClick={onClickMark}>
+          <img src={'/design/pinchmark.png'} alt="logo" />
+        </Logo>
+        <RightBox>
+          <Search>
             <StyledSearchOutlined onClick={onClickSearch} />
-          </div>
-          <div
-            style={{ marginTop: '5px', cursor: 'pointer', marginLeft: '13px' }}
-          >
-            <Image src={'/design/alarm.png'} width="21px" height="21px" />
-          </div>
-          <div
-            style={{
-              marginLeft: '15px',
-              marginRight: '20px',
-              cursor: 'pointer',
-              verticalAlign: 'center',
-            }}
-          >
-            <Avatar
-              style={{
-                width: 30,
-                height: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-                verticalAlign: 'center',
-              }}
-              onClick={onClickAvatar}
-            >
-              E
-            </Avatar>
-          </div>
-        </div>
-      </div>
+          </Search>
+          <StyledAlarm>
+            <img src={'/design/alarm.png'} alt="alarm" />
+          </StyledAlarm>
+          <StyledProfile onClick={onClickAvatar}>
+            <img
+              src={`${me.profile_picture}`}
+              alt="profileImage"
+              style={{ width: 30, height: 30 }}
+            />
+          </StyledProfile>
+        </RightBox>
+      </Bar>
       <StyledForm onSubmit={onSubmitForm} toggle={toggle}>
-        <InputWrapper
-          style={{
-            height: 50,
-            width: '92%',
-            background: 'white',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: '2px solid #C0C0C0',
-            borderRadius: '10px',
-            marginTop: '10px',
-          }}
-        >
+        <InputWrapper>
           <SearchOutlined style={{ fontSize: '150%', color: 'gray' }} />
-          <input
+          <StyledInput
             value={searchValue}
             onChange={onChangeInput}
             placeholder="어떤 뉴스레터를 찾고 있나요?"
-            style={{
-              border: 'none',
-              height: 40,
-              width: '87%',
-              outline: 'none',
-              fontSize: '15px',
-              marginLeft: '10px',
-            }}
           />
         </InputWrapper>
       </StyledForm>
@@ -136,6 +90,37 @@ const StyledForm = styled.form`
   align-item: center;
   justify-content: center;
 `;
+
+const Bar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+`;
+
+const Logo = styled.div`
+  cursor: pointer;
+  margin-top: 7px;
+  margin-left: 15px;
+`;
+
+const Search = styled.div`
+  cursor: pointer;
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledAlarm = styled.div`
+  /* margin-top: 5px; */
+  cursor: pointer;
+  margin-left: 13px;
+  width: 21px;
+  height: 21px;
+`;
+
 const InputWrapper = styled.div`
   height: 50;
   width: 92%;
@@ -153,4 +138,29 @@ const InputWrapper = styled.div`
   &:focus-within {
     box-shadow: 2px 2px 2px 2px #e0e0e0;
   }
+`;
+
+const StyledInput = styled.input`
+  border: none;
+  height: 40px;
+  width: 87%;
+  outline: none;
+  font-size: 15px;
+  margin-left: 10px;
+`;
+
+const StyledProfile = styled.div`
+  margin-left: 15px;
+  margin-right: 20px;
+  cursor: pointer;
+  vertical-align: center;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  border-radius: 100px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
 `;
