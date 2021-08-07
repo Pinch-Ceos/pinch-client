@@ -54,7 +54,7 @@ const NoImageCard = ({ item }) => {
         >
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          {item.name}
+          <SenderWrapper>{item.name}</SenderWrapper>
         </ActionsWrapper>,
         <div
           style={{
@@ -101,7 +101,7 @@ const NoImageCard = ({ item }) => {
         >
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          {item.name}
+          <SenderWrapper>{item.name}</SenderWrapper>
         </ActionsWrapper>,
         <StyledBookmark>
           <Image
@@ -142,7 +142,7 @@ const NoImageCard = ({ item }) => {
         >
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          {item.name}
+          <SenderWrapper>{item.name}</SenderWrapper>
         </ActionsWrapper>,
         <StyledBookmark>
           <Image
@@ -172,6 +172,10 @@ const NoImageCard = ({ item }) => {
 
 export default NoImageCard;
 
+const SenderWrapper = styled.div`
+  font-family: 'Sans Neo Regular';
+`;
+
 const StyeldMeta = styled(Meta)`
   flex-direction: column;
   margin-top: 16px;
@@ -190,6 +194,7 @@ const StyeldMeta = styled(Meta)`
     vertical-align: center;
     text-overflow: ellipsis;
     word-break: break-all;
+    font-size: 18px;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
@@ -204,6 +209,8 @@ const StyeldMeta = styled(Meta)`
     vertical-align: top;
     text-overflow: ellipsis;
     word-break: break-all;
+    font-family: 'Sans Neo Regular';
+    font-size: 14px;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }

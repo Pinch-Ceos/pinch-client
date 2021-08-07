@@ -5,14 +5,14 @@ import NoImageCard from './NoImageCard';
 import styled from 'styled-components';
 import CardListHeader from './CardListHeader';
 
-const CardList = ({ data, header }) => {
+const CardList = ({ data, header, setPage }) => {
   return (
     <List
       grid={{
         gutter: 16,
         xs: 1,
         sm: 2,
-        md: 3,
+        md: 2,
         lg: 3,
         xl: 3,
         xxl: 4,
@@ -22,7 +22,7 @@ const CardList = ({ data, header }) => {
         border: 'none',
         width: '100%',
       }}
-      header={<CardListHeader header={header} />}
+      header={<CardListHeader header={header} setPage={setPage} />}
       dataSource={data}
       renderItem={(item) => (
         <StyledItem

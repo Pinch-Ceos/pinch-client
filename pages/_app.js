@@ -28,6 +28,7 @@ const Pinch = ({ Component }) => {
 
   return (
     <Body>
+      <GlobalStyles />
       <Head>
         <meta charSet="utf-8" />
         <title>Pinch</title>
@@ -43,22 +44,21 @@ export default wrapper.withRedux(Pinch);
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
-  font-family: 'Spoqa Han Sans Neo';
-  src: url('design/font/SpoqaHanSansNeo-Bold.otf') format('opentype');
+  font-family: 'Sans Neo Regular';
+  src: url('/font/SpoqaHanSansNeo-Regular.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Spoqa Han Sans Neo';
-  src: url('design/font/SpoqaHanSansNeo-Medium.otf') format('opentype');
-  font-weight: medium;
+  font-family: 'Sans Neo Medium';
+  src: url('/font/SpoqaHanSansNeo-Medium.otf') format('opentype');
+  font-weight: normal;
   font-style: normal;
 }
+
 body, html {
-  font-family: 'Spoqa Han Sans Neo';
-  height: 100%;
-  background: #f9f9f9;
+  font-family: 'Sans Neo Medium';
 }
 @media screen and (max-width: 768px) { html { font-size: 12px; } }
 

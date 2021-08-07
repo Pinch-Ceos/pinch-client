@@ -16,19 +16,13 @@ const Subscription = () => {
     (state) => state
   );
   const [header, setHeader] = useState('');
-  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['Token', 'Filter']);
   const [page, setPage] = useState(2);
 
   useEffect(() => {
     setHeader(
       me.subscriptions.find((v) => v.email_address === newsletter).name
     );
-    dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: newsletter,
-      page: 1,
-      token: cookie.Token,
-    });
   }, [newsletter]);
 
   useEffect(() => {
@@ -43,6 +37,7 @@ const Subscription = () => {
             data: newsletter,
             page: page,
             token: cookie.Token,
+            read: cookie.Filter,
           });
           setPage((prev) => prev + 1);
         }
@@ -57,20 +52,41 @@ const Subscription = () => {
   return (
     <>
       <AppLayout>
-        <CardList data={mails} header={header} />
+        <CardList data={mails} header={header} setPage={setPage} />
       </AppLayout>
     </>
   );
 };
+export const getCookie = (cookie, cookie_name) => {
+  const val = cookie.split(';');
+  for (let i = 0; i < val.length; i++) {
+    let x = val[i].substr(0, val[i].indexOf('='));
+    const y = val[i].substr(val[i].indexOf('=') + 1);
+    x = x.replace(/^\s+|\s+$/g, '');
+    if (x === cookie_name) {
+      return y;
+    }
+  }
+};
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie
-      ? context.req.headers.cookie.substr(6)
+    console.log(context.req.headers.cookie);
+    const Token = getCookie(context.req.headers.cookie, 'Token')
+      ? getCookie(context.req.headers.cookie, 'Token')
       : '';
-    console.log(Token);
+    const Filter = getCookie(context.req.headers.cookie, 'Filter')
+      ? getCookie(context.req.headers.cookie, 'Filter')
+      : '';
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
+    });
+    context.store.dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: context.params.newsletter,
+      page: 1,
+      token: Token,
+      read: Filter,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

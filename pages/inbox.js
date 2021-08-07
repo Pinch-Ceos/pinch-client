@@ -9,6 +9,7 @@ import wrapper from '../store/configureStore';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Modal from '../component/Modal';
+import { getCookie } from './subscription/[newsletter]';
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -16,17 +17,12 @@ const Inbox = () => {
     (state) => state
   );
   const [header, setHeader] = useState('');
-  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['Token', 'Filter']);
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    setHeader(me.user_name.concat('전체 뉴스레터'));
-    dispatch({
-      type: LOAD_MAIL_REQUEST,
-      data: '',
-      page: 1,
-      token: cookie.Token,
-    });
+    setHeader(me.user_name.concat('님의 인박스'));
+    setPage(2);
   }, []);
 
   useEffect(() => {
@@ -36,12 +32,15 @@ const Inbox = () => {
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMoreMails && !loadMailLoading) {
+          console.log(cookie.Filter);
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
             page: page,
             token: cookie.Token,
+            read: cookie.Filter,
           });
+          console.log(page);
           setPage((prev) => prev + 1);
         }
       }
@@ -50,7 +49,7 @@ const Inbox = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mails.length, hasMoreMails, loadMailLoading]);
+  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
 
   const ChangeBody = () => {
     if (me.subscription_num === 0 || mails === null) {
@@ -65,26 +64,36 @@ const Inbox = () => {
         </>
       );
     } else {
-      return <CardList data={mails} header={header} />;
+      return <CardList data={mails} header={header} setPage={setPage} />;
     }
   };
 
   return (
     <>
       <AppLayout>{ChangeBody()}</AppLayout>
-      {console.log(me.subscription_num)}
     </>
   );
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie.substr(6);
-    // const Token = context.req.headers.cookie['Token'];
+    const Token = getCookie(context.req.headers.cookie, 'Token')
+      ? getCookie(context.req.headers.cookie, 'Token')
+      : '';
+    const Filter = getCookie(context.req.headers.cookie, 'Filter')
+      ? getCookie(context.req.headers.cookie, 'Filter')
+      : '';
     console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,
+    });
+    context.store.dispatch({
+      type: LOAD_MAIL_REQUEST,
+      data: '',
+      page: 1,
+      token: Token,
+      read: Filter,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

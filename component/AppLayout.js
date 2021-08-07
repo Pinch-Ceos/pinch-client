@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Router from 'next/router';
 import MenuLayout from './Menu';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const { Header, Content, Sider } = Layout;
 
@@ -38,12 +39,12 @@ const AppLayout = ({ children }) => {
       <Layout>
         {hasHeader() ? null : (
           <Row>
-            <Col xs={0} sm={24}>
+            <Col xs={0} sm={0} md={24}>
               <Header
                 className="site-layout-background"
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 0,
                   width: '100%',
@@ -51,6 +52,7 @@ const AppLayout = ({ children }) => {
                   backgroundColor: 'white',
                 }}
               >
+                <Image src={'/design/left.png'} width="540px" height="260px" />
                 <StyledForm onSubmit={onSubmitForm}>
                   <InputWrapper>
                     <SearchOutlined
@@ -63,6 +65,7 @@ const AppLayout = ({ children }) => {
                     />
                   </InputWrapper>
                 </StyledForm>
+                <Image src={'/design/right.png'} width="540px" height="260px" />
               </Header>
             </Col>
           </Row>
@@ -120,6 +123,12 @@ const AppLayout = ({ children }) => {
 
 export default AppLayout;
 
+const LeftImageWrapper = styled.div`
+  // display: flex;
+  // align-items: flex-end;
+  align-self: flex-end;
+`;
+
 const StyledForm = styled.form`
   border-radius: 10px;
   &:focus-within {
@@ -131,8 +140,8 @@ const StyledForm = styled.form`
 `;
 
 const InputWrapper = styled.div`
-  height: 62px;
-  width: 90vw;
+  height: 70px;
+  width: 38vw;
   max-width: 620px;
   background: white;
   display: flex;
@@ -144,12 +153,16 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   border: none;
-  height: 58px;
-  width: 80vw;
+  height: 62px;
+  width: 34vw;
   max-width: 540px;
   outline: none;
-  font-size: 15px;
+  font-family: 'Sans Neo Medium';
+  font-size: 20px;
   margin-left: 10px;
+  ::placeholder {
+    color: #999999;
+  }
 `;
 
 const Global = createGlobalStyle`

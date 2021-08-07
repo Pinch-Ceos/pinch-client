@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
 
 const MenuLayout = () => {
   const [selectedInbox, setSelectedInbox] = useState(false);
@@ -45,10 +46,20 @@ const MenuLayout = () => {
     <div style={{ margin: 10 }}>
       <MenuBar>
         <Menu onClick={onClickInbox} selected={selectedInbox}>
-          👀 Inbox
+          <TextWrapper>
+            <ImageWrapper>
+              <Image src={'/design/emoji1.png'} width="18px" height="18px" />
+            </ImageWrapper>
+            <MenuText>Inbox</MenuText>
+          </TextWrapper>
         </Menu>
         <Menu onClick={onClickSubscription} selected={selectedSubscription}>
-          📚 구독 중인 뉴스레터
+          <TextWrapper>
+            <ImageWrapper>
+              <Image src={'/design/emoji2.png'} width="18px" height="18px" />
+            </ImageWrapper>
+            <MenuText>구독 중인 뉴스레터</MenuText>
+          </TextWrapper>
           <MenuContainer
             onClick={onClickMenuContainer}
             selected={selectedSubscription}
@@ -60,19 +71,40 @@ const MenuLayout = () => {
                 selected={selectedSubscription}
               >
                 {v.name}
-                <div>&#x25cf;</div>
+                <div style={{ fontSize: 24, marginLeft: 6 }}>&#x2022;</div>
               </SubMenu>
             ))}
           </MenuContainer>
         </Menu>
         <Menu onClick={onClickBookmark} selected={selectedBookmark}>
-          📌 저장한 뉴스레터
+          <TextWrapper>
+            <ImageWrapper>
+              <Image src={'/design/emoji3.png'} width="18px" height="18px" />
+            </ImageWrapper>
+            <MenuText>저장한 뉴스레터</MenuText>
+          </TextWrapper>
         </Menu>
       </MenuBar>
     </div>
   );
 };
 export default MenuLayout;
+
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const MenuText = styled.div`
+  font-size: 18px;
+  // font-weight: bold;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+`;
 
 const MenuBar = styled.div`
   display: flex;
@@ -88,18 +120,21 @@ const MenuContainer = styled.div`
   height: auto;
   display: ${(props) => (props.selected ? 'flex' : 'none')};
   flex-direction: column;
-  padding-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 24px;
   background-color: white;
   position: relative;
   left: -20px;
   top: 13px;
 `;
-const Menu = styled.button`
+const Menu = styled.div`
+  // display: flex;
+  // align-items: center;
   height: auto;
   border-radius: 8px;
   border: none;
   text-align: left;
-  font-weight: bold;
+  font-weight: normal;
   padding-right: 20px;
   padding-left: 20px;
   padding-top: 12px;
@@ -116,12 +151,15 @@ const Menu = styled.button`
 `;
 
 const SubMenu = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   background-color: white;
   padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 14px;
+  padding-bottom: 12px;
   height: 16px;
+  font-size: 16px;
   display: ${(props) => (props.selected ? 'flex' : 'none')};
   color: ${(props) => (props.subselected ? 'black' : '#C2C2C2')};
   margin-bottom: 16px;

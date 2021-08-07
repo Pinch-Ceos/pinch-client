@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import Image from 'next/image';
 import styled from 'styled-components';
+import { getCookie } from '../subscription/[newsletter]';
 
 const NewsLetterView = () => {
   const { view, viewInfo } = useSelector((state) => state);
@@ -95,9 +96,6 @@ const NewsLetterView = () => {
             </div>
           </div>
           <iframe
-            // name="NeBoard"
-            // scrolling="No"
-            // onLoad="ResizeFrame(`NeBorad`);"
             style={{
               width: '100%',
               height: '75vh',
@@ -115,7 +113,9 @@ const NewsLetterView = () => {
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const Token = context.req.headers.cookie.substr(6);
+    const Token = getCookie(context.req.headers.cookie, 'Token')
+      ? getCookie(context.req.headers.cookie, 'Token')
+      : '';
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,

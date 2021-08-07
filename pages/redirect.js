@@ -7,7 +7,7 @@ const redirect = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { giveCodeDone, me } = useSelector((state) => state);
-  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['Token', 'Filter']);
 
   useEffect(() => {
     let authcode = new URL(window.location.href).searchParams.get('code');
@@ -19,6 +19,7 @@ const redirect = () => {
   useEffect(() => {
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
+      setCookie('Filter', 'False', { path: '/' });
       router.push(`http://localhost:3000/inbox`);
     }
   }, [giveCodeDone]);
