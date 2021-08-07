@@ -44,7 +44,7 @@ import {
 
 import backUrl from '../config/config';
 axios.defaults.baseURL = backUrl;
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
