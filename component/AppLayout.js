@@ -48,7 +48,7 @@ const AppLayout = ({ children }) => {
                   padding: 0,
                   width: '100%',
                   height: 260,
-                  backgroundColor: 'lightgrey',
+                  backgroundColor: 'white',
                 }}
               >
                 <StyledForm onSubmit={onSubmitForm}>
