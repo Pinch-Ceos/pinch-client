@@ -8,6 +8,8 @@ import CardList from '../../component/CardList';
 import { LOAD_MY_INFO_REQUEST, LOAD_SEARCH_MAIL_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
 import { getCookie } from '../subscription/[newsletter]';
+import { LoadingWrapper } from '../inbox';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const Search = () => {
   const router = useRouter();
@@ -57,6 +59,9 @@ const Search = () => {
     <>
       <AppLayout>
         <CardList data={mails} header={header} />
+        <LoadingWrapper>
+          {loadMailLoading ? <LoadingOutlined /> : null}
+        </LoadingWrapper>
       </AppLayout>
     </>
   );
