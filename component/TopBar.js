@@ -112,7 +112,6 @@ const RightBox = styled.div`
 `;
 
 const StyledAlarm = styled.div`
-  /* margin-top: 5px; */
   cursor: pointer;
   margin-left: 13px;
   width: 21px;

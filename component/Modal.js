@@ -104,23 +104,15 @@ const ModalWindow = () => {
   return (
     <>
       <Global />
-      <Modal
+      <StyledModal
         visible={visible}
         onCancel={handleCancel}
         width={797}
         height={659}
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          borderRadius: 12,
-          boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
-          background: '#2B2E32',
-        }}
+        footer={<div />}
       >
         <ModalBody />
-      </Modal>
+      </StyledModal>
     </>
   );
 };
@@ -152,7 +144,7 @@ const Global = createGlobalStyle`
   }
   .ant-modal-footer{
     border-top: none;
-    display: flex;
+    display: none;
     justify-content: center;
   }
 
@@ -181,6 +173,16 @@ const StyledTitle = styled.div`
   word-break: keep-all;
   margin-top: 86px;
   margin-bottom: 36px;
+`;
+
+const StyledModal = styled(Modal)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+  background: #2b2e32;
 `;
 
 const StyledBody = styled.div`
@@ -214,6 +216,10 @@ const StyledButton = styled.button`
   border: none;
   width: 246px;
   z-index: 999;
+`;
+
+const LabelButton = styled(StyledButton)`
+  /* disabled:${(props) => (props.selected ? 'false' : 'true')}; */
 `;
 
 const StyledImage = styled.div`

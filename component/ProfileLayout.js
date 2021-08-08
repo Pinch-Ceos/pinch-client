@@ -6,6 +6,7 @@ import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
 import { Cookies, useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { Tooltip } from 'antd';
+import Modal from '../component/Modal';
 
 const MyProfileContent = ({ name, email_address, profile_picture }) => {
   return (
@@ -120,6 +121,9 @@ const text = (
 );
 
 const MySubscribeList = ({ subscriptions }) => {
+  const ModalOpen = () => {
+    return <Modal />;
+  };
   return (
     <>
       <SubscriptionTitle>
@@ -127,7 +131,7 @@ const MySubscribeList = ({ subscriptions }) => {
         <div className="demo">
           <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
             <Tooltip placement="topRight" title={text}>
-              <PlusButton>
+              <PlusButton onCLick={ModalOpen}>
                 <img
                   src={'/design/ProfilePlus.png'}
                   alt="plus"
@@ -211,10 +215,6 @@ const GlobalStyle = createGlobalStyle`
 }
 * {
     font-family: 'Spoqa Han Sans Neo';
-    /* overflow-x: hidden; */
-    /* ::-webkit-scrollbar{
-      display:none;
-    } */
 }
 
 [tooltip-text]:hover{
