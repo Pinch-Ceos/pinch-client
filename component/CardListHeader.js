@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { useSelector } from 'react-redux';
-
-const profileImage = () => {};
+import styled from 'styled-components';
+import SubscriptionIcon from './SubscriptionIcon';
+import { Tooltip } from 'antd';
 
 const CardListHeader = ({ header, setPage }) => {
   const router = useRouter();
@@ -69,11 +70,12 @@ const CardListHeader = ({ header, setPage }) => {
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ display: 'flex' }}>
-              <Image
+              {/* <Image
                 src={'/design/subscriptionIcon.png'}
                 width="36px"
                 height="36px"
-              />
+              /> */}
+              <SubscriptionIcon header={header} size={true} />
             </div>
             <div
               style={{
@@ -87,9 +89,15 @@ const CardListHeader = ({ header, setPage }) => {
               {header}
             </div>
           </div>
-          <div style={{ cursor: 'pointer', marginRight: 10 }}>
-            {filterToggle()}
-          </div>
+          <Tooltip
+            placement="topRight"
+            title="읽지 않은 뉴스레터만 표시하는 기능이에요"
+            color={'#FDFEFE'}
+          >
+            <div style={{ cursor: 'pointer', marginRight: 10 }}>
+              {filterToggle()}
+            </div>
+          </Tooltip>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
           <Image src={'/design/frontnumber.png'} width="14px" height="18px" />
@@ -119,7 +127,15 @@ const CardListHeader = ({ header, setPage }) => {
         >
           {header}
         </div>
-        <div style={{ cursor: 'pointer' }}>{filterToggle()}</div>
+        <Tooltip
+          placement="topRight"
+          title="읽지 않은 뉴스레터만 표시하는 기능이에요"
+          color={'#FDFEFE'}
+        >
+          <div style={{ cursor: 'pointer', marginRight: 10 }}>
+            {filterToggle()}
+          </div>
+        </Tooltip>
       </div>
     );
   }

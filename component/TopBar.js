@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { Avatar } from 'antd';
 import Router from 'next/router';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -45,9 +43,9 @@ const Header = () => {
           <Search>
             <StyledSearchOutlined onClick={onClickSearch} />
           </Search>
-          <StyledAlarm>
+          {/* <StyledAlarm>
             <img src={'/design/alarm.png'} alt="alarm" />
-          </StyledAlarm>
+          </StyledAlarm> */}
           <StyledProfile onClick={onClickAvatar}>
             <img
               src={`${me.profile_picture}`}
@@ -73,10 +71,10 @@ const Header = () => {
 export default Header;
 
 const StyledSearchOutlined = styled(SearchOutlined)`
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 768px) {
     display: none;
   }
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: 768px) {
     display: flex;
   }
   font-size: 150%;
@@ -84,7 +82,7 @@ const StyledSearchOutlined = styled(SearchOutlined)`
 `;
 const StyledForm = styled.form`
   display: ${(props) => (props.toggle ? 'flex' : 'none')};
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 768px) {
     display: none;
   }
   align-item: center;
@@ -101,7 +99,7 @@ const Bar = styled.div`
 const Logo = styled.div`
   cursor: pointer;
   margin-top: 7px;
-  margin-left: 15px;
+  margin-left: 25px;
 `;
 
 const Search = styled.div`
@@ -151,7 +149,7 @@ const StyledInput = styled.input`
 
 const StyledProfile = styled.div`
   margin-left: 15px;
-  margin-right: 20px;
+  margin-right: 25px;
   cursor: pointer;
   vertical-align: center;
   width: 30px;

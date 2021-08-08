@@ -14,7 +14,9 @@ import {
   UnreadCard,
   ReadCard,
   ActionsWrapper,
+  SenderWrapper,
 } from './ImageCard';
+import SubscriptionIcon from './SubscriptionIcon';
 
 const NoImageCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -44,17 +46,13 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <ActionsWrapper
-          style={{
-            display: 'flex',
-            justifyContent: 'start',
-            marginLeft: 8,
-            textAlign: 'left',
-          }}
-        >
+        <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          <SenderWrapper>{item.name}</SenderWrapper>
+          <SenderWrapper>
+            <SubscriptionIcon header={item.name} size={false} />
+            <div style={{ marginLeft: 8 }}>{item.name}</div>
+          </SenderWrapper>{' '}
         </ActionsWrapper>,
         <div
           style={{
@@ -91,17 +89,13 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <ActionsWrapper
-          style={{
-            display: 'flex',
-            justifyContent: 'start',
-            marginLeft: 8,
-            textAlign: 'left',
-          }}
-        >
+        <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          <SenderWrapper>{item.name}</SenderWrapper>
+          <SenderWrapper>
+            <SubscriptionIcon header={item.name} size={false} />
+            <div style={{ marginLeft: 8 }}>{item.name}</div>
+          </SenderWrapper>{' '}
         </ActionsWrapper>,
         <StyledBookmark>
           <Image
@@ -132,17 +126,13 @@ const NoImageCard = ({ item }) => {
       onClick={onCardClick(item)}
       style={{ border: 'none' }}
       actions={[
-        <ActionsWrapper
-          style={{
-            display: 'flex',
-            justifyContent: 'start',
-            marginLeft: 8,
-            textAlign: 'left',
-          }}
-        >
+        <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
-          <SenderWrapper>{item.name}</SenderWrapper>
+          <SenderWrapper>
+            <SubscriptionIcon header={item.name} size={false} />
+            <div style={{ marginLeft: 8 }}>{item.name}</div>
+          </SenderWrapper>{' '}
         </ActionsWrapper>,
         <StyledBookmark>
           <Image
@@ -172,10 +162,6 @@ const NoImageCard = ({ item }) => {
 
 export default NoImageCard;
 
-const SenderWrapper = styled.div`
-  font-family: 'Sans Neo Regular';
-`;
-
 const StyeldMeta = styled(Meta)`
   flex-direction: column;
   margin-top: 16px;
@@ -189,7 +175,7 @@ const StyeldMeta = styled(Meta)`
     display: -ms-flexbox;
     display: box;
     margin-top: 12px;
-    height: 44px;
+    height: 54px;
     overflow: hidden;
     vertical-align: center;
     text-overflow: ellipsis;

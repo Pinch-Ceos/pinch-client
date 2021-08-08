@@ -60,15 +60,15 @@ const NewsLetterView = () => {
         >
           <div style={{ width: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ fontSize: '20px' }}>
+              <div style={{ fontSize: '30px' }}>
                 {viewInfo && viewInfo.name}
               </div>
               {viewInfo && viewInfo.bookmark_id !== null ? (
                 <BookmarkWrapper>
                   <Image
                     src={'/design/bookmarked.png'}
-                    width="30px"
-                    height="30px"
+                    width="44px"
+                    height="44px"
                     style={{ boxShadow: '3px 3px 3px #000' }}
                     onClick={(event) => {
                       event.stopPropagation();
@@ -80,8 +80,8 @@ const NewsLetterView = () => {
                 <BookmarkWrapper>
                   <Image
                     src={'/design/bookmark.png'}
-                    width="30px"
-                    height="30px"
+                    width="44px"
+                    height="44px"
                     style={{ filter: 'drop-shadow(5px 5px 5px #000)' }}
                     onClick={(event) => {
                       event.stopPropagation();
@@ -91,14 +91,14 @@ const NewsLetterView = () => {
                 </BookmarkWrapper>
               )}
             </div>
-            <div style={{ marginTop: 10, marginBottom: 10 }}>
+            <div style={{ marginTop: 5, fontSize: '20px' }}>
               {viewInfo && viewInfo.subject}
             </div>
           </div>
           <iframe
             style={{
               width: '100%',
-              height: '75vh',
+              height: '83vh',
               wordBreak: 'break-all',
               border: 'none',
               boxShadow: 'none',
@@ -140,10 +140,10 @@ export default NewsLetterView;
 const BookmarkWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-right: 10px;
   max-width: none;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
+  // box-shadow: 0 0 5px #b0b0b0;
   &:hover {
     transform: scale(1.2);
   }

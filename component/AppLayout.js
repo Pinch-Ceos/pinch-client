@@ -41,7 +41,13 @@ const AppLayout = ({ children }) => {
           <Row>
             <Col xs={0} sm={0} md={24}>
               <StyledHeader className="site-layout-background">
-                <Image src={'/design/left.png'} width="540px" height="260px" />
+                <ImageWrapper>
+                  <Image
+                    src={'/design/left.png'}
+                    width="540px"
+                    height="260px"
+                  />
+                </ImageWrapper>
                 <StyledForm onSubmit={onSubmitForm}>
                   <InputWrapper>
                     <StyledSearch />
@@ -52,7 +58,13 @@ const AppLayout = ({ children }) => {
                     />
                   </InputWrapper>
                 </StyledForm>
-                <Image src={'/design/right.png'} width="540px" height="260px" />
+                <ImageWrapper>
+                  <Image
+                    src={'/design/right.png'}
+                    width="540px"
+                    height="260px"
+                  />
+                </ImageWrapper>
               </StyledHeader>
             </Col>
           </Row>
@@ -74,7 +86,13 @@ const AppLayout = ({ children }) => {
                 style={{ backgroundColor: 'white', border: 0 }}
               >
                 <div className="logo" />
-                <MenuLayout />
+                {hasHeader() ? (
+                  <MenuLayoutWrapper>
+                    <MenuLayout />
+                  </MenuLayoutWrapper>
+                ) : (
+                  <MenuLayout />
+                )}
               </Sider>
             </Col>
             <Col
@@ -97,9 +115,15 @@ const AppLayout = ({ children }) => {
 
 export default AppLayout;
 
-const LeftImageWrapper = styled.div`
-  // display: flex;
-  // align-items: flex-end;
+const MenuLayoutWrapper = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
   align-self: flex-end;
 `;
 
@@ -198,5 +222,9 @@ const Global = createGlobalStyle`
   }
   .ant-layout-content {
     width: 100%;
+  }
+  .ant-tooltip-inner {
+    font-size: 13px;
+    color: #A1A1A1;
   }
 `;

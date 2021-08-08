@@ -1,2 +1,2 @@
-const backUrl = 'http://ec2-3-34-152-171.ap-northeast-2.compute.amazonaws.com';
+const backUrl = 'https://pinchserver.shop';
 export default backUrl;
