@@ -44,14 +44,17 @@ import {
 
 import backUrl from '../config/config';
 axios.defaults.baseURL = backUrl;
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
 function logInAPI() {
-  return axios.get(`/auth/login`, {
-    headers: { accept: 'application/json', 'Access-Control-Allow-Origin': '*' },
-  });
+  return axios.get(
+    `/auth/login`
+    //  {
+    //   headers: { accept: 'application/json', 'Access-Control-Allow-Origin': '*' },
+    // }
+  );
 }
 
 function* logIn(action) {
