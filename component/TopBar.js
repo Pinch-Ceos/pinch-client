@@ -46,13 +46,13 @@ const Header = () => {
           {/* <StyledAlarm>
             <img src={'/design/alarm.png'} alt="alarm" />
           </StyledAlarm> */}
-          <StyledProfile onClick={onClickAvatar}>
+          {/* <StyledProfile onClick={onClickAvatar}>
             <img
               src={`${me.profile_picture}`}
               alt="profileImage"
               style={{ width: 30, height: 30 }}
             />
-          </StyledProfile>
+          </StyledProfile> */}
         </RightBox>
       </Bar>
       <StyledForm onSubmit={onSubmitForm} toggle={toggle}>
