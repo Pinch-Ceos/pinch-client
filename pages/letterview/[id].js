@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../component/AppLayout';
 import { END } from 'redux-saga';
@@ -32,7 +32,7 @@ const NewsLetterView = () => {
     });
   }, [viewInfo && viewInfo.bookmark_id]);
 
-  const onBookmarkClick = () => {
+  const onBookmarkClick = useCallback(() => {
     if (viewInfo.bookmark_id !== null) {
       dispatch({
         type: DELETE_BOOKMARK_REQUEST,
@@ -46,7 +46,7 @@ const NewsLetterView = () => {
         token: cookie.Token,
       });
     }
-  };
+  }, []);
   return (
     <>
       <Header />
@@ -127,11 +127,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       token: Token,
       data: context.params.id,
     });
-    // context.store.dispatch({
-    //   type: LOAD_DETAIL_INFO_REQUEST,
-    //   token: Token,
-    //   data: context.params.id,
-    // });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

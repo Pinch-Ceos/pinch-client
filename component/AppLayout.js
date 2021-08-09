@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Layout, Row, Col } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { createGlobalStyle } from 'styled-components';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import MenuLayout from './Menu';
@@ -12,7 +11,6 @@ import Image from 'next/image';
 const { Header, Content, Sider } = Layout;
 
 const AppLayout = ({ children }) => {
-  const { me } = useSelector((state) => state);
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const address = router.pathname.split('/')[1];
@@ -21,17 +19,19 @@ const AppLayout = ({ children }) => {
       setSearchValue(router.query.value);
     }
   }, [router]);
-  const hasHeader = () => {
+  const hasHeader = useCallback(() => {
     return address === 'letterview';
-  };
-  const onChangeInput = (e) => {
+  }, [address]);
+  const onChangeInput = useCallback((e) => {
     setSearchValue(e.target.value);
-  };
-  const onSubmitForm = (e) => {
-    e.preventDefault();
-    console.log(searchValue);
-    Router.push(`/search/${searchValue}`);
-  };
+  }, []);
+  const onSubmitForm = useCallback(
+    (e) => {
+      e.preventDefault();
+      Router.push(`/search/${searchValue}`);
+    },
+    [searchValue]
+  );
 
   return (
     <>
@@ -70,9 +70,9 @@ const AppLayout = ({ children }) => {
           </Row>
         )}
         <StyledLayout className="site-layout">
-          <Row gutter={20} style={{ border: 'none', width: '100%' }}>
+          <StyledWrapper gutter={20}>
             <Col md={1}></Col>
-            <Col xs={23} md={4} style={{ width: '100%' }}>
+            <MenuCol xs={23} md={4}>
               <Sider
                 breakpoint
                 width={{
@@ -94,19 +94,12 @@ const AppLayout = ({ children }) => {
                   <MenuLayout />
                 )}
               </Sider>
-            </Col>
-            <Col
-              xs={24}
-              md={18}
-              style={{
-                display: 'flex',
-                width: '100%',
-              }}
-            >
+            </MenuCol>
+            <ChildrenCol xs={24} md={18}>
               <StyledContent>{children}</StyledContent>
-            </Col>
+            </ChildrenCol>
             <Col md={1}></Col>
-          </Row>
+          </StyledWrapper>
         </StyledLayout>
       </Layout>
     </>
@@ -114,6 +107,19 @@ const AppLayout = ({ children }) => {
 };
 
 export default AppLayout;
+
+const StyledWrapper = styled(Row)`
+  border: none;
+  width: 100%;
+`;
+const MenuCol = styled(Col)`
+  width: 100%;
+`;
+
+const ChildrenCol = styled(Col)`
+  display: flex;
+  width: 100%;
+`;
 
 const MenuLayoutWrapper = styled.div`
   @media screen and (max-width: 768px) {
@@ -153,10 +159,10 @@ const StyledHeader = styled(Header)`
 const StyledForm = styled.form`
   border-radius: 10px;
   &:focus-within {
-    box-shadow: 3px 3px 3px 3px #c0c0c0;
+    box-shadow: 5px 5px 5px #e5e7e9;
   }
   &:hover {
-    box-shadow: 3px 3px 3px 3px #c0c0c0;
+    box-shadow: 5px 5px 5px #e5e7e9;
   }
 `;
 
@@ -226,5 +232,8 @@ const Global = createGlobalStyle`
   .ant-tooltip-inner {
     font-size: 13px;
     color: #A1A1A1;
+  }
+  .ant-card-cover img {
+    border-radius: 15px;
   }
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import Router from 'next/router';
@@ -16,8 +16,7 @@ const ImageCard = ({ item }) => {
   const onCardClick = (item) => () => {
     Router.push(`/letterview/${item.id}`);
   };
-  const onBookmarkClick = (item) => {
-    console.log(item);
+  const onBookmarkClick = useCallback((item) => {
     if (item.bookmark_id) {
       dispatch({
         type: DELETE_BOOKMARK_REQUEST,
@@ -31,38 +30,21 @@ const ImageCard = ({ item }) => {
         token: cookie.Token,
       });
     }
-  };
+  }, []);
   return item.bookmark_id ? (
     <UnreadCard
       onClick={onCardClick(item)}
-      style={{ hight: 200, border: 'none' }}
-      cover={
-        <img
-          alt="cover"
-          src={item.image}
-          style={{
-            height: 146,
-            objectFit: 'fill',
-            borderRadius: '15px',
-          }}
-        />
-      }
+      cover={<StyledImg alt="cover" src={item.image} />}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>
         </ActionsWrapper>,
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginRight: 24,
-          }}
-        >
+        <ImageWrapper>
           <Image
             src={'/design/bookmarked.png'}
             width="30px"
@@ -72,7 +54,7 @@ const ImageCard = ({ item }) => {
               onBookmarkClick(item);
             }}
           />
-        </div>,
+        </ImageWrapper>,
       ]}
     >
       <StyledMeta title={item.subject} description={item.snippet} />
@@ -80,25 +62,14 @@ const ImageCard = ({ item }) => {
   ) : item.read ? (
     <ReadCard
       onClick={onCardClick(item)}
-      style={{ hight: 200, border: 'none' }}
-      cover={
-        <img
-          alt="cover"
-          src={item.image}
-          style={{
-            height: 146,
-            objectFit: 'fill',
-            borderRadius: '15px',
-          }}
-        />
-      }
+      cover={<StyledImg alt="cover" src={item.image} />}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>
         </ActionsWrapper>,
         <StyledBookmark>
@@ -119,25 +90,14 @@ const ImageCard = ({ item }) => {
   ) : (
     <UnreadCard
       onClick={onCardClick(item)}
-      style={{ hight: 200, border: 'none' }}
-      cover={
-        <img
-          alt="cover"
-          src={item.image}
-          style={{
-            height: 146,
-            objectFit: 'fill',
-            borderRadius: '15px',
-          }}
-        />
-      }
+      cover={<StyledImg alt="cover" src={item.image} />}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>
         </ActionsWrapper>,
         <StyledBookmark>
@@ -187,6 +147,7 @@ export const StyledBookmark = styled.div`
 `;
 
 export const UnreadCard = styled(Card)`
+  border: none;
   border-radius: 15px;
   cursor: pointer;
   &:hover {
@@ -209,6 +170,7 @@ export const UnreadCard = styled(Card)`
 `;
 
 export const ReadCard = styled(Card)`
+  border: none;
   opacity: 0.4;
   border-radius: 15px;
   cursor: pointer;
@@ -262,4 +224,19 @@ const StyledMeta = styled(Meta)`
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+`;
+
+const StyledImg = styled.img`
+  height: 146px;
+  object-fit: fill;
+`;
+
+export const NameWrapper = styled.div`
+  margin-left: 8px;
+`;
+
+export const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 24px;
 `;

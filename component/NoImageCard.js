@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card } from 'antd';
 import { Meta } from 'antd/lib/list/Item';
 import Router from 'next/router';
@@ -15,6 +15,8 @@ import {
   ReadCard,
   ActionsWrapper,
   SenderWrapper,
+  NameWrapper,
+  ImageWrapper,
 } from './ImageCard';
 import SubscriptionIcon from './SubscriptionIcon';
 
@@ -24,8 +26,7 @@ const NoImageCard = ({ item }) => {
   const onCardClick = (item) => () => {
     Router.push(`/letterview/${item.id}`);
   };
-  const onBookmarkClick = (item) => {
-    console.log(item);
+  const onBookmarkClick = useCallback((item) => {
     if (item.bookmark_id) {
       dispatch({
         type: DELETE_BOOKMARK_REQUEST,
@@ -39,28 +40,21 @@ const NoImageCard = ({ item }) => {
         token: cookie.Token,
       });
     }
-  };
+  }, []);
   return item.bookmark_id ? (
     <UnreadCard
       hoverable
       onClick={onCardClick(item)}
-      style={{ border: 'none' }}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>{' '}
         </ActionsWrapper>,
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginRight: 24,
-          }}
-        >
+        <ImageWrapper>
           <Image
             src={'/design/bookmarked.png'}
             width="30px"
@@ -70,13 +64,13 @@ const NoImageCard = ({ item }) => {
               onBookmarkClick(item);
             }}
           />
-        </div>,
+        </ImageWrapper>,
       ]}
     >
       <StyeldMeta
         avatar={
           <div>
-            <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
+            <StyledAvatar>{item.name[0]}</StyledAvatar>
           </div>
         }
         title={item.subject}
@@ -87,14 +81,13 @@ const NoImageCard = ({ item }) => {
     <ReadCard
       hoverable
       onClick={onCardClick(item)}
-      style={{ border: 'none' }}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>{' '}
         </ActionsWrapper>,
         <StyledBookmark>
@@ -113,7 +106,7 @@ const NoImageCard = ({ item }) => {
       <StyeldMeta
         avatar={
           <div>
-            <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
+            <StyledAvatar>{item.name[0]}</StyledAvatar>
           </div>
         }
         title={item.subject}
@@ -124,14 +117,13 @@ const NoImageCard = ({ item }) => {
     <UnreadCard
       hoverable
       onClick={onCardClick(item)}
-      style={{ border: 'none' }}
       actions={[
         <ActionsWrapper>
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
             <SubscriptionIcon header={item.name} size={'false'} />
-            <div style={{ marginLeft: 8 }}>{item.name}</div>
+            <NameWrapper>{item.name}</NameWrapper>
           </SenderWrapper>{' '}
         </ActionsWrapper>,
         <StyledBookmark>
@@ -150,7 +142,7 @@ const NoImageCard = ({ item }) => {
       <StyeldMeta
         avatar={
           <div>
-            <Avatar style={{ width: 36, height: 36 }}>{item.name[0]}</Avatar>
+            <StyledAvatar>{item.name[0]}</StyledAvatar>
           </div>
         }
         title={item.subject}
@@ -200,4 +192,9 @@ const StyeldMeta = styled(Meta)`
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+`;
+
+const StyledAvatar = styled(Avatar)`
+  width: 36px;
+  height: 36px;
 `;
