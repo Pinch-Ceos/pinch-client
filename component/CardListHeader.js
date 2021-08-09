@@ -75,7 +75,7 @@ const CardListHeader = ({ header, setPage }) => {
                 width="36px"
                 height="36px"
               /> */}
-              <SubscriptionIcon header={header} size={true} />
+              <SubscriptionIcon header={header} size={'true'} />
             </div>
             <div
               style={{

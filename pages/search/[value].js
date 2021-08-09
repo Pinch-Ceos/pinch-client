@@ -10,12 +10,13 @@ import wrapper from '../../store/configureStore';
 import { getCookie } from '../subscription/[newsletter]';
 import { LoadingWrapper } from '../inbox';
 import { LoadingOutlined } from '@ant-design/icons';
+import Header from '../../component/TopBar';
 
 const Search = () => {
   const router = useRouter();
   const { value } = router.query;
   const dispatch = useDispatch();
-  const { mails, hasMoreMails, loadMailLoading } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading, num_of_email } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -23,14 +24,8 @@ const Search = () => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    setHeader('3개의 뉴스레터');
-    dispatch({
-      type: LOAD_SEARCH_MAIL_REQUEST,
-      data: value,
-      page: 1,
-      token: cookie.Token,
-    });
-  }, [value]);
+    setHeader(`${num_of_email}개의 뉴스레터`);
+  }, [value, num_of_email]);
 
   useEffect(() => {
     function onScroll() {
@@ -57,6 +52,7 @@ const Search = () => {
 
   return (
     <>
+      <Header />
       <AppLayout>
         <CardList data={mails} header={header} />
         <LoadingWrapper>
@@ -74,6 +70,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+      token: Token,
+    });
+    context.store.dispatch({
+      type: LOAD_SEARCH_MAIL_REQUEST,
+      data: context.params.value,
+      page: 1,
       token: Token,
     });
     context.store.dispatch(END);

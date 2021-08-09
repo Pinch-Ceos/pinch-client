@@ -194,7 +194,8 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMailLoading = false;
         draft.loadMailDone = true;
         draft.mails = draft.mails.concat(action.data);
-        draft.hasMoreMails = action.data.length === 12;
+        draft.hasMoreMails =
+          action.data.email_list.length === 12 && draft.mails.length < 500;
         break;
       case LOAD_SEARCH_MAIL_SUCCESS:
       case LOAD_MAIL_SUCCESS:
@@ -202,7 +203,8 @@ const rootReducer = (state = initalState, action) =>
         draft.loadMailDone = true;
         draft.mails = draft.mails.concat(action.data.email_list);
         draft.num_of_email = action.data.num_of_email;
-        draft.hasMoreMails = action.data.email_list.length === 12;
+        draft.hasMoreMails =
+          action.data.email_list.length === 12 && draft.mails.length < 500;
         break;
       case LOAD_SEARCH_MAIL_FAILURE:
       case LOAD_MAIL_FAILURE:

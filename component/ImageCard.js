@@ -52,7 +52,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
-            <SubscriptionIcon header={item.name} size={false} />
+            <SubscriptionIcon header={item.name} size={'false'} />
             <div style={{ marginLeft: 8 }}>{item.name}</div>
           </SenderWrapper>
         </ActionsWrapper>,
@@ -97,7 +97,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
-            <SubscriptionIcon header={item.name} size={false} />
+            <SubscriptionIcon header={item.name} size={'false'} />
             <div style={{ marginLeft: 8 }}>{item.name}</div>
           </SenderWrapper>
         </ActionsWrapper>,
@@ -136,7 +136,7 @@ const ImageCard = ({ item }) => {
           {moment(item.datetime).format('YYYY.MM.DD')}
           <br />
           <SenderWrapper>
-            <SubscriptionIcon header={item.name} size={false} />
+            <SubscriptionIcon header={item.name} size={'false'} />
             <div style={{ marginLeft: 8 }}>{item.name}</div>
           </SenderWrapper>
         </ActionsWrapper>,

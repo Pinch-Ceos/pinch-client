@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Modal from '../component/Modal';
 import { getCookie } from './subscription/[newsletter]';
 import { LoadingOutlined } from '@ant-design/icons';
+import Header from '../component/TopBar';
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const Inbox = () => {
     if (me.subscription_num === 0 || mails === null) {
       return (
         <>
-          <Header>{header}</Header>
+          <HeaderWrapper>{header}</HeaderWrapper>
           <EmptyContainer>
             <Modal />
             <Image src={'/design/emptyInbox.png'} width="252" height="263" />
@@ -78,6 +79,7 @@ const Inbox = () => {
 
   return (
     <>
+      <Header />
       <AppLayout>{ChangeBody()}</AppLayout>
     </>
   );
@@ -134,7 +136,7 @@ const TextLabel = styled.div`
   margin-top: 19px;
 `;
 
-const Header = styled.div`
+const HeaderWrapper = styled.div`
   margin-left: 5px;
   font-weight: bold;
   font-size: 1.5rem;

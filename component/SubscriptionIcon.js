@@ -107,6 +107,6 @@ const SubscriptionIcon = ({ header, size }) => {
 export default SubscriptionIcon;
 
 const IconWrapper = styled.img`
-  width: ${(props) => (props.size ? '40px' : '22px')};
-  height: ${(props) => (props.size ? '40px' : '22px')};
+  width: ${(props) => (props.size === 'true' ? '40px' : '22px')};
+  height: ${(props) => (props.size === 'true' ? '40px' : '22px')};
 `;

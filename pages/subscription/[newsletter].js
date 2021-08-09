@@ -9,6 +9,7 @@ import { LOAD_MAIL_REQUEST, LOAD_MY_INFO_REQUEST } from '../../reducers';
 import wrapper from '../../store/configureStore';
 import { LoadingWrapper } from '../inbox';
 import { LoadingOutlined } from '@ant-design/icons';
+import Header from '../../component/TopBar';
 
 const Subscription = () => {
   const router = useRouter();
@@ -53,6 +54,7 @@ const Subscription = () => {
 
   return (
     <>
+      <Header />
       <AppLayout>
         <CardList data={mails} header={header} setPage={setPage} />
         <LoadingWrapper>

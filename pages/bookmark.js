@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { getCookie } from './subscription/[newsletter]';
 import { LoadingWrapper } from './inbox';
 import { LoadingOutlined } from '@ant-design/icons';
+import Header from '../component/TopBar';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const Bookmark = () => {
     } else {
       return (
         <>
-          <Header>{header}</Header>
+          <HeaderWrapper>{header}</HeaderWrapper>
           <EmptyContainer>
             <Image src={'/design/emptyBookmark.png'} width="383" height="352" />
             <TextLabel>아직 저장한 뉴스레터가 없어요!</TextLabel>
@@ -72,6 +73,7 @@ const Bookmark = () => {
 
   return (
     <>
+      <Header />
       <AppLayout>{ChangeBody()}</AppLayout>
     </>
   );
@@ -116,7 +118,7 @@ const TextLabel = styled.div`
   margin-top: 19px;
 `;
 
-const Header = styled.div`
+const HeaderWrapper = styled.div`
   margin-left: 5px;
   font-weight: bold;
   font-size: 1.5rem;

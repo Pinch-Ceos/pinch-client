@@ -25,13 +25,7 @@ const CardList = ({ data, header, setPage }) => {
       header={<CardListHeader header={header} setPage={setPage} />}
       dataSource={data}
       renderItem={(item) => (
-        <StyledItem
-          style={{
-            marginTop: '20px',
-            marginLeft: 10,
-            marginRight: 10,
-          }}
-        >
+        <StyledItem key={item.id}>
           {item.image ? <ImageCard item={item} /> : <NoImageCard item={item} />}
         </StyledItem>
       )}
@@ -41,6 +35,9 @@ const CardList = ({ data, header, setPage }) => {
 export default CardList;
 
 const StyledItem = styled(List.Item)`
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   &:hover {
     .ant-list-item-meta-title {
       text-decoration: underline;

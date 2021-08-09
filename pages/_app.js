@@ -10,17 +10,10 @@ import styled from 'styled-components';
 
 const Pinch = ({ Component }) => {
   const router = useRouter();
-  const topBar = () => {
-    const address = router.pathname.split('/')[1];
-    if (!address || address === 'redirect' || address === 'indextest') {
-      return null;
-    }
-    return <Header />;
-  };
 
   const footer = () => {
     const address = router.pathname.split('/')[1];
-    if (!address || address === 'redirect' || address === 'indextest') {
+    if (!address || address === 'redirect') {
       return null;
     }
     return <Footer />;
@@ -33,7 +26,6 @@ const Pinch = ({ Component }) => {
         <meta charSet="utf-8" />
         <title>Pinch</title>
       </Head>
-      {topBar()}
       <Component />
       {footer()}
     </Body>

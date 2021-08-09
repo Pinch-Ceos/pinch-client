@@ -15,6 +15,7 @@ import { useCookies } from 'react-cookie';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { getCookie } from '../subscription/[newsletter]';
+import Header from '../../component/TopBar';
 
 const NewsLetterView = () => {
   const { view, viewInfo } = useSelector((state) => state);
@@ -48,6 +49,7 @@ const NewsLetterView = () => {
   };
   return (
     <>
+      <Header />
       <AppLayout>
         <div
           style={{

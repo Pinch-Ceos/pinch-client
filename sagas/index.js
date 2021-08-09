@@ -49,12 +49,7 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
 function logInAPI() {
-  return axios.get(
-    `/auth/login`
-    //  {
-    //   headers: { accept: 'application/json', 'Access-Control-Allow-Origin': '*' },
-    // }
-  );
+  return axios.get(`/auth/login`);
 }
 
 function* logIn(action) {
@@ -75,16 +70,7 @@ function* logIn(action) {
 function giveCodeAPI(data) {
   console.log(data);
   console.log({ code: data });
-  return axios.post(
-    `/auth/callback?code=${data}/`,
-    { code: data }
-    // {
-    //   headers: {
-    //     accept: 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //   },
-    // }
-  );
+  return axios.post(`/auth/callback?code=${data}/`, { code: data });
 }
 function* giveCode(action) {
   try {

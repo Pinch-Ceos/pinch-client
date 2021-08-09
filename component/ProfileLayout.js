@@ -8,23 +8,23 @@ import Router from 'next/router';
 import { Tooltip } from 'antd';
 import Modal from '../component/Modal';
 
-// const MyProfileContent = ({ name, email_address, profile_picture }) => {
-//   return (
-//     <MyProfile>
-//       <ProfileImg>
-//         <img
-//           src={`${profile_picture}`}
-//           alt="profileImage"
-//           style={{ width: '9.313em', height: '9.313em' }}
-//         />
-//       </ProfileImg>
-//       <ProfileContent>
-//         <ProfileName>{name}</ProfileName>
-//         <ProfileEmail>{email_address}</ProfileEmail>
-//       </ProfileContent>
-//     </MyProfile>
-//   );
-// };
+const MyProfileContent = ({ name, email_address, profile_picture }) => {
+  return (
+    <MyProfile>
+      <ProfileImg>
+        <img
+          src={`${profile_picture}`}
+          alt="profileImage"
+          style={{ width: '9.313em', height: '9.313em' }}
+        />
+      </ProfileImg>
+      <ProfileContent>
+        <ProfileName>{name}</ProfileName>
+        <ProfileEmail>{email_address}</ProfileEmail>
+      </ProfileContent>
+    </MyProfile>
+  );
+};
 
 const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
   const savedNewsLetterOnClick = () => {
@@ -179,11 +179,11 @@ const ProfileLayout = () => {
       <GlobalStyle />
       <Container>
         <Body>
-          {/* <MyProfileContent
+          <MyProfileContent
             name={me.user_name}
             email_address={me.user_email_address}
             profile_picture={me.profile_picture}
-          /> */}
+          />
           <MyNewsLetterContent
             bookmark_num={me.bookmark_num}
             subscription_num={me.subscription_num}

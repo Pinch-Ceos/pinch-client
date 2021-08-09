@@ -4,9 +4,15 @@ import wrapper from '../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../reducers';
 import { END } from 'redux-saga';
 import { getCookie } from './subscription/[newsletter]';
+import Header from '../component/TopBar';
 
 const profile = () => {
-  return <ProfileLayout />;
+  return (
+    <>
+      <Header />
+      <ProfileLayout />;
+    </>
+  );
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {

@@ -66,6 +66,7 @@ const MenuLayout = () => {
           >
             {me.subscriptions.map((v) => (
               <SubMenu
+                key={v.id}
                 onClick={onClickSub(v)}
                 subselected={isSubSelected(v)}
                 selected={selectedSubscription}
