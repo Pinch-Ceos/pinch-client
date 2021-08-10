@@ -49,6 +49,27 @@ const GlobalStyles = createGlobalStyle`
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Poppins-Bold';
+  src: url('/font/Poppins-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins-Medium';
+  src: url('/font/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('/font/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body, html {
   font-family: 'Sans Neo Medium';
 }

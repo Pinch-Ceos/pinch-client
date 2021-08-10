@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { DELETE_SUBSCRIPTION_REQUEST, LOAD_SENDER_REQUEST } from '../reducers';
+import { DELETE_SUBSCRIPTION_REQUEST, DELETE_USER_REQUEST } from '../reducers';
 import { Cookies, useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { Tooltip } from 'antd';
 import Modal from '../component/Modal';
+import { DEFAULT_SCROLLING_RESET_TIME_INTERVAL } from 'react-virtualized/dist/es/grid';
 
 const MyProfileContent = ({ name, email_address, profile_picture }) => {
   return (
@@ -89,7 +89,6 @@ const MySubscribeButton = ({ id }) => {
       data: id,
       token: cookie.Token,
     });
-    console.log(id);
   };
 
   const changeText = () => {
@@ -115,8 +114,8 @@ const MySubscribeButton = ({ id }) => {
 };
 const text = (
   <span>
-    <div>뉴스레터 추가하기</div>
-    <div>메일함 속 새로운 뉴스레터를 추가해보세요!</div>
+    <div>새로 구독한 뉴스레터가 있으시다면, 뉴스레터를 추가해 주세요!</div>
+    <TooltipButton>추가하러 가기</TooltipButton>
   </span>
 );
 
@@ -156,18 +155,35 @@ const MySubscribeList = ({ subscriptions }) => {
     </>
   );
 };
+
 const LogOut = () => {
   const [cookie, setCookie, removeCookie] = useCookies();
-  let history = useHistory();
+  const dispatch = useDispatch();
 
   function logout(e) {
-    history.push('/');
+    removeCookie(cookie.Token);
+    Router.push('/');
+  }
+
+  function userDelete(e) {
+    // dispatch({
+    //   type: DELETE_USER_REQUEST,
+    //   token: cookie.Token,
+    // });
+    Router.push('/');
   }
 
   return (
-    <LogOutContainer>
-      <LogOutButton onClick={logout}>로그아웃</LogOutButton>
-    </LogOutContainer>
+    <BottomContainer>
+      <LogOutContainer>
+        <LogOutButton onClick={logout}>로그아웃</LogOutButton>
+      </LogOutContainer>
+      <LogOutContainer>
+        <UserDeleteButton onClick={userDelete}>
+          그냥 탈퇴할래요
+        </UserDeleteButton>
+      </LogOutContainer>
+    </BottomContainer>
   );
 };
 
@@ -227,6 +243,21 @@ const GlobalStyle = createGlobalStyle`
     z-index: 999;
     background-color: grey;
 }
+
+  .ant-tooltip-inner{
+    /* background: #FFFFFF;
+    box-shadow: 0px 1px 30px rgba(145, 145, 145, 0.2);
+    border-radius: 12px;
+    width:38.563em;
+    height: 10.188em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center; */
+  }
+  .ant-tooltip-arrow{
+    display: none;
+  }
 `;
 
 const Container = styled.div`
@@ -286,8 +317,6 @@ const ProfileImg = styled.div`
   padding: 0;
 `;
 
-const ProfileContent = styled.div``;
-
 const ProfileName = styled.div`
   font-weight: bold;
   font-size: 1.75em;
@@ -331,13 +360,6 @@ const NewsLetterRead = styled.div`
   :hover {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
   }
-`;
-
-const ProfileIllust = styled.img`
-  left: 499px;
-  bottom: -190px;
-  /* z-index: 999; */
-  position: relative;
 `;
 
 const NewsLetterInfoContainer = styled.div`
@@ -531,8 +553,6 @@ const SubscribeNewsEmail = styled.div`
 const LogOutContainer = styled.div`
   display: flex;
   width: 100%;
-  padding-bottom: 4.5rem;
-  padding-top: 9rem;
   flex-direction: row-reverse;
 `;
 
@@ -549,10 +569,58 @@ const LogOutButton = styled.button`
   border: none;
 `;
 
+const BottomContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-bottom: 3.111rem;
+  padding-top: 9rem;
+  flex-direction: column;
+`;
 const ManageTitle = styled.div`
   font-weight: bold;
   font-size: 1.5em;
   line-height: 2em;
   color: #171920;
   text-align: left;
+`;
+
+const UserDeleteButton = styled.button`
+  font-weight: normal;
+  font-size: 0.667em;
+  line-height: 1em;
+  width: 12em;
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #cdcccc;
+  background-color: white;
+  border: none;
+  :focus {
+    outline: none;
+  }
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+const ProfileContent = styled.div``;
+
+const TooltipText = styled.div`
+  font-weight: normal;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  color: #b0b1b6;
+`;
+
+const TooltipButton = styled.button`
+  font-weight: normal;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  width: 8.15em;
+  height: 2.25em;
+  background: #3562ff;
+  color: #ffffff;
+  text-align: center;
+  margin-left: 3.1em;
 `;

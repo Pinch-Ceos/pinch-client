@@ -40,6 +40,9 @@ import {
   LOAD_SEARCH_MAIL_REQUEST,
   LOAD_SEARCH_MAIL_SUCCESS,
   LOAD_SEARCH_MAIL_FAILURE,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE,
 } from '../reducers';
 
 import backUrl from '../config/config';
@@ -344,6 +347,27 @@ function* loadDetailInfo(action) {
     });
   }
 }
+function deleteUserAPI(action) {
+  return axios.delete(`/user`, {
+    headers: { Authorization: action.token },
+  });
+}
+function* deleteUser(action) {
+  try {
+    const result = yield call(deleteUserAPI, action);
+    console.log(result);
+    yield put({
+      type: DELETE_USER_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: DELETE_USER_FAILURE,
+      error: err.response,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -386,6 +410,9 @@ function* watchDeleteBookmark() {
 function* watchLoadDetailInfo() {
   yield takeLatest(LOAD_DETAIL_INFO_REQUEST, loadDetailInfo);
 }
+function* watchDeleteUser() {
+  yield takeLatest(DELETE_USER_REQUEST, deleteUser);
+}
 export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
@@ -402,5 +429,6 @@ export default function* rootSaga() {
     fork(watchAddBookmark),
     fork(watchDeleteBookmark),
     fork(watchLoadSearchMail),
+    fork(watchDeleteUser),
   ]);
 }

@@ -25,9 +25,10 @@ const Tags = ({ selectedTags, setSelectedTags }) => {
               checked={selectedTags.indexOf(tag) > -1}
               onChange={(checked) => handleChange(tag, checked)}
             >
-              {tag.name}
-              <br />
-              {tag.email_address}
+              <StyledTag>
+                <Title>{tag.name}</Title>
+                <Email>{tag.email_address}</Email>
+              </StyledTag>
             </CheckableTag>
           ))}
         </Container>
@@ -84,6 +85,16 @@ const OverflowGradient = styled.div`
 `;
 
 const { CheckableTag } = Tag;
+
+const StyledTag = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const Container = styled.div`
   padding-top: 25px;
   padding-bottom: 80px;
@@ -98,9 +109,28 @@ const Container = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     background-color: #404247;
-    border-radius: 2px;
+    border-radius: 7px;
+    width: 7px;
   }
   ::-webkit-scrollbar-track {
     background-color: none;
   }
+`;
+
+const Title = styled.div`
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  text-align: center;
+  color: #e5e6eb;
+`;
+
+const Email = styled.div`
+  font-family: 'Poppins-Regular';
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 19px;
+  text-align: center;
+  color: #b0b1b6;
+  opacity: 0.7;
 `;
