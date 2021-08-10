@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "build": "cross-env ANALYZE=true NODE_ENV=production next build",
-    "start": "next start"
+    "build": "cross-env NODE_ENV=production ANALYZE=true next build",
+    "start": "next start -p 80"
   },
   "author": "seungBum",
   "license": "ISC",

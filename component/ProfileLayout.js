@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_SUBSCRIPTION_REQUEST, DELETE_USER_REQUEST } from '../reducers';
-import { Cookies, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { Tooltip } from 'antd';
 import Modal from '../component/Modal';
-import { DEFAULT_SCROLLING_RESET_TIME_INTERVAL } from 'react-virtualized/dist/es/grid';
 
 const MyProfileContent = ({ name, email_address, profile_picture }) => {
   return (
@@ -76,6 +75,12 @@ const MyAccountContent = ({ email_address }) => {
     </AccountContainer>
   );
 };
+const text = () => {
+  <span>
+    <div>새로 구독한 뉴스레터가 있으시다면, 뉴스레터를 추가해 주세요!</div>
+    <TooltipButton>추가하러 가기</TooltipButton>
+  </span>;
+};
 
 const MySubscribeButton = ({ id }) => {
   const [text, setText] = useState('숨기기');
@@ -108,16 +113,10 @@ const MySubscribeButton = ({ id }) => {
       onClick={deleteSubscribe(id)}
       isMouseOver={isMouseOver}
     >
-      {text}
+      {text()}
     </DeleteButton>
   );
 };
-const text = (
-  <span>
-    <div>새로 구독한 뉴스레터가 있으시다면, 뉴스레터를 추가해 주세요!</div>
-    <TooltipButton>추가하러 가기</TooltipButton>
-  </span>
-);
 
 const MySubscribeList = ({ subscriptions }) => {
   const ModalOpen = () => {
@@ -129,7 +128,7 @@ const MySubscribeList = ({ subscriptions }) => {
         <ManageTitle>뉴스레터 관리</ManageTitle>
         <div className="demo">
           <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
-            <Tooltip placement="topRight" title={text}>
+            <ToolWtip placement="topRight" title={text}>
               <PlusButton onCLick={ModalOpen}>
                 <img
                   src={'/design/ProfilePlus.png'}
@@ -137,7 +136,7 @@ const MySubscribeList = ({ subscriptions }) => {
                   style={{ width: '1.5em', height: '1.5em' }}
                 />
               </PlusButton>
-            </Tooltip>
+            </ToolWtip>
           </div>
         </div>
       </SubscriptionTitle>
@@ -165,11 +164,11 @@ const LogOut = () => {
     Router.push('/');
   }
 
-  function userDelete(e) {
-    // dispatch({
-    //   type: DELETE_USER_REQUEST,
-    //   token: cookie.Token,
-    // });
+  function userDelete() {
+    dispatch({
+      type: DELETE_USER_REQUEST,
+      token: cookie.Token,
+    });
     Router.push('/');
   }
 
