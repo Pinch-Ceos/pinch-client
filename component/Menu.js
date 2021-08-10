@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
@@ -26,24 +26,23 @@ const MenuLayout = () => {
   const onClickSub = (v) => () => {
     Router.push(`/subscription/${v.email_address}`);
   };
-  const onClickInbox = () => {
+  const onClickInbox = useCallback(() => {
     Router.push(`/inbox`);
-  };
-  const onClickBookmark = () => {
+  }, []);
+  const onClickBookmark = useCallback(() => {
     Router.push(`/bookmark`);
-  };
-  const onClickSubscription = () => {
+  }, []);
+  const onClickSubscription = useCallback(() => {
     setSelectedSubscription(!selectedSubscription);
-  };
-  const onClickMenuContainer = (e) => {
+  }, [selectedSubscription]);
+  const onClickMenuContainer = useCallback((e) => {
     e.stopPropagation();
-    console.log('onClickMenuContainer');
-  };
+  }, []);
   const isSubSelected = (v) => {
     return router.query.newsletter === v.email_address;
   };
   return (
-    <div style={{ margin: 10 }}>
+    <Container>
       <MenuBar>
         <Menu onClick={onClickInbox} selected={selectedInbox}>
           <TextWrapper>
@@ -72,7 +71,7 @@ const MenuLayout = () => {
                 selected={selectedSubscription}
               >
                 {v.name}
-                <div style={{ fontSize: 24, marginLeft: 6 }}>&#x2022;</div>
+                <DotWrapper>&#x2022;</DotWrapper>
               </SubMenu>
             ))}
           </MenuContainer>
@@ -86,10 +85,19 @@ const MenuLayout = () => {
           </TextWrapper>
         </Menu>
       </MenuBar>
-    </div>
+    </Container>
   );
 };
 export default MenuLayout;
+
+const DotWrapper = styled.div`
+  font-size: 24px;
+  margin-left: 6px;
+`;
+
+const Container = styled.div`
+  margin: 10px;
+`;
 
 const TextWrapper = styled.div`
   display: flex;

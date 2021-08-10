@@ -43,21 +43,14 @@ const Header = () => {
           <Search>
             <StyledSearchOutlined onClick={onClickSearch} />
           </Search>
-          {/* <StyledAlarm>
-            <img src={'/design/alarm.png'} alt="alarm" />
-          </StyledAlarm> */}
           <StyledProfile onClick={onClickAvatar}>
-            <img
-              src={`${me.profile_picture}`}
-              alt="profileImage"
-              style={{ width: 30, height: 30 }}
-            />
+            <StyledImg src={`${me.profile_picture}`} alt="profileImage" />
           </StyledProfile>
         </RightBox>
       </Bar>
       <StyledForm onSubmit={onSubmitForm} toggle={toggle}>
         <InputWrapper>
-          <SearchOutlined style={{ fontSize: '150%', color: 'gray' }} />
+          <SearchIcon />
           <StyledInput
             value={searchValue}
             onChange={onChangeInput}
@@ -111,13 +104,6 @@ const RightBox = styled.div`
   align-items: center;
 `;
 
-const StyledAlarm = styled.div`
-  cursor: pointer;
-  margin-left: 13px;
-  width: 21px;
-  height: 21px;
-`;
-
 const InputWrapper = styled.div`
   height: 50;
   width: 92%;
@@ -130,10 +116,10 @@ const InputWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 5px;
   &: hover {
-    box-shadow: 2px 2px 2px 2px #e0e0e0;
+    box-shadow: 2px 2px 2px 2px #e5e7e9;
   }
   &:focus-within {
-    box-shadow: 2px 2px 2px 2px #e0e0e0;
+    box-shadow: 2px 2px 2px 2px #e5e7e9;
   }
 `;
 
@@ -160,4 +146,14 @@ const StyledProfile = styled.div`
   align-items: center;
   justify-content: center;
   vertical-align: center;
+`;
+
+const StyledImg = styled.img`
+  width: 30px;
+  height: 30px;
+`;
+
+const SearchIcon = styled(SearchOutlined)`
+  font-size: 150%;
+  color: gray;
 `;

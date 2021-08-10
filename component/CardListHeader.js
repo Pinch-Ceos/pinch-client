@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
@@ -15,7 +15,7 @@ const CardListHeader = ({ header, setPage }) => {
   const [toggle, setToggle] = useState(false);
   const { num_of_email } = useSelector((state) => state);
 
-  const onClickToggle = () => {
+  const onClickToggle = useCallback(() => {
     setToggle(!toggle);
     setPage(2);
     if (!toggle) {
@@ -28,7 +28,7 @@ const CardListHeader = ({ header, setPage }) => {
     } else if (address === 'inbox') {
       Router.push('/inbox');
     }
-  };
+  }, [address, toggle]);
 
   useEffect(() => {
     if (cookie['Filter'] === 'True') {
@@ -38,7 +38,7 @@ const CardListHeader = ({ header, setPage }) => {
     }
   }, []);
 
-  const filterToggle = () => {
+  const filterToggle = useCallback(() => {
     if (toggle) {
       return (
         <Image
@@ -57,89 +57,92 @@ const CardListHeader = ({ header, setPage }) => {
         onClick={onClickToggle}
       />
     );
-  };
+  }, [toggle]);
   if (address === 'subscription') {
     return (
-      <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ display: 'flex' }}>
-              {/* <Image
-                src={'/design/subscriptionIcon.png'}
-                width="36px"
-                height="36px"
-              /> */}
+      <>
+        <Container>
+          <HeaderContainer>
+            <IconWrapper>
               <SubscriptionIcon header={header} size={'true'} />
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                fontSize: '30px',
-                marginLeft: 10,
-                fontWeight: 'bold',
-              }}
-            >
-              {header}
-            </div>
-          </div>
+            </IconWrapper>
+            <SubHeaderWrapper>{header}</SubHeaderWrapper>
+          </HeaderContainer>
           <Tooltip
             placement="topRight"
             title="읽지 않은 뉴스레터만 표시하는 기능이에요"
             color={'#FDFEFE'}
           >
-            <div style={{ cursor: 'pointer', marginRight: 10 }}>
-              {filterToggle()}
-            </div>
+            <FilterToggleWrapper>{filterToggle()}</FilterToggleWrapper>
           </Tooltip>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+        </Container>
+        <ImageWrapper>
           <Image src={'/design/frontnumber.png'} width="14px" height="18px" />
-          <div style={{ fontSize: 20, marginLeft: 9 }}>
+          <NumberConatainer>
             {num_of_email > 99 ? `99+개` : `${num_of_email}개`}
-          </div>
-        </div>
-      </div>
+          </NumberConatainer>
+        </ImageWrapper>
+      </>
     );
   } else if (address === 'inbox') {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            fontSize: '24px',
-            marginLeft: 10,
-            fontWeight: 'bold',
-          }}
-        >
-          {header}
-        </div>
+      <Container>
+        <HeaderWrapper>{header}</HeaderWrapper>
         <Tooltip
           placement="topRight"
           title="읽지 않은 뉴스레터만 표시하는 기능이에요"
           color={'#FDFEFE'}
         >
-          <div style={{ cursor: 'pointer', marginRight: 10 }}>
-            {filterToggle()}
-          </div>
+          <FilterToggleWrapper>{filterToggle()}</FilterToggleWrapper>
         </Tooltip>
-      </div>
+      </Container>
     );
   }
-  return <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{header}</div>;
+  return <HeaderWrapper>{header}</HeaderWrapper>;
 };
 
 export default CardListHeader;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FilterToggleWrapper = styled.div`
+  cursor: pointer;
+  margin-right: 10px;
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SubHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  margin-left: 10px;
+  font-weight: bold;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const NumberConatainer = styled.div`
+  font-size: 20px;
+  argin-left: 9px;
+`;
+
+const HeaderWrapper = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+`;

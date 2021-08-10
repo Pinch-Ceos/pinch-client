@@ -7,7 +7,7 @@ import CardListHeader from './CardListHeader';
 
 const CardList = ({ data, header, setPage }) => {
   return (
-    <List
+    <StyledList
       grid={{
         gutter: 16,
         xs: 1,
@@ -16,11 +16,6 @@ const CardList = ({ data, header, setPage }) => {
         lg: 3,
         xl: 3,
         xxl: 4,
-      }}
-      style={{
-        backgroundColor: 'white',
-        border: 'none',
-        width: '100%',
       }}
       header={<CardListHeader header={header} setPage={setPage} />}
       dataSource={data}
@@ -33,6 +28,12 @@ const CardList = ({ data, header, setPage }) => {
   );
 };
 export default CardList;
+
+const StyledList = styled(List)`
+  background-color: white;
+  border: none;
+  width: 100%;
+`;
 
 const StyledItem = styled(List.Item)`
   margin-top: 20px;
