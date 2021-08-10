@@ -97,6 +97,9 @@ const DotWrapper = styled.div`
 
 const Container = styled.div`
   margin: 10px;
+  @media screen and (max-width: 768px) {
+    margin-top: 40px;
+  }
 `;
 
 const TextWrapper = styled.div`

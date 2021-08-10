@@ -147,6 +147,7 @@ const StyledLayout = styled(Layout)`
 `;
 
 const StyledHeader = styled(Header)`
+  margin-top: 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;

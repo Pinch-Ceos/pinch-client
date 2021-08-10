@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GIVE_CODE_REQUEST } from '../reducers';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import styled from 'styled-components';
+import Image from 'next/image';
 const redirect = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,7 +25,20 @@ const redirect = () => {
       router.push(`/inbox`);
     }
   }, [giveCodeDone]);
-  return <div>Loading...</div>;
+  return (
+    <LoaderWrapper>
+      {' '}
+      <Image src={'/design/modalLoader.gif'} width="200" height="200" />
+    </LoaderWrapper>
+  );
 };
 
 export default redirect;
+
+const LoaderWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justiyfy-content: center;
+  align-items: center;
+`;

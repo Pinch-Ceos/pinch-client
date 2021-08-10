@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
@@ -11,13 +11,13 @@ import styled from 'styled-components';
 const Pinch = ({ Component }) => {
   const router = useRouter();
 
-  const footer = () => {
+  const footer = useCallback(() => {
     const address = router.pathname.split('/')[1];
     if (!address || address === 'redirect') {
       return null;
     }
     return <Footer />;
-  };
+  }, [router]);
 
   return (
     <Body>

@@ -54,7 +54,7 @@ const Inbox = () => {
   }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
 
   const ChangeBody = () => {
-    if (me.subscription_num === 0 || mails === null) {
+    if (me.subscription_num === 0 || mails.length === 0) {
       return (
         <>
           <HeaderWrapper>{header}</HeaderWrapper>

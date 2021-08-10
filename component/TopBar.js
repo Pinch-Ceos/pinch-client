@@ -34,7 +34,7 @@ const Header = () => {
     Router.push(`/search/${searchValue}`);
   };
   return (
-    <>
+    <Container>
       <Bar>
         <Logo onClick={onClickMark}>
           <img src={'/design/pinchmark.png'} alt="logo" />
@@ -58,10 +58,18 @@ const Header = () => {
           />
         </InputWrapper>
       </StyledForm>
-    </>
+    </Container>
   );
 };
 export default Header;
+
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: white;
+`;
 
 const StyledSearchOutlined = styled(SearchOutlined)`
   @media screen and (min-width: 768px) {

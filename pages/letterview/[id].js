@@ -48,30 +48,19 @@ const NewsLetterView = () => {
     }
   }, []);
   return (
-    <>
+    <Container>
       <Header />
       <AppLayout>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <div style={{ width: '100%' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ fontSize: '30px' }}>
-                {viewInfo && viewInfo.name}
-              </div>
+        <Container1>
+          <Container2>
+            <Container3>
+              <NameWrapper>{viewInfo && viewInfo.name}</NameWrapper>
               {viewInfo && viewInfo.bookmark_id !== null ? (
                 <BookmarkWrapper>
                   <Image
                     src={'/design/bookmarked.png'}
                     width="44px"
                     height="44px"
-                    style={{ boxShadow: '3px 3px 3px #000' }}
                     onClick={(event) => {
                       event.stopPropagation();
                       onBookmarkClick();
@@ -84,7 +73,6 @@ const NewsLetterView = () => {
                     src={'/design/bookmark.png'}
                     width="44px"
                     height="44px"
-                    style={{ filter: 'drop-shadow(5px 5px 5px #000)' }}
                     onClick={(event) => {
                       event.stopPropagation();
                       onBookmarkClick();
@@ -92,25 +80,13 @@ const NewsLetterView = () => {
                   />
                 </BookmarkWrapper>
               )}
-            </div>
-            <div style={{ marginTop: 5, fontSize: '20px' }}>
-              {viewInfo && viewInfo.subject}
-            </div>
-          </div>
-          <iframe
-            style={{
-              width: '100%',
-              height: '83vh',
-              wordBreak: 'break-all',
-              border: 'none',
-              boxShadow: 'none',
-              justifyContent: 'center',
-            }}
-            srcDoc={`${view}`}
-          ></iframe>
-        </div>
+            </Container3>
+            <SubjectWrapper>{viewInfo && viewInfo.subject}</SubjectWrapper>
+          </Container2>
+          <StyledIframe srcDoc={`${view}`}></StyledIframe>
+        </Container1>
       </AppLayout>
-    </>
+    </Container>
   );
 };
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -144,4 +120,43 @@ const BookmarkWrapper = styled.div`
   &:hover {
     transform: scale(1.2);
   }
+`;
+
+const Container = styled.div`
+  margin-top: 48px;
+`;
+
+const Container1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const Container2 = styled.div`
+  width: 100%;
+`;
+
+const Container3 = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NameWrapper = styled.div`
+  font-size: 30px;
+`;
+
+const SubjectWrapper = styled.div`
+  margin-top: 5px;
+  font-size: 20px;
+`;
+
+const StyledIframe = styled.iframe`
+  width: 100%;
+  height: 83vh;
+  word-break: break-all;
+  border: none;
+  box-shadow: none;
+  justify-content: center;
 `;
