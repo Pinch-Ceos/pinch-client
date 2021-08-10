@@ -40,6 +40,9 @@ const initalState = {
   loadDetailInfoLoading: false,
   loadDetailInfoDone: false,
   loadDetailInfoError: null,
+  deleteUserLoading: false,
+  deleteUserDone: false,
+  deleteUserError: null,
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -93,6 +96,10 @@ export const ADD_BOOKMARK_FAILURE = 'ADD_BOOKMARK_FAILURE';
 export const DELETE_BOOKMARK_REQUEST = 'DELETE_BOOKMARK_REQUEST';
 export const DELETE_BOOKMARK_SUCCESS = 'DELETE_BOOKMARK_SUCCESS';
 export const DELETE_BOOKMARK_FAILURE = 'DELETE_BOOKMARK_FAILURE';
+
+export const DELETE_USER_REQUEST = 'DELETE_USER_REQUEST';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
@@ -283,6 +290,19 @@ const rootReducer = (state = initalState, action) =>
       case LOG_IN_FAILURE:
         draft.logInLoading = false;
         draft.logInError = action.error;
+        break;
+      case DELETE_USER_REQUEST:
+        draft.deleteUserLoading = true;
+        draft.deleteUserDone = false;
+        draft.deleteUserError = null;
+        break;
+      case DELETE_USER_SUCCESS:
+        draft.deleteUserLoading = false;
+        draft.deleteUserDone = true;
+        break;
+      case DELETE_USER_FAILURE:
+        draft.deleteUserLoading = false;
+        draft.deleteUserError = action.error;
         break;
       default:
         break;
