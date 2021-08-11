@@ -51,7 +51,6 @@ const Subscription = () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, [newsletter, mails.length, hasMoreMails, loadMailLoading]);
-
   return (
     <>
       <Header />

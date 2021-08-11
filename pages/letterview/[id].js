@@ -18,7 +18,7 @@ import { getCookie } from '../subscription/[newsletter]';
 import Header from '../../component/TopBar';
 
 const NewsLetterView = () => {
-  const { view, viewInfo } = useSelector((state) => state);
+  const { view, viewInfo, me } = useSelector((state) => state);
   const router = useRouter();
   const data = router.query;
   const dispatch = useDispatch();

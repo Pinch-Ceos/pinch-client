@@ -121,7 +121,7 @@ const MySubscribeButton = ({ id }) => {
       onClick={deleteSubscribe(id)}
       isMouseOver={isMouseOver}
     >
-      <text />
+      {text}
     </DeleteButton>
   );
 };
@@ -164,11 +164,11 @@ const MySubscribeList = ({ subscriptions }) => {
 };
 
 const LogOut = () => {
-  const [cookie, setCookie, removeCookie] = useCookies();
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
   const dispatch = useDispatch();
 
-  function logout(e) {
-    removeCookie(cookie.Token);
+  function logout() {
+    removeCookie('Token');
     Router.push('/');
   }
 

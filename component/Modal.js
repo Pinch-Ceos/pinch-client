@@ -34,7 +34,6 @@ const ModalWindow = () => {
     if (me.subscription_num === 0) {
       showModal();
     }
-    s;
   }, []);
 
   const changeBody = () => {

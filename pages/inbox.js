@@ -76,7 +76,6 @@ const Inbox = () => {
       );
     }
   };
-
   return (
     <>
       <Header />
