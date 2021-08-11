@@ -76,10 +76,16 @@ const MyAccountContent = ({ email_address }) => {
   );
 };
 const text = () => {
-  <span>
-    <div>새로 구독한 뉴스레터가 있으시다면, 뉴스레터를 추가해 주세요!</div>
-    <TooltipButton>추가하러 가기</TooltipButton>
-  </span>;
+  return (
+    <TooltipContainer>
+      <TooltipText>
+        새로 구독한 뉴스레터가 있으시다면,
+        <br />
+        뉴스레터를 추가해 주세요!
+      </TooltipText>
+      <TooltipButton>추가하러 가기</TooltipButton>
+    </TooltipContainer>
+  );
 };
 
 const MySubscribeButton = ({ id }) => {
@@ -113,7 +119,7 @@ const MySubscribeButton = ({ id }) => {
       onClick={deleteSubscribe(id)}
       isMouseOver={isMouseOver}
     >
-      {text()}
+      <text />
     </DeleteButton>
   );
 };
@@ -128,7 +134,7 @@ const MySubscribeList = ({ subscriptions }) => {
         <ManageTitle>뉴스레터 관리</ManageTitle>
         <div className="demo">
           <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
-            <ToolWtip placement="topRight" title={text}>
+            <Tooltip placement="topRight" title={text}>
               <PlusButton onCLick={ModalOpen}>
                 <img
                   src={'/design/ProfilePlus.png'}
@@ -136,7 +142,7 @@ const MySubscribeList = ({ subscriptions }) => {
                   style={{ width: '1.5em', height: '1.5em' }}
                 />
               </PlusButton>
-            </ToolWtip>
+            </Tooltip>
           </div>
         </div>
       </SubscriptionTitle>
@@ -244,15 +250,21 @@ const GlobalStyle = createGlobalStyle`
 }
 
   .ant-tooltip-inner{
-    /* background: #FFFFFF;
+    background: #FFFFFF;
+    position:absolute;
+    bottom:100%;
+    right: 0;
     box-shadow: 0px 1px 30px rgba(145, 145, 145, 0.2);
     border-radius: 12px;
-    width:38.563em;
-    height: 10.188em;
+    width:35em;
+    height: 9em;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items:center; */
+    align-items:center;
+    @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
   }
   .ant-tooltip-arrow{
     display: none;
@@ -605,6 +617,13 @@ const UserDeleteButton = styled.button`
 
 const ProfileContent = styled.div``;
 
+const TooltipContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
 const TooltipText = styled.div`
   font-weight: normal;
   font-size: 1.25em;
@@ -621,5 +640,6 @@ const TooltipButton = styled.button`
   background: #3562ff;
   color: #ffffff;
   text-align: center;
-  margin-left: 3.1em;
+  margin-left: 2.5em;
+  border: none;
 `;
