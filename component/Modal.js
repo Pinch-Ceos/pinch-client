@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
+import { Tooltip } from 'antd';
+import { useRouter } from 'next/router';
 
 const ModalWindow = () => {
   const [visible, setVisible] = useState(false);
@@ -14,7 +16,7 @@ const ModalWindow = () => {
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
   const { loadSenderLoading, me } = useSelector((state) => state);
-
+  const router = useRouter();
   const showModal = () => {
     setComponum(0);
     setVisible(true);
@@ -31,10 +33,9 @@ const ModalWindow = () => {
   }, [loadSenderLoading]);
 
   useEffect(() => {
-    if (me.subscription_num === 0) {
+    if (me.subscription_num === 0 && router.pathname !== '/profile') {
       showModal();
     }
-    s;
   }, []);
 
   const changeBody = () => {
@@ -102,9 +103,37 @@ const ModalWindow = () => {
     }
   };
 
+  const text = () => {
+    return (
+      <TooltipContainer>
+        <TooltipText>
+          새로 구독한 뉴스레터가 있으시다면,
+          <br />
+          뉴스레터를 추가해 주세요!
+        </TooltipText>
+        <TooltipButton onClick={() => showModal()}>추가하러 가기</TooltipButton>
+      </TooltipContainer>
+    );
+  };
+
   return (
     <>
       <Global />
+
+      <div className="demo">
+        <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
+          <Tooltip placement="topRight" title={text}>
+            <OpenButton>
+              <img
+                src={'/design/ProfilePlus.png'}
+                alt="plus"
+                style={{ width: '1.5em', height: '1.5em' }}
+              />
+            </OpenButton>
+          </Tooltip>
+        </div>
+      </div>
+
       <StyledModal
         visible={visible}
         onCancel={handleCancel}
@@ -134,6 +163,7 @@ const Global = createGlobalStyle`
     flex-direction: column;
     justify-content: space-between;
     box-shadow: none;
+    z-index:999;
   }
   .ant-modal-body{
     color: #b0b1b6;
@@ -153,6 +183,38 @@ const Global = createGlobalStyle`
     border-radius: 15;
     padding: 10, 10, 15, 15;
     margin: 0;
+  }
+
+  [tooltip-text]:hover{
+    position:relative;
+}
+[tooltip-text]:hover:after{
+    position:absolute;
+    top:100%;
+    right: 0;
+    z-index: 999;
+    background-color: grey;
+}
+
+  .ant-tooltip-inner{
+    background: #FFFFFF;
+    position:absolute;
+    bottom:100%;
+    right: 0;
+    box-shadow: 0px 1px 30px rgba(145, 145, 145, 0.2);
+    border-radius: 12px;
+    width:35em;
+    height: 9em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
+  }
+  .ant-tooltip-arrow{
+    display: none;
   }
 `;
 
@@ -226,4 +288,50 @@ const LabelButton = styled(StyledButton)`
 const StyledImage = styled.div`
   margin-top: 8.8%;
   margin-bottom: 11.53%;
+`;
+
+const OpenButton = styled(Button)`
+  background: none;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 1.375em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: #f3f3f3;
+  border: none;
+  text-align: center;
+  :hover {
+    background: #f3f3f3;
+  }
+  a:active {
+    border: none;
+  }
+`;
+const TooltipContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+const TooltipText = styled.div`
+  font-weight: normal;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  color: #b0b1b6;
+`;
+
+const TooltipButton = styled.button`
+  font-weight: normal;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  width: 8.15em;
+  height: 2.25em;
+  background: #3562ff;
+  color: #ffffff;
+  text-align: center;
+  margin-left: 2.5em;
+  border: none;
 `;

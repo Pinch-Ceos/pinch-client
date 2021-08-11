@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_SUBSCRIPTION_REQUEST, DELETE_USER_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
-import { Tooltip } from 'antd';
 import Modal from '../component/Modal';
 
 const MyProfileContent = ({ name, email_address, profile_picture }) => {
@@ -77,18 +76,6 @@ const MyAccountContent = ({ email_address }) => {
     </AccountContainer>
   );
 };
-const text = () => {
-  return (
-    <TooltipContainer>
-      <TooltipText>
-        새로 구독한 뉴스레터가 있으시다면,
-        <br />
-        뉴스레터를 추가해 주세요!
-      </TooltipText>
-      <TooltipButton>추가하러 가기</TooltipButton>
-    </TooltipContainer>
-  );
-};
 
 const MySubscribeButton = ({ id }) => {
   const [text, setText] = useState('숨기기');
@@ -127,26 +114,11 @@ const MySubscribeButton = ({ id }) => {
 };
 
 const MySubscribeList = ({ subscriptions }) => {
-  const ModalOpen = () => {
-    return <Modal />;
-  };
   return (
     <>
       <SubscriptionTitle>
         <ManageTitle>뉴스레터 관리</ManageTitle>
-        <div className="demo">
-          <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
-            <Tooltip placement="topRight" title={text}>
-              <PlusButton onCLick={ModalOpen}>
-                <img
-                  src={'/design/ProfilePlus.png'}
-                  alt="plus"
-                  style={{ width: '1.5em', height: '1.5em' }}
-                />
-              </PlusButton>
-            </Tooltip>
-          </div>
-        </div>
+        <Modal />
       </SubscriptionTitle>
       {subscriptions.map((item) => {
         return (
@@ -240,38 +212,6 @@ const GlobalStyle = createGlobalStyle`
 * {
     font-family: 'Spoqa Han Sans Neo';
 }
-
-[tooltip-text]:hover{
-    position:relative;
-}
-[tooltip-text]:hover:after{
-    position:absolute;
-    top:100%;
-    right: 0;
-    z-index: 999;
-    background-color: grey;
-}
-
-  .ant-tooltip-inner{
-    background: #FFFFFF;
-    position:absolute;
-    bottom:100%;
-    right: 0;
-    box-shadow: 0px 1px 30px rgba(145, 145, 145, 0.2);
-    border-radius: 12px;
-    width:35em;
-    height: 9em;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items:center;
-    @media screen and (max-width: 768px) {
-    font-size: 10px;
-  }
-  }
-  .ant-tooltip-arrow{
-    display: none;
-  }
 `;
 
 const Container = styled.div`
@@ -442,17 +382,17 @@ const EmailContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 `;
 
 const EmailLabel = styled.div`
   font-weight: normal;
-  width: 3.125rem;
-  margin-right: 0.375rem;
+  width: 3.125em;
+  /* margin-right: 0.2em; */
   font-size: 1.125em;
   line-height: 1.625em;
   color: #171920;
-  margin-right: 34.63%;
 `;
 
 const EmailBox = styled.div`
@@ -495,24 +435,6 @@ const SubscriptionTitle = styled.div`
   margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
-`;
-
-const PlusButton = styled(Button)`
-  background: none;
-  /* width: 2.875em; */
-  /* height: 2.875em; */
-  width: 1.5em;
-  height: 1.5em;
-  padding: 1.375em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  background: #f3f3f3;
-  border: none;
-  a:active {
-    border: none;
-  }
 `;
 
 const SubscriptionList = styled.div`
@@ -593,6 +515,7 @@ const BottomContainer = styled.div`
   padding-top: 9rem;
   flex-direction: column;
 `;
+
 const ManageTitle = styled.div`
   font-weight: bold;
   font-size: 1.5em;
@@ -622,33 +545,6 @@ const UserDeleteButton = styled.button`
 `;
 
 const ProfileContent = styled.div``;
-
-const TooltipContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-const TooltipText = styled.div`
-  font-weight: normal;
-  font-size: 1.25em;
-  line-height: 1.5em;
-  color: #b0b1b6;
-`;
-
-const TooltipButton = styled.button`
-  font-weight: normal;
-  font-size: 1.25em;
-  line-height: 1.5em;
-  width: 8.15em;
-  height: 2.25em;
-  background: #3562ff;
-  color: #ffffff;
-  text-align: center;
-  margin-left: 2.5em;
-  border: none;
-`;
 
 const BlueLabel = styled.div`
   font-weight: normal;
