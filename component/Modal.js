@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
 
-const ModalWindow = () => {
+const ModalWindow = (sub) => {
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -123,7 +123,8 @@ const ModalWindow = () => {
       <div className="demo">
         <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
           <Tooltip placement="topRight" title={text}>
-            <OpenButton>
+            <OpenButton sub={sub.sub}>
+              {console.log(sub)}
               <img
                 src={'/design/ProfilePlus.png'}
                 alt="plus"
@@ -295,7 +296,7 @@ const OpenButton = styled(Button)`
   width: 1.5em;
   height: 1.5em;
   padding: 1.375em;
-  display: flex;
+  display: ${(props) => (props.sub === 0 ? 'none' : 'flex')};
   justify-content: center;
   align-items: center;
   border-radius: 100px;

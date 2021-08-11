@@ -59,7 +59,7 @@ const Inbox = () => {
         <>
           <HeaderWrapper>{header}</HeaderWrapper>
           <EmptyContainer>
-            <Modal />
+            <Modal sub={me.subscription_num} />
             <Image src={'/design/emptyInbox.png'} width="252" height="263" />
             <TextLabel>아무것도 없네요!</TextLabel>
           </EmptyContainer>
