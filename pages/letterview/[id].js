@@ -33,7 +33,7 @@ const NewsLetterView = () => {
   }, [viewInfo && viewInfo.bookmark_id]);
 
   const onBookmarkClick = useCallback(() => {
-    if (viewInfo.bookmark_id !== null) {
+    if (viewInfo && viewInfo.bookmark_id !== null) {
       dispatch({
         type: DELETE_BOOKMARK_REQUEST,
         data: viewInfo.bookmark_id,
@@ -46,7 +46,7 @@ const NewsLetterView = () => {
         token: cookie.Token,
       });
     }
-  }, []);
+  }, [viewInfo]);
   return (
     <Container>
       <Header />

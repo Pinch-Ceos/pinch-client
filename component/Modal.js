@@ -54,7 +54,7 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
-      Router.push('/inbox');
+      Router.push('/redirect');
     }
   };
 

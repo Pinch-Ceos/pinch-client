@@ -22,8 +22,8 @@ const redirect = () => {
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
       setCookie('Filter', 'False', { path: '/' });
-      router.push(`/inbox`);
     }
+    router.push(`/inbox`);
   }, [giveCodeDone]);
   return (
     <LoaderWrapper>
