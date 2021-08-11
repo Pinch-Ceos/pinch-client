@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import SubscriptionIcon from './SubscriptionIcon';
 import { Tooltip } from 'antd';
 
@@ -59,8 +59,19 @@ const CardListHeader = ({ header, setPage }) => {
     );
   }, [toggle]);
   if (address === 'subscription') {
+    const text = () => {
+      return (
+        <TooltipContainer>
+          <TooltipTitle>읽지 않은 뉴스레터</TooltipTitle>
+          <TooltipText>
+            읽지 않은 뉴스레터를 먼저 표시하는 기능이에요.
+          </TooltipText>
+        </TooltipContainer>
+      );
+    };
     return (
       <>
+        <Global />
         <Container>
           <HeaderContainer>
             <IconWrapper>
@@ -68,11 +79,7 @@ const CardListHeader = ({ header, setPage }) => {
             </IconWrapper>
             <SubHeaderWrapper>{header}</SubHeaderWrapper>
           </HeaderContainer>
-          <Tooltip
-            placement="topRight"
-            title="읽지 않은 뉴스레터만 표시하는 기능이에요"
-            color={'#FDFEFE'}
-          >
+          <Tooltip placement="topRight" title={text} color={'#FDFEFE'}>
             <FilterToggleWrapper>{filterToggle()}</FilterToggleWrapper>
           </Tooltip>
         </Container>
@@ -85,23 +92,53 @@ const CardListHeader = ({ header, setPage }) => {
       </>
     );
   } else if (address === 'inbox') {
+    const text = () => {
+      return (
+        <TooltipContainer>
+          <TooltipTitle>읽지 않은 뉴스레터</TooltipTitle>
+          <TooltipText>읽지 않은 뉴스레터만 표시하는 기능이에요.</TooltipText>
+        </TooltipContainer>
+      );
+    };
     return (
-      <Container>
-        <HeaderWrapper>{header}</HeaderWrapper>
-        <Tooltip
-          placement="topRight"
-          title="읽지 않은 뉴스레터만 표시하는 기능이에요"
-          color={'#FDFEFE'}
-        >
-          <FilterToggleWrapper>{filterToggle()}</FilterToggleWrapper>
-        </Tooltip>
-      </Container>
+      <>
+        <Global />
+        <Container>
+          <HeaderWrapper>{header}</HeaderWrapper>
+          <Tooltip placement="topRight" title={text} color={'#FDFEFE'}>
+            <FilterToggleWrapper>{filterToggle()}</FilterToggleWrapper>
+          </Tooltip>
+        </Container>
+      </>
     );
   }
   return <HeaderWrapper>{header}</HeaderWrapper>;
 };
 
 export default CardListHeader;
+
+const Global = createGlobalStyle`
+  .ant-tooltip-inner{
+    background: #FFFFFF;
+    position:absolute;
+    bottom:100%;
+    right: 0;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+    width:17.5em;
+    height: 5.25em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
+  }
+  .ant-tooltip-arrow{
+    display: none;
+  }
+`;
 
 const Container = styled.div`
   display: flex;
@@ -145,4 +182,23 @@ const NumberConatainer = styled.div`
 const HeaderWrapper = styled.div`
   font-size: 24px;
   font-weight: bold;
+`;
+
+const TooltipContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TooltipTitle = styled.div`
+  font-weight: normal;
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #171920;
+  margin-bottom: 0.375em;
+`;
+const TooltipText = styled.div`
+  font-weight: normal;
+  font-size: 0.75em;
+  line-height: 1.333em;
+  color: #a2a2a2;
 `;
