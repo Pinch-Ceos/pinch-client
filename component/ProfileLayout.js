@@ -25,7 +25,7 @@ const MyProfileContent = ({ name, email_address, profile_picture }) => {
   );
 };
 
-const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
+const MyNewsLetterContent = ({ bookmark_num, subscription_num, read_num }) => {
   const savedNewsLetterOnClick = () => {
     Router.push(`/bookmark`);
   };
@@ -36,7 +36,9 @@ const MyNewsLetterContent = ({ bookmark_num, subscription_num }) => {
 
   return (
     <NewsLetterContainer>
-      <NewsLetterRead>🚀 지금까지 999+개의 뉴스레터를 읽었어요!</NewsLetterRead>
+      <NewsLetterRead>
+        🚀 지금까지 <BlueLabel>{read_num}</BlueLabel>개의 뉴스레터를 읽었어요!
+      </NewsLetterRead>
       <NewsLetterInfoContainer>
         <NewsLetter>
           <Label>저장한 뉴스레터</Label>
@@ -208,6 +210,7 @@ const ProfileLayout = () => {
           <MyNewsLetterContent
             bookmark_num={me.bookmark_num}
             subscription_num={me.subscription_num}
+            read_num={me.read_num}
           />
           <MyAccountContent email_address={me.user_email_address} />
           <MySubscribeList subscriptions={me.subscriptions} />
@@ -355,6 +358,9 @@ const NewsLetterContainer = styled.div`
 
 const NewsLetterRead = styled.div`
   height: 3.938rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 3.125rem;
   margin-bottom: 2rem;
   background: #ffffff;
@@ -642,4 +648,12 @@ const TooltipButton = styled.button`
   text-align: center;
   margin-left: 2.5em;
   border: none;
+`;
+
+const BlueLabel = styled.div`
+  font-weight: normal;
+  font-size: 1.25em;
+  line-height: 1.875em;
+  color: #3562ff;
+  margin-left: 0.3em;
 `;
