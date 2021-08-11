@@ -27,8 +27,13 @@ const redirect = () => {
   }, [giveCodeDone]);
   return (
     <LoaderWrapper>
-      {' '}
-      <Image src={'/design/modalLoader.gif'} width="200" height="200" />
+      <ImageWrapper>
+        <img
+          src={'/design/modalLoader.gif'}
+          alt="loader"
+          style={{ width: '27em', height: '27em' }}
+        />
+      </ImageWrapper>
     </LoaderWrapper>
   );
 };
@@ -36,9 +41,17 @@ const redirect = () => {
 export default redirect;
 
 const LoaderWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  justiyfy-content: center;
+  justify-content: center;
   align-items: center;
+  background-color: #2B2E32;
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+`;
+
+const ImageWrapper = styled.div`
+  width: 27em;
+  height: 27em;
 `;
