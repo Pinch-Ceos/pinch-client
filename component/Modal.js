@@ -33,7 +33,6 @@ const ModalWindow = (sub) => {
   }, [loadSenderLoading]);
 
   useEffect(() => {
-    console.log('showModal');
     if (
       (me.subscription_num === 0 || !me.subscription_num) &&
       router.pathname !== '/profile'
@@ -56,6 +55,14 @@ const ModalWindow = (sub) => {
         token: cookie.Token,
       });
       Router.push('/inbox');
+    }
+  };
+
+  const handleDisabled = () => {
+    if (selectedTags.length > 0) {
+      return;
+    } else {
+      return 'disabled';
     }
   };
 
@@ -100,7 +107,11 @@ const ModalWindow = (sub) => {
             당신의 메일함도 한층 더 깔끔해질 거에요.😊
           </StyledBody>
           <Tag selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-          <StyledButton type="button" onClick={changeBody}>
+          <StyledButton
+            type="button"
+            onClick={changeBody}
+            disabled={handleDisabled()}
+          >
             다 선택했어요!
           </StyledButton>
         </StyledCompo>
@@ -129,7 +140,6 @@ const ModalWindow = (sub) => {
         <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
           <Tooltip placement="topRight" title={text}>
             <OpenButton sub={sub.sub}>
-              {console.log(sub)}
               <img
                 src={'/design/ProfilePlus.png'}
                 alt="plus"
@@ -288,11 +298,14 @@ const StyledButton = styled.button`
   border: none;
   width: 246px;
   z-index: 999;
+  :disabled {
+    background-color: #393a3f;
+  }
 `;
 
-const LabelButton = styled(StyledButton)`
-  /* disabled:${(props) => (props.selected ? 'false' : 'true')}; */
-`;
+// const LabelButton = styled(StyledButton)`
+//   disabled:${(props) => (props.selected ? 'true' : 'false')};
+// `;
 
 const StyledImage = styled.div`
   margin-top: 8.8%;

@@ -24,7 +24,6 @@ const MainBox = () => {
   };
 
   useEffect(() => {
-    console.log(`${auth_uri}`);
     if (logInDone) {
       router.push(`${auth_uri}`);
     }

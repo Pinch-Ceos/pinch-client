@@ -13,7 +13,6 @@ const MenuLayout = () => {
   const router = useRouter();
   useEffect(() => {
     const menuSelector = router.pathname.split('/')[1];
-    console.log(menuSelector);
     if (menuSelector === 'inbox') {
       setSelectedInbox(true);
     } else if (menuSelector === 'bookmark') {

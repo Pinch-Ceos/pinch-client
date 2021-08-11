@@ -30,7 +30,6 @@ const Header = () => {
   };
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(searchValue);
     Router.push(`/search/${searchValue}`);
   };
   return (

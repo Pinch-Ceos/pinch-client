@@ -67,7 +67,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const Token = getCookie(context.req.headers.cookie, 'Token')
       ? getCookie(context.req.headers.cookie, 'Token')
       : '';
-    console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,

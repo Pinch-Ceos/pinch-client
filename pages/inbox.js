@@ -34,7 +34,6 @@ const Inbox = () => {
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMoreMails && !loadMailLoading) {
-          console.log(cookie.Filter);
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
@@ -42,7 +41,6 @@ const Inbox = () => {
             token: cookie.Token,
             read: cookie.Filter,
           });
-          console.log(page);
           setPage((prev) => prev + 1);
         }
       }
@@ -54,14 +52,11 @@ const Inbox = () => {
   }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
 
   const ChangeBody = () => {
-    console.log('qwertyu');
-    console.log(me.subscription_num);
     if (
       !me.subscription_num ||
       me.subscription_num === 0 ||
       mails.length === 0
     ) {
-      console.log('모달모달');
       return (
         <>
           <HeaderWrapper>{header}</HeaderWrapper>
@@ -99,7 +94,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const Filter = getCookie(context.req.headers.cookie, 'Filter')
       ? getCookie(context.req.headers.cookie, 'Filter')
       : '';
-    console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,

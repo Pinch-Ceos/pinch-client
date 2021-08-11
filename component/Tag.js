@@ -1,12 +1,10 @@
-import { Tag } from 'antd';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector } from 'react-redux';
-import { select } from '@redux-saga/core/effects';
 
 const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
   const onClickTag = (tag) => (e) => {
-    e.preventDefault();
+    console.log(e);
     if (selectedTags.find((v) => tag === v)) {
       setSelectedTags(selectedTags.filter((value) => value !== tag));
     } else {
@@ -25,8 +23,6 @@ const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
   return (
     <CheckableTag
       key={tag.name}
-      // checked={selectedTags.indexOf(tag) > -1}
-      // onChange={(checked) => handleChange(tag, checked)}
       onClick={onClickTag(tag)}
       selected={isSelected(tag)}
     >
@@ -40,59 +36,34 @@ const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
 
 const Tags = memo(({ selectedTags, setSelectedTags }) => {
   const { sender_list } = useSelector((state) => state);
+  // const scrollRef = useRef(null);
 
-  // const handleChange = (tag, checked) => {
-  //   const nextSelectedTags = checked
-  //     ? [...selectedTags, tag]
-  //     : selectedTags.filter((t) => t !== tag);
-  //   setSelectedTags(nextSelectedTags);
-  // };
-
-  // const onClickTag = (tag) => (e) => {
-  //   // console.log(e);
-  //   e.preventDefault();
-  //   if (selectedTags.find((v) => tag === v)) {
-  //     setSelectedTags(selectedTags.filter((value) => value !== v));
-  //   } else {
-  //     setSelectedTags([...selectedTags, tag]);
-  //   }
-  // };
-
-  // const isSelected = (tag) => {
-  //   if (selectedTags.find((v) => tag === v)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
+  // useEffect(() => {
+  //   console.log(scrollRef);
+  //   scrollRef.current.scrollBy(0, scrollRef.current.scrollHeight);
+  // }, [selectedTags]);
+  // useEffect(() => {
+  //   console.log(document.documentElement.scrollHeight);
+  //   console.log(window.scrollY);
+  // });
   return (
-    <div style={{ width: '100%' }}>
-      <OverflowGradient>
-        <Container universal={true}>
-          <Global />
-          {sender_list.map((tag) => (
-            <SubTag
-              selectedTags={selectedTags}
-              setSelectedTags={setSelectedTags}
-              tag={tag}
-            />
-            // <CheckableTag
-            //   key={tag.name}
-            //   // checked={selectedTags.indexOf(tag) > -1}
-            //   // onChange={(checked) => handleChange(tag, checked)}
-            //   onClick={onClickTag(tag)}
-            //   selected={isSelected(tag)}
-            // >
-            //   <StyledTag>
-            //     <Title>{tag.name}</Title>
-            //     <Email>{tag.email_address}</Email>
-            //   </StyledTag>
-            // </CheckableTag>
-          ))}
-        </Container>
-      </OverflowGradient>
-    </div>
+    <>
+      <div style={{ width: '100%' }}>
+        <OverflowGradient>
+          <Container universal={true}>
+            <Global />
+            {sender_list.map((tag) => (
+              <SubTag
+                key={tag.name}
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+                tag={tag}
+              />
+            ))}
+          </Container>
+        </OverflowGradient>
+      </div>
+    </>
   );
 });
 
@@ -151,8 +122,6 @@ const OverflowGradient = styled.div`
     pointer-events: none;
   }
 `;
-
-// const { CheckableTag } = Tag;
 
 const StyledTag = styled.div`
   display: flex;

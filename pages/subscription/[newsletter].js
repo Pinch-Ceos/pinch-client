@@ -76,7 +76,6 @@ export const getCookie = (cookie, cookie_name) => {
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    console.log(context.req.headers.cookie);
     const Token = getCookie(context.req.headers.cookie, 'Token')
       ? getCookie(context.req.headers.cookie, 'Token')
       : '';

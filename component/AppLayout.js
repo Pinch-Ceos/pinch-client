@@ -27,7 +27,6 @@ const AppLayout = ({ children }) => {
   }, []);
   const onSubmitForm = useCallback(
     (e) => {
-      console.log(e);
       e.preventDefault();
       Router.push(`/search/${searchValue}`);
     },
