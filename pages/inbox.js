@@ -54,7 +54,14 @@ const Inbox = () => {
   }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
 
   const ChangeBody = () => {
-    if (me.subscription_num === 0 || mails.length === 0) {
+    console.log('qwertyu');
+    console.log(me.subscription_num);
+    if (
+      !me.subscription_num ||
+      me.subscription_num === 0 ||
+      mails.length === 0
+    ) {
+      console.log('모달모달');
       return (
         <>
           <HeaderWrapper>{header}</HeaderWrapper>

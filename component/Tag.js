@@ -1,18 +1,70 @@
 import { Tag } from 'antd';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { select } from '@redux-saga/core/effects';
 
-const Tags = ({ selectedTags, setSelectedTags }) => {
+const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
+  const onClickTag = (tag) => (e) => {
+    e.preventDefault();
+    if (selectedTags.find((v) => tag === v)) {
+      setSelectedTags(selectedTags.filter((value) => value !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
+  const isSelected = (tag) => {
+    if (selectedTags.find((v) => tag === v)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  return (
+    <CheckableTag
+      key={tag.name}
+      // checked={selectedTags.indexOf(tag) > -1}
+      // onChange={(checked) => handleChange(tag, checked)}
+      onClick={onClickTag(tag)}
+      selected={isSelected(tag)}
+    >
+      <StyledTag>
+        <Title>{tag.name}</Title>
+        <Email>{tag.email_address}</Email>
+      </StyledTag>
+    </CheckableTag>
+  );
+});
+
+const Tags = memo(({ selectedTags, setSelectedTags }) => {
   const { sender_list } = useSelector((state) => state);
 
-  const handleChange = (tag, checked) => {
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter((t) => t !== tag);
-    setSelectedTags(nextSelectedTags);
-  };
+  // const handleChange = (tag, checked) => {
+  //   const nextSelectedTags = checked
+  //     ? [...selectedTags, tag]
+  //     : selectedTags.filter((t) => t !== tag);
+  //   setSelectedTags(nextSelectedTags);
+  // };
+
+  // const onClickTag = (tag) => (e) => {
+  //   // console.log(e);
+  //   e.preventDefault();
+  //   if (selectedTags.find((v) => tag === v)) {
+  //     setSelectedTags(selectedTags.filter((value) => value !== v));
+  //   } else {
+  //     setSelectedTags([...selectedTags, tag]);
+  //   }
+  // };
+
+  // const isSelected = (tag) => {
+  //   if (selectedTags.find((v) => tag === v)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   return (
     <div style={{ width: '100%' }}>
@@ -20,24 +72,40 @@ const Tags = ({ selectedTags, setSelectedTags }) => {
         <Container universal={true}>
           <Global />
           {sender_list.map((tag) => (
-            <CheckableTag
-              key={tag.name}
-              checked={selectedTags.indexOf(tag) > -1}
-              onChange={(checked) => handleChange(tag, checked)}
-            >
-              <StyledTag>
-                <Title>{tag.name}</Title>
-                <Email>{tag.email_address}</Email>
-              </StyledTag>
-            </CheckableTag>
+            <SubTag
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
+              tag={tag}
+            />
+            // <CheckableTag
+            //   key={tag.name}
+            //   // checked={selectedTags.indexOf(tag) > -1}
+            //   // onChange={(checked) => handleChange(tag, checked)}
+            //   onClick={onClickTag(tag)}
+            //   selected={isSelected(tag)}
+            // >
+            //   <StyledTag>
+            //     <Title>{tag.name}</Title>
+            //     <Email>{tag.email_address}</Email>
+            //   </StyledTag>
+            // </CheckableTag>
           ))}
         </Container>
       </OverflowGradient>
     </div>
   );
-};
+});
 
 export default Tags;
+
+const CheckableTag = styled.div`
+  display: flex;
+  width: 40%;
+  height: 87px;
+  margin: 10px;
+  border-radius: 12px;
+  background-color: ${(props) => (props.selected ? '#3562FF' : ' #393a3f')};
+`;
 
 const Global = createGlobalStyle`
     .ant-tag{
@@ -84,7 +152,7 @@ const OverflowGradient = styled.div`
   }
 `;
 
-const { CheckableTag } = Tag;
+// const { CheckableTag } = Tag;
 
 const StyledTag = styled.div`
   display: flex;
@@ -96,6 +164,10 @@ const StyledTag = styled.div`
 `;
 
 const Container = styled.div`
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+  flex-flow: wrap;
   padding-top: 25px;
   padding-bottom: 80px;
   height: 303px;

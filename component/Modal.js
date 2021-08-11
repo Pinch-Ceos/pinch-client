@@ -1,5 +1,5 @@
 import { Modal, Button } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
@@ -8,7 +8,7 @@ import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
 import { useCookies } from 'react-cookie';
 import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
-
+import Router from 'next/router';
 const ModalWindow = (sub) => {
   const [visible, setVisible] = useState(false);
   const [componum, setComponum] = useState(0);
@@ -33,7 +33,11 @@ const ModalWindow = (sub) => {
   }, [loadSenderLoading]);
 
   useEffect(() => {
-    if (me.subscription_num === 0 && router.pathname !== '/profile') {
+    console.log('showModal');
+    if (
+      (me.subscription_num === 0 || !me.subscription_num) &&
+      router.pathname !== '/profile'
+    ) {
       showModal();
     }
   }, []);
@@ -51,10 +55,11 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
+      Router.push('/inbox');
     }
   };
 
-  const ModalBody = () => {
+  const ModalBody = useCallback(() => {
     if (componum === 0) {
       return (
         <StyledCompo>
@@ -101,7 +106,7 @@ const ModalWindow = (sub) => {
         </StyledCompo>
       );
     }
-  };
+  }, [componum, selectedTags]);
 
   const text = () => {
     return (
@@ -215,6 +220,9 @@ const Global = createGlobalStyle`
   }
   }
   .ant-tooltip-arrow{
+    display: none;
+  }
+  .ant-modal-close-x {
     display: none;
   }
 `;

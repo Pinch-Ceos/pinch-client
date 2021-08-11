@@ -191,14 +191,14 @@ const TooltipContainer = styled.div`
 
 const TooltipTitle = styled.div`
   font-weight: normal;
-  font-size: 1em;
+  font-size: 16px;
   line-height: 1.5em;
   color: #171920;
   margin-bottom: 0.375em;
 `;
 const TooltipText = styled.div`
   font-weight: normal;
-  font-size: 0.75em;
+  font-size: 11.5px;
   line-height: 1.333em;
   color: #a2a2a2;
 `;
