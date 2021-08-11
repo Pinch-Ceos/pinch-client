@@ -71,8 +71,6 @@ function* logIn(action) {
 }
 
 function giveCodeAPI(data) {
-  console.log(data);
-  console.log({ code: data });
   return axios.post(`/auth/callback?code=${data}/`, { code: data });
 }
 function* giveCode(action) {
@@ -112,7 +110,6 @@ function* loadSender(action) {
 }
 
 function loadSubscriptionAPI(data, token) {
-  console.log(data);
   return axios.post(`/subscriptions/`, data, {
     headers: { Authorization: token },
   }); //이거 api 어떻게 넘기는지
@@ -171,7 +168,6 @@ function* loadMail(action) {
     });
   } catch (err) {
     console.log(err);
-    console.log('ASDASD');
     yield put({
       type: LOAD_MAIL_FAILURE,
       error: err.response,

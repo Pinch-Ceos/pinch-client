@@ -3,7 +3,8 @@ import Router from 'next/router';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOADING } from '../reducers';
 
 const Header = () => {
   const { me } = useSelector((state) => state);
@@ -11,6 +12,7 @@ const Header = () => {
   const [toggle, setToggle] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const address = router.pathname.split('/')[1];
+  const dispatch = useDispatch();
   useEffect(() => {
     if (address === 'search') {
       setSearchValue(router.query.value);
@@ -20,9 +22,11 @@ const Header = () => {
     setSearchValue(e.target.value);
   };
   const onClickMark = () => {
+    dispatch({ type: LOADING });
     Router.push(`/inbox`);
   };
   const onClickAvatar = () => {
+    dispatch({ type: LOADING });
     Router.push(`/profile`);
   };
   const onClickSearch = () => {

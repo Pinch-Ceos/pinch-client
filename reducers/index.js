@@ -5,6 +5,8 @@ const initalState = {
   me: null,
   mails: [],
   sender_list: [],
+  loading: false,
+  modalScroll: null,
   view: null,
   viewInfo: null,
   num_of_email: null,
@@ -101,11 +103,20 @@ export const DELETE_USER_REQUEST = 'DELETE_USER_REQUEST';
 export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
+export const LOADING = 'LOADING';
+export const SCROLLING = 'SCROLLING';
+
 const rootReducer = (state = initalState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case HYDRATE:
         return action.payload;
+      case SCROLLING:
+        draft.modalScroll = action.data;
+        break;
+      case LOADING:
+        draft.loading = true;
+        break;
       case LOAD_DETAIL_INFO_REQUEST:
         draft.loadDetailInfoLoading = true;
         draft.loadDetailInfoDone = false;

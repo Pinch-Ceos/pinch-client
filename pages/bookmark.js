@@ -15,7 +15,7 @@ import Header from '../component/TopBar';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
-  const { mails, hasMoreMails, loadMailLoading, me } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading, me, loading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -30,9 +30,9 @@ const Bookmark = () => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 600
       ) {
-        if (hasMoreMails && !loadMailLoading) {
+        if (hasMoreMails && !loadMailLoading && !loading) {
           dispatch({
             type: LOAD_BOOKMARK_REQUEST,
             page: page,
@@ -46,7 +46,7 @@ const Bookmark = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mails.length, hasMoreMails, loadMailLoading]);
+  }, [mails.length, hasMoreMails, loadMailLoading, loading]);
 
   const ChangeBody = () => {
     if (me.bookmark_num !== 0) {

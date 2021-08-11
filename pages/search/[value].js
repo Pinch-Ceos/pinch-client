@@ -16,9 +16,8 @@ const Search = () => {
   const router = useRouter();
   const { value } = router.query;
   const dispatch = useDispatch();
-  const { mails, hasMoreMails, loadMailLoading, num_of_email } = useSelector(
-    (state) => state
-  );
+  const { mails, hasMoreMails, loadMailLoading, num_of_email, loading } =
+    useSelector((state) => state);
   const [header, setHeader] = useState('');
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
   const [page, setPage] = useState(2);
@@ -31,9 +30,9 @@ const Search = () => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 600
       ) {
-        if (hasMoreMails && !loadMailLoading) {
+        if (hasMoreMails && !loadMailLoading && !loading) {
           dispatch({
             type: LOAD_SEARCH_MAIL_REQUEST,
             data: value,
@@ -48,7 +47,7 @@ const Search = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [value, mails.length, hasMoreMails, loadMailLoading]);
+  }, [value, mails.length, hasMoreMails, loadMailLoading, loading]);
 
   return (
     <>

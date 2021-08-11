@@ -149,6 +149,7 @@ const LogOut = () => {
       type: DELETE_USER_REQUEST,
       token: cookie.Token,
     });
+    removeCookie('Token');
     Router.push('/');
   }
 

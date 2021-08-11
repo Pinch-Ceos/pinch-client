@@ -2,8 +2,9 @@ import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
+import { LOADING } from '../reducers';
 
 const MenuLayout = () => {
   const [selectedInbox, setSelectedInbox] = useState(false);
@@ -11,6 +12,7 @@ const MenuLayout = () => {
   const [selectedBookmark, setSelectedBookmark] = useState(false);
   const { me } = useSelector((state) => state);
   const router = useRouter();
+  const dispatch = useDispatch();
   useEffect(() => {
     const menuSelector = router.pathname.split('/')[1];
     if (menuSelector === 'inbox') {
@@ -23,12 +25,15 @@ const MenuLayout = () => {
   }, [router]);
 
   const onClickSub = (v) => () => {
+    dispatch({ type: LOADING });
     Router.push(`/subscription/${v.email_address}`);
   };
   const onClickInbox = useCallback(() => {
+    dispatch({ type: LOADING });
     Router.push(`/inbox`);
   }, []);
   const onClickBookmark = useCallback(() => {
+    dispatch({ type: LOADING });
     Router.push(`/bookmark`);
   }, []);
   const onClickSubscription = useCallback(() => {
@@ -41,50 +46,52 @@ const MenuLayout = () => {
     return router.query.newsletter === v.email_address;
   };
   return (
-    <Container>
-      <MenuBar>
-        <Menu onClick={onClickInbox} selected={selectedInbox}>
-          <TextWrapper>
-            <ImageWrapper>
-              <Image src={'/design/emoji1.png'} width="18px" height="18px" />
-            </ImageWrapper>
-            <MenuText>Inbox</MenuText>
-          </TextWrapper>
-        </Menu>
-        <Menu onClick={onClickSubscription} selected={selectedSubscription}>
-          <TextWrapper>
-            <ImageWrapper>
-              <Image src={'/design/emoji2.png'} width="18px" height="18px" />
-            </ImageWrapper>
-            <MenuText>구독 중인 뉴스레터</MenuText>
-          </TextWrapper>
-          <MenuContainer
-            onClick={onClickMenuContainer}
-            selected={selectedSubscription}
-          >
-            {me.subscriptions.map((v) => (
-              <SubMenu
-                key={v.id}
-                onClick={onClickSub(v)}
-                subselected={isSubSelected(v)}
-                selected={selectedSubscription}
-              >
-                {v.name}
-                <DotWrapper>&#x2022;</DotWrapper>
-              </SubMenu>
-            ))}
-          </MenuContainer>
-        </Menu>
-        <Menu onClick={onClickBookmark} selected={selectedBookmark}>
-          <TextWrapper>
-            <ImageWrapper>
-              <Image src={'/design/emoji3.png'} width="18px" height="18px" />
-            </ImageWrapper>
-            <MenuText>저장한 뉴스레터</MenuText>
-          </TextWrapper>
-        </Menu>
-      </MenuBar>
-    </Container>
+    <>
+      <Container>
+        <MenuBar>
+          <Menu onClick={onClickInbox} selected={selectedInbox}>
+            <TextWrapper>
+              <ImageWrapper>
+                <Image src={'/design/emoji1.png'} width="18px" height="18px" />
+              </ImageWrapper>
+              <MenuText>Inbox</MenuText>
+            </TextWrapper>
+          </Menu>
+          <Menu onClick={onClickSubscription} selected={selectedSubscription}>
+            <TextWrapper>
+              <ImageWrapper>
+                <Image src={'/design/emoji2.png'} width="18px" height="18px" />
+              </ImageWrapper>
+              <MenuText>구독 중인 뉴스레터</MenuText>
+            </TextWrapper>
+            <MenuContainer
+              onClick={onClickMenuContainer}
+              selected={selectedSubscription}
+            >
+              {me.subscriptions.map((v) => (
+                <SubMenu
+                  key={v.id}
+                  onClick={onClickSub(v)}
+                  subselected={isSubSelected(v)}
+                  selected={selectedSubscription}
+                >
+                  {v.name}
+                  <DotWrapper>&#x2022;</DotWrapper>
+                </SubMenu>
+              ))}
+            </MenuContainer>
+          </Menu>
+          <Menu onClick={onClickBookmark} selected={selectedBookmark}>
+            <TextWrapper>
+              <ImageWrapper>
+                <Image src={'/design/emoji3.png'} width="18px" height="18px" />
+              </ImageWrapper>
+              <MenuText>저장한 뉴스레터</MenuText>
+            </TextWrapper>
+          </Menu>
+        </MenuBar>
+      </Container>
+    </>
   );
 };
 export default MenuLayout;

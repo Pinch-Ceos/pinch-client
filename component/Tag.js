@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, connect, useDispatch } from 'react-redux';
+import { SCROLLING } from '../reducers';
 
 const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
   const onClickTag = (tag) => (e) => {
@@ -35,22 +36,26 @@ const SubTag = memo(({ selectedTags, setSelectedTags, tag }) => {
 });
 
 const Tags = memo(({ selectedTags, setSelectedTags }) => {
-  const { sender_list } = useSelector((state) => state);
-  // const scrollRef = useRef(null);
+  const { sender_list, modalScroll } = useSelector((state) => state);
+  const scrollRef = useRef(null);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    scrollRef.current.scrollBy(0, modalScroll);
+  }, [selectedTags]);
 
-  // useEffect(() => {
-  //   console.log(scrollRef);
-  //   scrollRef.current.scrollBy(0, scrollRef.current.scrollHeight);
-  // }, [selectedTags]);
-  // useEffect(() => {
-  //   console.log(document.documentElement.scrollHeight);
-  //   console.log(window.scrollY);
-  // });
+  const onScroll = (e) => {
+    dispatch({
+      type: SCROLLING,
+      data: e.target.scrollTop,
+    });
+    console.log(e);
+  };
+
   return (
     <>
       <div style={{ width: '100%' }}>
         <OverflowGradient>
-          <Container universal={true}>
+          <Container universal={true} onScroll={onScroll} ref={scrollRef}>
             <Global />
             {sender_list.map((tag) => (
               <SubTag
@@ -72,6 +77,9 @@ export default Tags;
 const CheckableTag = styled.div`
   display: flex;
   width: 40%;
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
   height: 87px;
   margin: 10px;
   border-radius: 12px;

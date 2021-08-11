@@ -2,14 +2,15 @@ import React, { useCallback } from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
-import Header from '../component/TopBar';
 import Footer from '../component/Footer';
 import { createGlobalStyle } from 'styled-components';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const Pinch = ({ Component }) => {
   const router = useRouter();
+  const { loading } = useSelector((state) => state);
 
   const footer = useCallback(() => {
     const address = router.pathname.split('/')[1];
@@ -28,11 +29,38 @@ const Pinch = ({ Component }) => {
       </Head>
       <Component />
       {footer()}
+      {loading && (
+        <LoaderWrapper>
+          <Loader src={'/design/Loader_transparent.gif'} alt="loading..." />
+        </LoaderWrapper>
+      )}
     </Body>
   );
 };
 
 export default wrapper.withRedux(Pinch);
+
+const Loader = styled.img`
+  width: 50%;
+  height: 50%;
+  @media screen and (max-width: 768px) {
+    width: 25%;
+    height: 25%;
+  }
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 999;
+  @media screen and (max-width: 768px) {
+    right: 20px;
+    bottom: 20px;
+  }
+`;
 
 const GlobalStyles = createGlobalStyle`
   @font-face {

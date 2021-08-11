@@ -15,7 +15,7 @@ import Header from '../component/TopBar';
 
 const Inbox = () => {
   const dispatch = useDispatch();
-  const { mails, hasMoreMails, loadMailLoading, me } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading, me, loading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -23,17 +23,19 @@ const Inbox = () => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    setHeader(me.user_name.concat('님의 인박스'));
-    setPage(2);
-  }, []);
+    if (me) {
+      setHeader(me.user_name.concat('님의 인박스'));
+      setPage(2);
+    }
+  }, [me]);
 
   useEffect(() => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 600
       ) {
-        if (hasMoreMails && !loadMailLoading) {
+        if (hasMoreMails && !loadMailLoading && !loading) {
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
@@ -49,7 +51,7 @@ const Inbox = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
+  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter, loading]);
 
   const ChangeBody = () => {
     if (
@@ -78,6 +80,9 @@ const Inbox = () => {
       );
     }
   };
+  if (!me) {
+    return '내 정보 로딩중...';
+  }
   return (
     <>
       <Header />
