@@ -11,16 +11,32 @@ const Footer = () => {
           {/* putlogohere */}
         </Logo>
         <CenterBox>
-          <a href="https://www.notion.so/Pinch-7f54905428e6446a8a94fb815c4c6d05">
+          <a
+            href="https://www.notion.so/Pinch-7f54905428e6446a8a94fb815c4c6d05"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Label>개인정보 처리방침</Label>
           </a>
-          <a href="https://www.notion.so/774c59a6e62441c5b3de8304d7a55d4e">
+          <a
+            href="https://www.notion.so/774c59a6e62441c5b3de8304d7a55d4e"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Label>서비스약관</Label>
           </a>
-          <a href="https://www.notion.so/e2792527e1874140af414986d03bda51">
+          <a
+            href="https://www.notion.so/e2792527e1874140af414986d03bda51"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Label>제휴문의</Label>
           </a>
-          <a href="https://www.notion.so/a9360c46281b4af88cafccd2bd3779f0">
+          <a
+            href="https://www.notion.so/a9360c46281b4af88cafccd2bd3779f0"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Label>Help & Support</Label>
           </a>
         </CenterBox>

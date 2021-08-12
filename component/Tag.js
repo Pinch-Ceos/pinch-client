@@ -115,7 +115,7 @@ const OverflowGradient = styled.div`
     top: 0;
     width: 100%; //이거 픽셀 아니면 안먹히는데, 모바일 화면 이상함
     height: 50px;
-    background: linear-gradient(transparent, #2b2e32);
+    background: linear-gradient(1turn, transparent, #2b2e32);
   }
   :after {
     content: '';

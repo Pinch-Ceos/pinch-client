@@ -60,13 +60,12 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
-      dispatch({ type: LOADING });
     }
   };
 
   useEffect(() => {
     if (loadSubscriptionDone) {
-      Router.push(`/redirect?loadsubscription=${true}`);
+      Router.push(`/loading`);
     }
   }, [loadSubscriptionDone]);
 

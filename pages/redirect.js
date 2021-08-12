@@ -18,15 +18,9 @@ const redirect = () => {
     });
   }, []);
   useEffect(() => {
-    let fromprofile = new URL(window.location.href).searchParams.get(
-      'loadsubscription'
-    );
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
       setCookie('Filter', 'False', { path: '/' });
-      router.push(`/inbox`);
-    }
-    if (fromprofile === 'true') {
       router.push(`/inbox`);
     }
   }, [giveCodeDone]);
@@ -45,7 +39,7 @@ const redirect = () => {
 
 export default redirect;
 
-const LoaderWrapper = styled.div`
+export const LoaderWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -56,7 +50,7 @@ const LoaderWrapper = styled.div`
     font-size: 11px;
 `;
 
-const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div`
   width: 27em;
   height: 27em;
 `;

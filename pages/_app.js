@@ -14,7 +14,7 @@ const Pinch = ({ Component }) => {
 
   const footer = useCallback(() => {
     const address = router.pathname.split('/')[1];
-    if (!address || address === 'redirect') {
+    if (!address || address === 'redirect' || address === 'loading') {
       return null;
     }
     return <Footer />;

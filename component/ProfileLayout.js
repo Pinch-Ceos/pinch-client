@@ -83,7 +83,7 @@ const MySubscribeButton = ({ id }) => {
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
   const dispatch = useDispatch();
 
-  const deleteSubscribe = (id) => () => {
+  const deleteSubscribe = (id) => (e) => {
     dispatch({
       type: DELETE_SUBSCRIPTION_REQUEST,
       data: id,

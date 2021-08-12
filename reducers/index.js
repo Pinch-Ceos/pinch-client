@@ -33,9 +33,9 @@ const initalState = {
   loadDetailLoading: false,
   loadDetailDone: false,
   loadDetailError: null,
-  deleteSubcriptionLoading: false,
-  deleteSubcriptionDone: false,
-  deleteSubcriptionError: null,
+  deleteSubscriptionLoading: false,
+  deleteSubscriptionDone: false,
+  deleteSubscriptionError: null,
   addBookmarkLoading: false,
   addBookmarkDone: false,
   addBookmarkError: null,
@@ -248,20 +248,20 @@ const rootReducer = (state = initalState, action) =>
         draft.loadSubscriptionError = action.error;
         break;
       case DELETE_SUBSCRIPTION_REQUEST:
-        draft.loadSubscriptionLoading = true;
-        draft.loadSubscriptionDone = false;
-        draft.loadSubscriptionError = null;
+        draft.deleteSubscriptionLoading = true;
+        draft.deleteSubscriptionDone = false;
+        draft.deleteSubscriptionError = null;
         break;
       case DELETE_SUBSCRIPTION_SUCCESS:
-        draft.loadSubscriptionLoading = false;
-        draft.loadSubscriptionDone = true;
+        draft.deleteSubscriptionLoading = false;
+        draft.deleteSubscriptionDone = true;
         draft.me.subscriptions = draft.me.subscriptions.filter(
           (value) => value.id !== action.data
         );
         break;
       case DELETE_SUBSCRIPTION_FAILURE:
-        draft.loadSubscriptionLoading = false;
-        draft.loadSubscriptionError = action.error;
+        draft.deleteSubscriptionLoading = false;
+        draft.deleteSubscriptionError = action.error;
         break;
       case LOAD_SENDER_REQUEST:
         draft.loadSenderLoading = true;
