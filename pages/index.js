@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 const TopBar = () => {
   return (
     <Logo>
-      <Image src={'/design/pinchmark.png'} width="80" height="22" />
+      <Image src={'/design/logo_pinch.svg'} width="80" height="22" />
     </Logo>
   );
 };
@@ -49,7 +49,7 @@ const MainBox = () => {
         <Image src={'/design/GoogleLogin.png'} width="292" height="51" />
       </LoginButton>
       <BodyImage>
-        <Image src={'/design/LoginImage.png'} width="429" height="210" />
+        <Image src={'/design/login.svg'} width="429" height="210" />
       </BodyImage>
     </MainContainer>
   );
@@ -84,6 +84,9 @@ export default Login;
 const Container = styled.section`
   height: 100%;
   width: 100%;
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+  }
 `;
 const ExceptLogo = styled.div`
   margin: 0;
@@ -99,6 +102,7 @@ const Title = styled.section`
   margin-top: 11vh;
   font-weight: bold;
   font-size: max(25px, 2.2vw);
+  line-height: 1.375em;
   text-align: center;
   color: #111111;
   margin-bottom: 7vh;
