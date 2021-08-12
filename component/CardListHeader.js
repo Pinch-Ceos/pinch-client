@@ -3,10 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { createGlobalStyle } from 'styled-components';
 import SubscriptionIcon from './SubscriptionIcon';
 import { Tooltip } from 'antd';
+import { LOADING } from '../reducers';
 
 const CardListHeader = ({ header, setPage }) => {
   const router = useRouter();
@@ -14,8 +15,10 @@ const CardListHeader = ({ header, setPage }) => {
   const [cookie, setCookie, removeCookie] = useCookies(['Filter']);
   const [toggle, setToggle] = useState(false);
   const { num_of_email } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const onClickToggle = useCallback(() => {
+    dispatch({ type: LOADING });
     setToggle(!toggle);
     setPage(2);
     if (!toggle) {

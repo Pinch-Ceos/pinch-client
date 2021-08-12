@@ -15,7 +15,7 @@ const Subscription = () => {
   const router = useRouter();
   const { newsletter } = router.query;
   const dispatch = useDispatch();
-  const { mails, me, hasMoreMails, loadMailLoading } = useSelector(
+  const { mails, me, hasMoreMails, loadMailLoading, loading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -32,9 +32,9 @@ const Subscription = () => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 600
       ) {
-        if (hasMoreMails && !loadMailLoading) {
+        if (hasMoreMails && !loadMailLoading && !loading) {
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: newsletter,
@@ -50,7 +50,14 @@ const Subscription = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [newsletter, mails.length, hasMoreMails, loadMailLoading]);
+  }, [
+    newsletter,
+    mails.length,
+    hasMoreMails,
+    loadMailLoading,
+    loading,
+    cookie.Filter,
+  ]);
   return (
     <>
       <Header />
@@ -76,7 +83,6 @@ export const getCookie = (cookie, cookie_name) => {
 };
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    console.log(context.req.headers.cookie);
     const Token = getCookie(context.req.headers.cookie, 'Token')
       ? getCookie(context.req.headers.cookie, 'Token')
       : '';

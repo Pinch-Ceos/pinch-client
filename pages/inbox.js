@@ -15,7 +15,7 @@ import Header from '../component/TopBar';
 
 const Inbox = () => {
   const dispatch = useDispatch();
-  const { mails, hasMoreMails, loadMailLoading, me } = useSelector(
+  const { mails, hasMoreMails, loadMailLoading, me, loading } = useSelector(
     (state) => state
   );
   const [header, setHeader] = useState('');
@@ -23,18 +23,19 @@ const Inbox = () => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    setHeader(me.user_name.concat('님의 인박스'));
-    setPage(2);
-  }, []);
+    if (me) {
+      setHeader(me.user_name.concat('님의 인박스'));
+      setPage(2);
+    }
+  }, [me]);
 
   useEffect(() => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 600
       ) {
-        if (hasMoreMails && !loadMailLoading) {
-          console.log(cookie.Filter);
+        if (hasMoreMails && !loadMailLoading && !loading) {
           dispatch({
             type: LOAD_MAIL_REQUEST,
             data: '',
@@ -42,7 +43,6 @@ const Inbox = () => {
             token: cookie.Token,
             read: cookie.Filter,
           });
-          console.log(page);
           setPage((prev) => prev + 1);
         }
       }
@@ -51,17 +51,14 @@ const Inbox = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter]);
+  }, [mails.length, hasMoreMails, loadMailLoading, cookie.Filter, loading]);
 
   const ChangeBody = () => {
-    console.log('qwertyu');
-    console.log(me.subscription_num);
     if (
       !me.subscription_num ||
       me.subscription_num === 0 ||
       mails.length === 0
     ) {
-      console.log('모달모달');
       return (
         <>
           <HeaderWrapper>{header}</HeaderWrapper>
@@ -83,6 +80,9 @@ const Inbox = () => {
       );
     }
   };
+  if (!me) {
+    return '내 정보 로딩중...';
+  }
   return (
     <>
       <Header />
@@ -99,7 +99,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const Filter = getCookie(context.req.headers.cookie, 'Filter')
       ? getCookie(context.req.headers.cookie, 'Filter')
       : '';
-    console.log(Token);
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
       token: Token,

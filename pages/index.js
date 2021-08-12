@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOG_IN_REQUEST } from '../reducers';
+import { LOADING, LOG_IN_REQUEST } from '../reducers';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 
 const TopBar = () => {
   return (
@@ -17,6 +18,7 @@ const MainBox = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { logInDone, auth_uri } = useSelector((state) => state);
+  const [cookie, setCookie, removeCookie] = useCookies(['Token']);
   const responseGoogle = () => {
     dispatch({
       type: LOG_IN_REQUEST,
@@ -24,7 +26,13 @@ const MainBox = () => {
   };
 
   useEffect(() => {
-    console.log(`${auth_uri}`);
+    if (cookie.Token) {
+      dispatch({ type: LOADING });
+      router.push('/inbox');
+    }
+  }, []);
+
+  useEffect(() => {
     if (logInDone) {
       router.push(`${auth_uri}`);
     }

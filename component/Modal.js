@@ -4,7 +4,11 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
+import {
+  LOADING,
+  LOAD_SENDER_REQUEST,
+  LOAD_SUBSCRIPTION_REQUEST,
+} from '../reducers';
 import { useCookies } from 'react-cookie';
 import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
@@ -15,7 +19,9 @@ const ModalWindow = (sub) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  const { loadSenderLoading, me } = useSelector((state) => state);
+  const { loadSenderLoading, me, loadSubscriptionDone } = useSelector(
+    (state) => state
+  );
   const router = useRouter();
   const showModal = () => {
     setComponum(0);
@@ -33,7 +39,6 @@ const ModalWindow = (sub) => {
   }, [loadSenderLoading]);
 
   useEffect(() => {
-    console.log('showModal');
     if (
       (me.subscription_num === 0 || !me.subscription_num) &&
       router.pathname !== '/profile'
@@ -55,7 +60,21 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
-      Router.push('/inbox');
+      dispatch({ type: LOADING });
+    }
+  };
+
+  useEffect(() => {
+    if (loadSubscriptionDone) {
+      Router.push(`/redirect?loadsubscription=${true}`);
+    }
+  }, [loadSubscriptionDone]);
+
+  const handleDisabled = () => {
+    if (selectedTags.length > 0) {
+      return;
+    } else {
+      return 'disabled';
     }
   };
 
@@ -69,7 +88,7 @@ const ModalWindow = (sub) => {
             <br />
             복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <StyledImage>
-              <img src={'/design/modalStart.png'} alt="modal start" />
+              <img src={'/design/modalStart.png'} alt="modalstart" />
             </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
@@ -100,7 +119,11 @@ const ModalWindow = (sub) => {
             당신의 메일함도 한층 더 깔끔해질 거에요.😊
           </StyledBody>
           <Tag selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-          <StyledButton type="button" onClick={changeBody}>
+          <StyledButton
+            type="button"
+            onClick={changeBody}
+            disabled={handleDisabled()}
+          >
             다 선택했어요!
           </StyledButton>
         </StyledCompo>
@@ -129,7 +152,6 @@ const ModalWindow = (sub) => {
         <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
           <Tooltip placement="topRight" title={text}>
             <OpenButton sub={sub.sub}>
-              {console.log(sub)}
               <img
                 src={'/design/ProfilePlus.png'}
                 alt="plus"
@@ -288,7 +310,14 @@ const StyledButton = styled.button`
   border: none;
   width: 246px;
   z-index: 999;
+  :disabled {
+    background-color: #393a3f;
+  }
 `;
+
+// const LabelButton = styled(StyledButton)`
+//   disabled:${(props) => (props.selected ? 'true' : 'false')};
+// `;
 
 const StyledImage = styled.div`
   margin-top: 8.8%;

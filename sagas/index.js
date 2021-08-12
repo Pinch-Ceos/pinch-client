@@ -71,8 +71,6 @@ function* logIn(action) {
 }
 
 function giveCodeAPI(data) {
-  console.log(data);
-  console.log({ code: data });
   return axios.post(`/auth/callback?code=${data}/`, { code: data });
 }
 function* giveCode(action) {
@@ -90,23 +88,6 @@ function* giveCode(action) {
   }
 }
 
-function logOutAPI() {
-  return axios.post('api/logout');
-}
-function* logOut() {
-  try {
-    yield delay(1000);
-    yield put({
-      type: 'LOG_OUT_SUCCESS',
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: 'LOG_OUT_FAILURE',
-      error: err.response.data,
-    });
-  }
-}
 function loadSenderAPI(token) {
   return axios.get(`/user/email-senders`, {
     headers: { Authorization: token },
@@ -129,7 +110,6 @@ function* loadSender(action) {
 }
 
 function loadSubscriptionAPI(data, token) {
-  console.log(data);
   return axios.post(`/subscriptions/`, data, {
     headers: { Authorization: token },
   }); //이거 api 어떻게 넘기는지
@@ -182,14 +162,12 @@ function loadMailAPI(action) {
 function* loadMail(action) {
   try {
     const result = yield call(loadMailAPI, action);
-    console.log(result);
     yield put({
       type: LOAD_MAIL_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.log(err);
-    console.log('ASDASD');
     yield put({
       type: LOAD_MAIL_FAILURE,
       error: err.response,
@@ -292,7 +270,6 @@ function addBookmarkAPI(action) {
 function* addBookmark(action) {
   try {
     const result = yield call(addBookmarkAPI, action);
-    console.log(result);
     yield put({
       type: ADD_BOOKMARK_SUCCESS,
       data: result.data,
@@ -313,7 +290,6 @@ function deleteBookmarkAPI(action) {
 function* deleteBookmark(action) {
   try {
     const result = yield call(deleteBookmarkAPI, action);
-    console.log(result);
     yield put({
       type: DELETE_BOOKMARK_SUCCESS,
       data: action.data,
@@ -334,7 +310,6 @@ function loadDetailInfoAPI(action) {
 function* loadDetailInfo(action) {
   try {
     const result = yield call(loadDetailInfoAPI, action);
-    console.log(result);
     yield put({
       type: LOAD_DETAIL_INFO_SUCCESS,
       data: result.data,
@@ -355,7 +330,6 @@ function deleteUserAPI(action) {
 function* deleteUser(action) {
   try {
     const result = yield call(deleteUserAPI, action);
-    console.log(result);
     yield put({
       type: DELETE_USER_SUCCESS,
       data: action.data,
@@ -370,9 +344,6 @@ function* deleteUser(action) {
 }
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
-}
-function* watchLogOut() {
-  yield takeLatest('LOG_OUT_REQUEST', logOut);
 }
 function* watchGiveCode() {
   yield takeLatest(GIVE_CODE_REQUEST, giveCode);
@@ -417,7 +388,6 @@ export default function* rootSaga() {
   yield all([
     fork(watchLoadMail),
     fork(watchLogIn),
-    fork(watchLogOut),
     fork(watchGiveCode),
     fork(watchLoadSender),
     fork(watchLoadSubscription),

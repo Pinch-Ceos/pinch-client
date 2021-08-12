@@ -21,7 +21,7 @@ const profile = () => {
   return (
     <>
       <Header />
-      <ProfileLayout />;
+      <ProfileLayout />
     </>
   );
 };

@@ -7,6 +7,8 @@ import Router from 'next/router';
 import MenuLayout from './Menu';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { LOADING } from '../reducers';
 
 const { Header, Content, Sider } = Layout;
 
@@ -14,6 +16,7 @@ const AppLayout = ({ children }) => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const address = router.pathname.split('/')[1];
+  const dispatch = useDispatch();
   useEffect(() => {
     if (address === 'search') {
       setSearchValue(router.query.value);
@@ -27,8 +30,8 @@ const AppLayout = ({ children }) => {
   }, []);
   const onSubmitForm = useCallback(
     (e) => {
-      console.log(e);
       e.preventDefault();
+      dispatch({ type: LOADING });
       Router.push(`/search/${searchValue}`);
     },
     [searchValue]

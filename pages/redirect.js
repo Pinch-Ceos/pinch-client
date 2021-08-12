@@ -4,7 +4,6 @@ import { GIVE_CODE_REQUEST } from '../reducers';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
-import Image from 'next/image';
 const redirect = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -19,9 +18,15 @@ const redirect = () => {
     });
   }, []);
   useEffect(() => {
+    let fromprofile = new URL(window.location.href).searchParams.get(
+      'loadsubscription'
+    );
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
       setCookie('Filter', 'False', { path: '/' });
+      router.push(`/inbox`);
+    }
+    if (fromprofile === 'true') {
       router.push(`/inbox`);
     }
   }, [giveCodeDone]);
@@ -29,7 +34,7 @@ const redirect = () => {
     <LoaderWrapper>
       <ImageWrapper>
         <img
-          src={'/design/modalLoader.gif'}
+          src={'/design/30266-documents.gif'}
           alt="loader"
           style={{ width: '27em', height: '27em' }}
         />
@@ -46,7 +51,7 @@ const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #2B2E32;
+  background-color: white;
   @media screen and (max-width: 768px) {
     font-size: 11px;
 `;
