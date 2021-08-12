@@ -54,7 +54,7 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
-      Router.push('/redirect');
+      Router.push(`/redirect?loadsubscription=${true}`);
     }
   };
 
@@ -76,7 +76,7 @@ const ModalWindow = (sub) => {
             <br />
             복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
             <StyledImage>
-              <img src={'/design/modalStart.png'} alt="modal start" />
+              <img src={'/design/modalStart.png'} alt="modalstart" />
             </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>

@@ -18,11 +18,17 @@ const redirect = () => {
     });
   }, []);
   useEffect(() => {
+    let fromprofile = new URL(window.location.href).searchParams.get(
+      'loadsubscription'
+    );
     if (giveCodeDone) {
       setCookie('Token', me.token, { path: '/' });
       setCookie('Filter', 'False', { path: '/' });
+      router.push(`/inbox`);
     }
-    router.push(`/inbox`);
+    if (fromprofile === 'true') {
+      router.push(`/inbox`);
+    }
   }, [giveCodeDone]);
   return (
     <LoaderWrapper>
