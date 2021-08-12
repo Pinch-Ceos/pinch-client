@@ -290,10 +290,6 @@ const StyledButton = styled.button`
   z-index: 999;
 `;
 
-const LabelButton = styled(StyledButton)`
-  /* disabled:${(props) => (props.selected ? 'false' : 'true')}; */
-`;
-
 const StyledImage = styled.div`
   margin-top: 8.8%;
   margin-bottom: 11.53%;

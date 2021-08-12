@@ -11,10 +11,18 @@ const Footer = () => {
           {/* putlogohere */}
         </Logo>
         <CenterBox>
-          <Label>개인정보 처리방침</Label>
-          <Label>서비스약관</Label>
-          <Label>제휴문의</Label>
-          <Label>Help & Support</Label>
+          <a href="https://www.notion.so/Pinch-7f54905428e6446a8a94fb815c4c6d05">
+            <Label>개인정보 처리방침</Label>
+          </a>
+          <a href="https://www.notion.so/774c59a6e62441c5b3de8304d7a55d4e">
+            <Label>서비스약관</Label>
+          </a>
+          <a href="https://www.notion.so/e2792527e1874140af414986d03bda51">
+            <Label>제휴문의</Label>
+          </a>
+          <a href="https://www.notion.so/a9360c46281b4af88cafccd2bd3779f0">
+            <Label>Help & Support</Label>
+          </a>
         </CenterBox>
         <Label>Copyright © Pinch. All rights reserved </Label>
       </CenterContainer>
