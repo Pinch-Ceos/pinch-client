@@ -84,11 +84,17 @@ const ModalWindow = (sub) => {
         <StyledCompo>
           <StyledTitle>시작하기</StyledTitle>
           <StyledBody>
-            핀치에 뉴스레터를 추가해 보세요.
-            <br />
-            복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
+            <StyledLabel>
+              핀치에 뉴스레터를 추가해 보세요.
+              <br />
+              복잡한 메일함에서 벗어나 따끈한 뉴스레터만 모아볼 수 있어요.
+            </StyledLabel>
             <StyledImage>
-              <img src={'/design/modalStart.png'} alt="modalstart" />
+              <img
+                src={'/design/modalStart.gif'}
+                alt="modalstart"
+                style={{ width: '13.889em', height: '11.944em' }}
+              />
             </StyledImage>
           </StyledBody>
           <StyledButton type="button" onClick={changeBody}>
@@ -104,7 +110,7 @@ const ModalWindow = (sub) => {
             <Image src={'/design/modalLoader.gif'} width="200" height="200" />
           </StyledImage>
           <Label>
-            최근 7일 간 User님의 메일로 온<br />
+            최근 7일 간 {me.user_name}님의 메일로 온<br />
             뉴스레터들을 찾고 있어요.
           </Label>
         </StyledCompo>
@@ -114,9 +120,11 @@ const ModalWindow = (sub) => {
         <StyledCompo>
           <StyledTitle>뉴스레터를 선택해주세요. </StyledTitle>
           <StyledBody>
-            이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
-            <br />
-            당신의 메일함도 한층 더 깔끔해질 거에요.😊
+            <StyledLabel>
+              이제 선택한 뉴스레터들은 핀치의 인박스로 도착하게 됩니다.
+              <br />
+              당신의 메일함도 한층 더 깔끔해질 거에요.😊
+            </StyledLabel>
           </StyledBody>
           <Tag selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
           <StyledButton
@@ -267,6 +275,10 @@ const StyledTitle = styled.div`
   word-break: keep-all;
   margin-top: 86px;
   margin-bottom: 36px;
+  @media screen and (max-width: 768px) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 `;
 
 const StyledModal = styled(Modal)`
@@ -285,16 +297,26 @@ const StyledBody = styled.div`
   color: #b0b1b6;
   text-align: center;
   word-break: break-word;
-  margin-bottom: 5.28%;
 `;
-
+const StyledLabel = styled.div`
+  font-size: 1.125rem;
+  font-weight: normal;
+  color: #b0b1b6;
+  text-align: center;
+  word-break: break-word;
+  @media screen and (max-width: 768px) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+`;
 const Label = styled.div`
   font-size: 1.125rem;
   font-weight: normal;
   color: #b0b1b6;
   text-align: center;
   word-break: break-word;
-  margin-bottom: 14.11%;
+  margin-bottom: 5.167em;
+  margin-top: 1.222em;
 `;
 
 const StyledButton = styled.button`
@@ -320,8 +342,15 @@ const StyledButton = styled.button`
 // `;
 
 const StyledImage = styled.div`
-  margin-top: 8.8%;
-  margin-bottom: 11.53%;
+  margin-top: 3.889em;
+  margin-bottom: 3em;
+  height: 11.944em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* @media screen and (max-width: 768px) {
+    margin-bottom: 3%;
+  } */
 `;
 
 const OpenButton = styled(Button)`

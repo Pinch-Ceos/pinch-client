@@ -40,7 +40,7 @@ const Header = () => {
     <Container>
       <Bar>
         <Logo onClick={onClickMark}>
-          <img src={'/design/pinchmark.png'} alt="logo" />
+          <img src={'/design/logo_pinch.svg'} alt="logo" />
         </Logo>
         <RightBox>
           <Search>
