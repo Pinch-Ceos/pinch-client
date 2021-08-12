@@ -4,7 +4,11 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Tag from '../component/Tag';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_SENDER_REQUEST, LOAD_SUBSCRIPTION_REQUEST } from '../reducers';
+import {
+  LOADING,
+  LOAD_SENDER_REQUEST,
+  LOAD_SUBSCRIPTION_REQUEST,
+} from '../reducers';
 import { useCookies } from 'react-cookie';
 import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
@@ -15,7 +19,9 @@ const ModalWindow = (sub) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const dispatch = useDispatch();
   const [cookie, setCookie, removeCookie] = useCookies(['Token']);
-  const { loadSenderLoading, me } = useSelector((state) => state);
+  const { loadSenderLoading, me, loadSubscriptionDone } = useSelector(
+    (state) => state
+  );
   const router = useRouter();
   const showModal = () => {
     setComponum(0);
@@ -54,9 +60,15 @@ const ModalWindow = (sub) => {
         data: selectedTags,
         token: cookie.Token,
       });
-      Router.push(`/redirect?loadsubscription=${true}`);
+      dispatch({ type: LOADING });
     }
   };
+
+  useEffect(() => {
+    if (loadSubscriptionDone) {
+      Router.push(`/redirect?loadsubscription=${true}`);
+    }
+  }, [loadSubscriptionDone]);
 
   const handleDisabled = () => {
     if (selectedTags.length > 0) {
