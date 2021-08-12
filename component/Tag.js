@@ -105,7 +105,6 @@ const Global = createGlobalStyle`
 `;
 
 const OverflowGradient = styled.div`
-  //스크롤 끝까지 내려도 gradient 효과 들어가는거 수정필요
   position: relative;
   width: 100%;
   :before {
@@ -116,7 +115,7 @@ const OverflowGradient = styled.div`
     top: 0;
     width: 100%; //이거 픽셀 아니면 안먹히는데, 모바일 화면 이상함
     height: 50px;
-    background: linear-gradient(#2b2e32, rgba(255, 255, 255, 0.001));
+    background: linear-gradient(transparent, #2b2e32);
   }
   :after {
     content: '';
