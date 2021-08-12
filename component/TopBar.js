@@ -89,7 +89,7 @@ const StyledForm = styled.form`
   @media screen and (min-width: 768px) {
     display: none;
   }
-  align-item: center;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -104,6 +104,8 @@ const Logo = styled.div`
   cursor: pointer;
   margin-top: 7px;
   margin-left: 25px;
+  height: 30px;
+  width: 100px;
 `;
 
 const Search = styled.div`
