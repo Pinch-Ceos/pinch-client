@@ -179,7 +179,7 @@ const ImageWrapper = styled.div`
 
 const NumberConatainer = styled.div`
   font-size: 20px;
-  argin-left: 9px;
+  margin-left: 9px;
 `;
 
 const HeaderWrapper = styled.div`

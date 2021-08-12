@@ -164,10 +164,10 @@ const StyledHeader = styled(Header)`
 const StyledForm = styled.form`
   border-radius: 10px;
   &:focus-within {
-    box-shadow: 5px 5px 5px #e5e7e9;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
   }
   &:hover {
-    box-shadow: 5px 5px 5px #e5e7e9;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
   }
 `;
 

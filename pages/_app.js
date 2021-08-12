@@ -88,7 +88,7 @@ const GlobalStyles = createGlobalStyle`
 @font-face {
   font-family: 'Poppins-Medium';
   src: url('/font/Poppins-Medium.ttf') format('truetype');
-  font-weight: 500;
+  font-weight: nromal;
   font-style: normal;
 }
 

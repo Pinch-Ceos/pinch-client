@@ -155,7 +155,7 @@ export const UnreadCard = styled(Card)`
       opacity: 1;
     }
     .ant-card-cover img {
-      box-shadow: 0 0 10px #b0b0b0;
+      box-shadow: 0 1px 30px rgba(145, 145, 145, 0.2);
     }
   }
   .ant-card-body {
@@ -180,7 +180,7 @@ export const ReadCard = styled(Card)`
       opacity: 1;
     }
     .ant-card-cover img {
-      box-shadow: 0 0 10px #a0a0a0;
+      box-shadow: 0 1px 30px rgba(145, 145, 145, 0.2);
     }
   }
   .ant-card-body {

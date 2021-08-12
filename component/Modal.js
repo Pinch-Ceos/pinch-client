@@ -104,7 +104,7 @@ const ModalWindow = (sub) => {
             <Image src={'/design/modalLoader.gif'} width="200" height="200" />
           </StyledImage>
           <Label>
-            최근 7일 간 User님의 메일로 온<br />
+            최근 7일 간 {me.user_name}님의 메일로 온<br />
             뉴스레터들을 찾고 있어요.
           </Label>
         </StyledCompo>

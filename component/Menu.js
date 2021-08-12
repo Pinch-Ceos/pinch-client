@@ -54,7 +54,7 @@ const MenuLayout = () => {
               <ImageWrapper>
                 <Image src={'/design/emoji1.png'} width="18px" height="18px" />
               </ImageWrapper>
-              <MenuText>Inbox</MenuText>
+              <MenuInbox>Inbox</MenuInbox>
             </TextWrapper>
           </Menu>
           <Menu onClick={onClickSubscription} selected={selectedSubscription}>
@@ -115,6 +115,11 @@ const TextWrapper = styled.div`
 
 const MenuText = styled.div`
   font-size: 18px;
+`;
+
+const MenuInbox = styled.div`
+  font-size: 18px;
+  font-family: 'Poppins-Medium';
 `;
 
 const ImageWrapper = styled.div`
